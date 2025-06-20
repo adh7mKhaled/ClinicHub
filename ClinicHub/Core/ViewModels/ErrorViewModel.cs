@@ -1,4 +1,4 @@
-namespace ClinicHub.Models
+namespace ClinicHub.Core.ViewModels
 {
     public class ErrorViewModel
     {
