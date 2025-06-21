@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Patient>
+
+@{
+	ViewData["Title"] = "Patients";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Patients</h5>
+		<table class="table table-sm">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Date of birth</th>
+					<th>Gender</th>
+					<th>Marital status</th>
+					<th>Address</th>
+					<th>Created on</th>
+					<th>Last updated on</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var patient in Model)
+				{
+					<tr>
+						<td>@patient.FullName</td>
+						<td>@patient.DateOfBirth.ToString("dd, MMM, yyyy")</td>
+						<td>@patient.Gender.ToString()</td>
+						<td>@patient.MaritalStatus.ToString()</td>
+						<td>@patient.Address</td>
+						<td>@patient.CreatedOn.ToString("dd, MMM, yyyy")</td>
+						<td>@patient.LastUpdatedOn?.ToString("dd, MMM, yyyy")</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+    </div>
+</div>
