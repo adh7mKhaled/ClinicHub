@@ -22,6 +22,8 @@ public static class ConfigureServices
 		services.AddControllersWithViews();
 
 		services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+		services.AddScoped<IPatientServices, PatientServices>();
+
 		services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
 
 		return services;

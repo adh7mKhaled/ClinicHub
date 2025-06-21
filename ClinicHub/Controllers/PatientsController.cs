@@ -2,18 +2,20 @@
 
 public class PatientsController : Controller
 {
-	private readonly IApplicationDbContext _context;
+	private readonly IPatientServices _patientServices;
 	private readonly IMapper _mapper;
 
-	public PatientsController(IApplicationDbContext context, IMapper mapper)
+	public PatientsController(IPatientServices patientServices, IMapper mapper)
 	{
-		_context = context;
+		_patientServices = patientServices;
 		_mapper = mapper;
 	}
 
 	public IActionResult Index()
 	{
-		var viewModel = _mapper.Map<IEnumerable<PatientViewModel>>(_context.Patients.ToList());
+		var patients = _patientServices.GetAll();
+		var viewModel = _mapper.Map<IEnumerable<PatientViewModel>>(patients);
+
 		return View(viewModel);
 	}
 }
