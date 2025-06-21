@@ -1,6 +1,6 @@
-﻿namespace ClinicHub.Core.Models;
+﻿namespace ClinicHub.Core.ViewModels;
 
-public class Patient : BaseModel
+public class PatientViewModel
 {
 	public int Id { get; set; }
 	public string FullName { get; set; } = null!;
@@ -10,4 +10,7 @@ public class Patient : BaseModel
 	public MaritalStatus MaritalStatus { get; set; }
 	public string PhoneNumber { get; set; } = null!;
 	public string Address { get; set; } = null!;
+	public bool IsDeleted { get; set; }
+	public DateTime CreatedOn { get; set; } = DateTime.Now;
+	public DateTime? LastUpdatedOn { get; set; }
 }
