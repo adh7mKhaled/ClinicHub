@@ -4,10 +4,37 @@
 	ViewData["Title"] = "Patients";
 }
 
+@section Styles
+{
+	<link rel="stylesheet" href="~/lib/datatables/css/datatables.bootstrap4.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+}
+
+<div class="pagetitle">
+	<div class="d-flex justify-content-between">
+		<div>
+			<h1>Patients</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active">Patients</li>
+				</ol>
+			</nav>
+		</div>
+		<div>
+			<a href="#" class="btn btn-sm btn-primary js-render-modal mt-1 p-2">
+				<i class="bi bi-plus-square-dotted"></i>
+				Add Patient
+			</a>
+		</div>
+	</div>
+
+</div>
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Patients</h5>
-		<table class="table table-sm">
+		<table id="js-datatable" class="table table-sm">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -17,6 +44,7 @@
 					<th>Address</th>
 					<th>Created on</th>
 					<th>Last updated on</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,11 +56,52 @@
 						<td>@patient.Gender.ToString()</td>
 						<td>@patient.MaritalStatus.ToString()</td>
 						<td>@patient.Address</td>
-						<td>@patient.CreatedOn.ToString("dd, MMM, yyyy")</td>
+						<td class="text-gray">@patient.CreatedOn.ToString("dd, MMM, yyyy")</td>
 						<td>@patient.LastUpdatedOn?.ToString("dd, MMM, yyyy")</td>
+						<td>
+							<div class="btn-group">
+								<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
+									Action
+								</button>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#" class="dropdown-item js-render-modal">
+											Edit
+										</a>
+									</li>
+									<li>
+										<a href="#" class="dropdown-item flex-stack px-3 js-toggle-status">
+											Toggle Status
+										</a>
+									</li>
+								</ul>
+							</div>
+						</td>
 					</tr>
 				}
 			</tbody>
 		</table>
     </div>
 </div>
+
+@section Plugins 
+{
+	<script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+	<script src="~/lib/datatables/js/datatables.bootstrap4.min.js"></script>
+	<script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+	<script defer src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+	<script defer src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+}
+
+@section Scripts
+{
+	<script>
+		$(document).ready(function () {
+			$('#js-datatable').DataTable({
+				info: false,
+			});
+		})
+	</script>
+}

@@ -29,3 +29,11 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/*Start Custom Style*/
+
+.ms-neg-10 {
+    margin-left: -10px;
+}
+
+/*End Custom Style*/
