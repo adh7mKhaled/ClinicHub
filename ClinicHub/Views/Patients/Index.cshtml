@@ -24,7 +24,7 @@
 			</nav>
 		</div>
 		<div>
-			<a href="#" class="btn btn-sm btn-primary js-render-modal mt-1 p-2">
+			<a href="#" class="btn btn-sm btn-primary js-render-modal mt-1 p-2" style="background-color: #4154f1; color: white;">
 				<i class="bi bi-plus-square-dotted"></i>
 				Add Patient
 			</a>
@@ -38,12 +38,12 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>Date of birth</th>
 					<th>Gender</th>
-					<th>Marital status</th>
 					<th>Address</th>
 					<th>Created on</th>
 					<th>Last updated on</th>
+					<th>Is Deleted</th>
+					<th>Status</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -52,12 +52,16 @@
 				{
 					<tr>
 						<td>@patient.FullName</td>
-						<td>@patient.DateOfBirth.ToString("dd, MMM, yyyy")</td>
 						<td>@patient.Gender.ToString()</td>
-						<td>@patient.MaritalStatus.ToString()</td>
 						<td>@patient.Address</td>
 						<td class="text-gray">@patient.CreatedOn.ToString("dd, MMM, yyyy")</td>
 						<td>@patient.LastUpdatedOn?.ToString("dd, MMM, yyyy")</td>
+						<td>
+							@(patient.IsDeleted ? "Deleted" : "Available")
+						</td>
+						<td>
+							@(patient.Status ? "Completed" : "Not Complete")
+						</td>
 						<td>
 							<div class="btn-group">
 								<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
