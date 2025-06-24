@@ -8,55 +8,78 @@
     <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Add Patient</h5>
+                <h5 class="card-title mb-4">Add Patient</h5>
                 <form method="post" class="row g-3" id="Form">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="First Name" asp-for="FirstName">
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Last Name" asp-for="LastName">
-                        <span asp-validation-for="LastName" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <select asp-for="Gender" class="form-select" asp-items="Html.GetEnumSelectList<Gender>()">
-                                <option value="">-- Select Gender --</option>
-                            </select>
-                            <span asp-validation-for="Gender" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <select asp-for="MaritalStatus" class="form-select" asp-items="Html.GetEnumSelectList<MaritalStatus>()">
-                                <option value="">-- Select Marital Status --</option>
-                            </select>
-                            <span asp-validation-for="MaritalStatus" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <input class="form-control" placeholder="Phone Number" asp-for="PhoneNumber">
-                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Address" asp-for="Address">
-                        <span asp-validation-for="Address" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="date" class="form-control" asp-for="DateOfBirth"/>
-                        <span asp-validation-for="DateOfBirth" class="text-danger d-block"></span>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="col-sm-10">
-                            <textarea class="form-control" placeholder="Notes" style="height: 130px" asp-for="Notes"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check form-switch form-check-solid form-check-custom mb-4">
-                            <input class="form-check-input" type="checkbox" asp-for="HasWhatsApp">
-                            <label class="form-check-label" asp-for="HasWhatsApp"></label>
-                        </div>
-                    </div>
+					<div class="row">
+						<div class="col md-5">
+							<div class="row">
+								<div class="col mb-4">
+									<input type="text" class="form-control" placeholder="First Name" asp-for="FirstName">
+									<span asp-validation-for="FirstName" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col mb-4">
+                                    <input type="text" class="form-control" placeholder="Last Name" asp-for="LastName">
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col mb-4">
+                                    <div class="form-group">
+                                        <select asp-for="Gender" class="form-select" asp-items="Html.GetEnumSelectList<Gender>()">
+                                            <option value="">-- Select Gender --</option>
+                                        </select>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col mb-4">
+                                    <div class="form-group">
+                                        <select asp-for="MaritalStatus" class="form-select" asp-items="Html.GetEnumSelectList<MaritalStatus>()">
+                                            <option value="">-- Select Marital Status --</option>
+                                        </select>
+                                        <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+                                    </div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col mb-4">
+                                    <input class="form-control" placeholder="Phone Number" asp-for="PhoneNumber">
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col mb-4">
+                                    <input type="text" class="form-control" placeholder="Address" asp-for="Address">
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col mb-4">
+                                    <input type="date" class="form-control" asp-for="DateOfBirth" />
+                                    <span asp-validation-for="DateOfBirth" class="text-danger d-block"></span>
+								</div>
+							</div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-check form-switch form-check-solid form-check-custom mb-4">
+                                        <input class="form-check-input" type="checkbox" asp-for="HasWhatsApp">
+                                        <label class="form-check-label" asp-for="HasWhatsApp"></label>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+						<div class="col md-7">
+							<div class="row">
+								<div class="col mb-4">
+                                    <textarea class="form-control" placeholder="Notes" style="height: 400px" asp-for="Notes"></textarea>
+                                    <span asp-validation-for="Notes" class="text-danger d-block"></span>
+								</div>
+							</div>
+						</div>
+					</div>
                 </form>
             </div>
             <div class="card-footer">
