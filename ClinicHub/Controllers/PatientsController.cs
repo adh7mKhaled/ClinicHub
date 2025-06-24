@@ -4,11 +4,13 @@ public class PatientsController : Controller
 {
 	private readonly IPatientServices _patientServices;
 	private readonly IMapper _mapper;
+	private readonly IValidator<PatientFormViewModel> _validator;
 
-	public PatientsController(IPatientServices patientServices, IMapper mapper)
+	public PatientsController(IPatientServices patientServices, IMapper mapper, IValidator<PatientFormViewModel> validator)
 	{
 		_patientServices = patientServices;
 		_mapper = mapper;
+		_validator = validator;
 	}
 
 	public IActionResult Index()
@@ -22,5 +24,21 @@ public class PatientsController : Controller
 	public IActionResult Create()
 	{
 		return View("_Form");
+	}
+
+	[HttpPost]
+	public IActionResult Create(PatientFormViewModel model)
+	{
+		var validationResult = _validator.Validate(model);
+
+		if (!validationResult.IsValid)
+			return BadRequest(validationResult);
+
+		var patient = _mapper.Map<Patient>(model);
+
+		_patientServices.Add(patient);
+		_patientServices.Save();
+
+		return RedirectToAction(nameof(Index));
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using ClinicHub.Core.Mapping;
 using ClinicHub.Data;
+using ClinicHub.Validators;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
@@ -23,6 +25,10 @@ public static class ConfigureServices
 
 		services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 		services.AddScoped<IPatientServices, PatientServices>();
+
+		services.AddScoped<IValidator<PatientFormViewModel>, PatientFormValidator>();
+		services.AddFluentValidationAutoValidation();
+		services.AddFluentValidationClientsideAdapters();
 
 		services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
 

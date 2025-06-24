@@ -1,4 +1,6 @@
-﻿namespace ClinicHub.Core.ViewModels;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ClinicHub.Core.ViewModels;
 
 public class PatientFormViewModel
 {
@@ -11,5 +13,7 @@ public class PatientFormViewModel
 	public string? Notes { get; set; }
 	public string PhoneNumber { get; set; } = null!;
 	public string Address { get; set; } = null!;
+
+	[Display(Name = "Has WhatsApp")]
 	public bool HasWhatsApp { get; set; }
 }

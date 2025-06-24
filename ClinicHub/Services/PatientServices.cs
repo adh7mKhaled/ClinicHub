@@ -9,8 +9,7 @@ public class PatientServices : IPatientServices
 		_context = context;
 	}
 
-	public IEnumerable<Patient> GetAll()
-	{
-		return _context.Patients.ToList();
-	}
+	public void Add(Patient patient) => _context.Patients.Add(patient);
+	public IEnumerable<Patient> GetAll() => _context.Patients.ToList();
+	public int Save() => _context.SaveChanges();
 }

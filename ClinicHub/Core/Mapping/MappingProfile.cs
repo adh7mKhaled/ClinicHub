@@ -6,5 +6,7 @@ public class MappingProfile : Profile
 	{
 		CreateMap<Patient, PatientViewModel>()
 			.ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
+		CreateMap<PatientFormViewModel, Patient>();
 	}
 }
