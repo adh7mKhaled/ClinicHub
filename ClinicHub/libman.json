@@ -21,6 +21,21 @@
     {
       "library": "expressive-annotations-validate@2.7.0",
       "destination": "wwwroot/lib/expressive-annotations-validate/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "sweetalert2@11.22.1",
+      "destination": "wwwroot/lib/sweetalert2/",
+      "files": [
+        "dist/sweetalert2.all.js",
+        "dist/sweetalert2.all.min.js",
+        "dist/sweetalert2.css",
+        "dist/sweetalert2.min.css"
+      ]
+    },
+    {
+      "library": "tinymce@7.9.1",
+      "destination": "wwwroot/lib/tinymce/"
     }
   ]
 }
