@@ -24,67 +24,45 @@
 			</nav>
 		</div>
 		<div>
-			<a href="#" class="btn btn-sm btn-primary js-render-modal mt-1 p-2" style="background-color: #4154f1; color: white;">
+			<a asp-action="Create" asp-controller="Patients" class="btn btn-sm btn-primary js-render-modal mt-1 p-2" style="background-color: #4154f1; color: white;">
 				<i class="bi bi-plus-square-dotted"></i>
 				Add Patient
 			</a>
 		</div>
 	</div>
-
 </div>
 <div class="card">
     <div class="card-body">
-		<table id="js-datatable" class="table table-sm">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Gender</th>
-					<th>Address</th>
-					<th>Created on</th>
-					<th>Last updated on</th>
-					<th>Is Deleted</th>
-					<th>Status</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var patient in Model)
-				{
+		@if (!Model.Any())
+		{
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				<i class="bi bi-exclamation-triangle me-1"></i>
+				No Patients found!
+			</div>
+		}
+		else
+		{
+			<table id="js-datatable" class="table table-sm">
+				<thead>
 					<tr>
-						<td>@patient.FullName</td>
-						<td>@patient.Gender.ToString()</td>
-						<td>@patient.Address</td>
-						<td class="text-gray">@patient.CreatedOn.ToString("dd, MMM, yyyy")</td>
-						<td>@patient.LastUpdatedOn?.ToString("dd, MMM, yyyy")</td>
-						<td>
-							@(patient.IsDeleted ? "Deleted" : "Available")
-						</td>
-						<td>
-							@(patient.Status ? "Completed" : "Not Complete")
-						</td>
-						<td>
-							<div class="btn-group">
-								<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
-									Action
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#" class="dropdown-item js-render-modal">
-											Edit
-										</a>
-									</li>
-									<li>
-										<a href="#" class="dropdown-item flex-stack px-3 js-toggle-status">
-											Toggle Status
-										</a>
-									</li>
-								</ul>
-							</div>
-						</td>
+						<th>Full Name</th>
+						<th>Gender</th>
+						<th>Address</th>
+						<th>Created on</th>
+						<th>Last updated on</th>
+						<th>Is Deleted</th>
+						<th>Status</th>
+						<th>Action</th>
 					</tr>
-				}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@foreach (var patient in Model)
+					{
+						<partial name="_PatientRow" model="@patient" />
+					}
+				</tbody>
+			</table>
+		}
     </div>
 </div>
 
@@ -105,6 +83,7 @@
 		$(document).ready(function () {
 			$('#js-datatable').DataTable({
 				info: false,
+				stateSave: true
 			});
 		})
 	</script>

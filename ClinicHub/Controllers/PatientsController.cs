@@ -18,4 +18,9 @@ public class PatientsController : Controller
 
 		return View(viewModel);
 	}
+
+	public IActionResult Create()
+	{
+		return View("_Form");
+	}
 }

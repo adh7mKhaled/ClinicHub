@@ -1,0 +1,32 @@
+﻿<tr>
+	<td>@Model.FullName</td>
+	<td>@Model.Gender.ToString()</td>
+	<td>@Model.Address</td>
+	<td class="text-gray">@Model.CreatedOn.ToString("dd, MMM, yyyy")</td>
+	<td>@Model.LastUpdatedOn?.ToString("dd, MMM, yyyy")</td>
+	<td>
+		@(Model.IsDeleted ? "Deleted" : "Available")
+	</td>
+	<td>
+		@(Model.Status ? "Completed" : "Not Complete")
+	</td>
+	<td>
+		<div class="btn-group">
+			<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
+				Action
+			</button>
+			<ul class="dropdown-menu">
+				<li>
+					<a href="#" class="dropdown-item js-render-modal">
+						Edit
+					</a>
+				</li>
+				<li>
+					<a href="#" class="dropdown-item flex-stack px-3 js-toggle-status">
+						Toggle Status
+					</a>
+				</li>
+			</ul>
+		</div>
+	</td>
+</tr>

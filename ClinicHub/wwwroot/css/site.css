@@ -35,5 +35,13 @@ body {
 .ms-neg-10 {
     margin-left: -10px;
 }
+/* Add this to your stylesheet */
+.form-floating {
+    padding-bottom: 0.1rem; /* Adjust this value as needed */
+}
 
+.form-control, .form-select {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
 /*End Custom Style*/

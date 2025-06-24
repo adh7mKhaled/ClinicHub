@@ -3,5 +3,6 @@
 public enum MaritalStatus
 {
 	Single,
-	Married
+	Married,
+	Divorced
 }
