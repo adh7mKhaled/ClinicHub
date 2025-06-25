@@ -1,8 +1,10 @@
-﻿<tr>
+﻿@model PatientViewModel
+
+<tr>
 	<td>@Model.FullName</td>
 	<td>@Model.Gender.ToString()</td>
 	<td>@Model.Address</td>
-	<td class="text-gray">@Model.CreatedOn.ToString("dd, MMM, yyyy")</td>
+	<td>@Model.CreatedOn.ToString("dd, MMM, yyyy")</td>
 	<td>@Model.LastUpdatedOn?.ToString("dd, MMM, yyyy")</td>
 	<td>
 		@(Model.IsDeleted ? "Deleted" : "Available")
@@ -17,7 +19,7 @@
 			</button>
 			<ul class="dropdown-menu">
 				<li>
-					<a href="#" class="dropdown-item js-render-modal">
+					<a asp-controller="Patients" asp-action="Edit" class="dropdown-item js-render-modal" asp-route-Id="@Model.Id">
 						Edit
 					</a>
 				</li>

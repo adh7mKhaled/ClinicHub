@@ -4,5 +4,6 @@ public interface IPatientServices
 {
 	IEnumerable<Patient> GetAll();
 	void Add(Patient patient);
-	int Save();
+	Patient? GetById(int id);
+	bool Edit(Patient patient);
 }

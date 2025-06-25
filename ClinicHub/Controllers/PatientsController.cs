@@ -27,17 +27,45 @@ public class PatientsController : Controller
 	}
 
 	[HttpPost]
+	[ValidateAntiForgeryToken]
 	public IActionResult Create(PatientFormViewModel model)
 	{
 		var validationResult = _validator.Validate(model);
 
 		if (!validationResult.IsValid)
-			return BadRequest(validationResult);
+			return BadRequest();
 
 		var patient = _mapper.Map<Patient>(model);
 
 		_patientServices.Add(patient);
-		_patientServices.Save();
+
+		return RedirectToAction(nameof(Index));
+	}
+
+	public IActionResult Edit(int id)
+	{
+		var patient = _patientServices.GetById(id);
+
+		if (patient is null)
+			return NotFound();
+
+		return View("_Form", _mapper.Map<PatientFormViewModel>(patient));
+	}
+
+	[HttpPost]
+	[ValidateAntiForgeryToken]
+	public IActionResult Edit(PatientFormViewModel model)
+	{
+		var validationResult = _validator.Validate(model);
+
+		if (!validationResult.IsValid)
+			return BadRequest();
+
+		var patient = _mapper.Map<Patient>(model);
+
+		patient.LastUpdatedOn = DateTime.Now;
+
+		_patientServices.Edit(patient);
 
 		return RedirectToAction(nameof(Index));
 	}

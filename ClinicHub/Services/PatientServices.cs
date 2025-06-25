@@ -9,7 +9,24 @@ public class PatientServices : IPatientServices
 		_context = context;
 	}
 
-	public void Add(Patient patient) => _context.Patients.Add(patient);
+	public void Add(Patient patient)
+	{
+		_context.Patients.Add(patient);
+		_context.SaveChanges();
+	}
+
 	public IEnumerable<Patient> GetAll() => _context.Patients.ToList();
-	public int Save() => _context.SaveChanges();
+
+	public Patient? GetById(int id) => _context.Patients.Find(id);
+
+	public bool Edit(Patient patient)
+	{
+		if (patient is null)
+			return false;
+
+		_context.Patients.Update(patient);
+		_context.SaveChanges();
+
+		return true;
+	}
 }
