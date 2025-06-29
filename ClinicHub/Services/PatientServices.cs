@@ -29,4 +29,5 @@ public class PatientServices : IPatientServices
 
 		return true;
 	}
+	public int Save() => _context.SaveChanges();
 }

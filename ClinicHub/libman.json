@@ -36,6 +36,18 @@
     {
       "library": "tinymce@7.9.1",
       "destination": "wwwroot/lib/tinymce/"
+    },
+    {
+      "library": "bootbox.js@6.0.4",
+      "destination": "wwwroot/lib/bootbox.js/",
+      "files": [
+        "bootbox.min.js",
+        "bootbox.js"
+      ]
+    },
+    {
+      "library": "animate.css@4.1.1",
+      "destination": "wwwroot/lib/animate.css/"
     }
   ]
 }

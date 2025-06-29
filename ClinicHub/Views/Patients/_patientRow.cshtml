@@ -5,26 +5,34 @@
 	<td>@Model.Gender.ToString()</td>
 	<td>@Model.Address</td>
 	<td>@Model.CreatedOn.ToString("dd, MMM, yyyy")</td>
-	<td>@Model.LastUpdatedOn?.ToString("dd, MMM, yyyy")</td>
+	<td class="js-updated-on">
+		@Model.LastUpdatedOn?.ToString()
+	</td>
 	<td>
+		@Model.RegistrationStatus.ToString()
+	</td>
+	<td class="js-status">
 		@(Model.IsDeleted ? "Deleted" : "Available")
 	</td>
-	<td>
-		@(Model.Status ? "Completed" : "Not Complete")
-	</td>
-	<td>
+	<td class="text-end">
 		<div class="btn-group">
 			<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
 				Action
 			</button>
 			<ul class="dropdown-menu">
 				<li>
-					<a asp-controller="Patients" asp-action="Edit" class="dropdown-item js-render-modal" asp-route-Id="@Model.Id">
+					<a asp-controller="Patients" asp-action="Edit" class="dropdown-item" asp-route-Id="@Model.Id">
 						Edit
 					</a>
 				</li>
 				<li>
-					<a href="#" class="dropdown-item flex-stack px-3 js-toggle-status">
+					<a asp-route-Id="@Model.Id" class="dropdown-item">
+						Details
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
+					   data-url="/Patients/ToggleStatus/@Model.Id">
 						Toggle Status
 					</a>
 				</li>

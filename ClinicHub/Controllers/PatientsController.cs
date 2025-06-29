@@ -42,9 +42,9 @@ public class PatientsController : Controller
 		return RedirectToAction(nameof(Index));
 	}
 
-	public IActionResult Edit(int id)
+	public IActionResult Edit(int Id)
 	{
-		var patient = _patientServices.GetById(id);
+		var patient = _patientServices.GetById(Id);
 
 		if (patient is null)
 			return NotFound();
@@ -68,5 +68,19 @@ public class PatientsController : Controller
 		_patientServices.Edit(patient);
 
 		return RedirectToAction(nameof(Index));
+	}
+
+	public IActionResult ToggleStatus(int id)
+	{
+		var patient = _patientServices.GetById(id);
+
+		if (patient is null)
+			return BadRequest();
+
+		patient.IsDeleted = !patient.IsDeleted;
+		patient.LastUpdatedOn = DateTime.Now;
+		_patientServices.Save();
+
+		return Ok(patient.LastUpdatedOn.ToString());
 	}
 }

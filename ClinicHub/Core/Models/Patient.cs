@@ -7,7 +7,7 @@ public class Patient : BaseModel
 	public string LastName { get; set; } = null!;
 	public DateTime DateOfBirth { get; set; }
 	public Gender Gender { get; set; }
-	public bool Status { get; set; }
+	public RegistrationStatus RegistrationStatus { get; set; } = RegistrationStatus.Pending;
 	public MaritalStatus MaritalStatus { get; set; }
 	public string? Notes { get; set; }
 	public string PhoneNumber { get; set; } = null!;
