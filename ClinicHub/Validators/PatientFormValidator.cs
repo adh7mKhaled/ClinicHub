@@ -17,7 +17,7 @@ public class PatientFormValidator : AbstractValidator<PatientFormViewModel>
 		RuleFor(x => x.Notes)
 			.MaximumLength(250).WithMessage(Errors.MaxLength);
 
-		RuleFor(x => x.Address)
+		RuleFor(x => x.City)
 			.MaximumLength(50).WithMessage(Errors.MaxLength);
 
 		RuleFor(x => x.PhoneNumber)

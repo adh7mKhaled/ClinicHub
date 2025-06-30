@@ -1,25 +1,4 @@
-﻿function showSuccessMessage(message = "Saved Successfully!") {
-    Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: message,
-        customClass: {
-            confirmButton: "btn btn-primary"
-        }
-    });
-}
-function showErrorMessage(message = "Something went wrong!") {
-    Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: message,
-        customClass: {
-            confirmButton: "btn btn-primary"
-        }
-    });
-}
-
-tinymce.init({
+﻿tinymce.init({
     selector: '.js-tinymce',
     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
 });
@@ -28,7 +7,7 @@ $(document).ready(function () {
     $('#js-datatable').DataTable({
         info: false,
         stateSave: true,
-        responsive: true
+        responsive: true,
     });
 
     $('.js-toggle-status').on('click', function () {
@@ -52,16 +31,15 @@ $(document).ready(function () {
                         url: btn.data('url'), 
                         success: function (lastUpdatedOn) {
                             var row = btn.parents('tr');
-                            var status = row.find('.js-status');
-                            var newStatus = status.text().trim() === 'Deleted' ? 'Available' : 'Deleted';
-                            status.text(newStatus);
-                            row.find('.js-updated-on').html(lastUpdatedOn);
-                            row.addClass('animate__animated animate__flash');
+                            row.addClass('animate__animated animate__fadeOut');
+                            setTimeout(function () {
+                                row.remove();
+                            }, 1000);
 
-                            showSuccessMessage();
+                            toastr.success('Patient deleted');
                         },
                         error: function () {
-                            showErrorMessage();
+                            toastr.error('Something went wrong!')
                         }
                     });
                 }

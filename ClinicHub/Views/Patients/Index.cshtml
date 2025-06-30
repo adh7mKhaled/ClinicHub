@@ -24,8 +24,8 @@
 			</nav>
 		</div>
 		<div>
-			<a asp-action="Create" asp-controller="Patients" class="btn btn-sm btn-primary js-render-modal mt-1 p-2" style="background-color: #4154f1; color: white;">
-				<i class="bi bi-plus-square-dotted"></i>
+			<a asp-action="Create" asp-controller="Patients" class="btn btn-sm mt-1 p-2" style="background-color: #4154f1; color: white;">
+				<i class="bi bi-plus-lg"></i>
 				Add Patient
 			</a>
 		</div>
@@ -35,33 +35,36 @@
     <div class="card-body">
 		@if (!Model.Any())
 		{
-			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			<div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 18px;">
 				<i class="bi bi-exclamation-triangle me-1"></i>
 				No Patients found!
 			</div>
 		}
 		else
 		{
-			<table id="js-datatable" class="table table-sm">
-				<thead>
-					<tr>
-						<th>Full Name</th>
-						<th>Gender</th>
-						<th>Address</th>
-						<th>Created on</th>
-						<th>Last updated on</th>
-						<th>Registration Status</th>
-						<th>Status</th>
-						<th class="text-end">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var patient in Model)
-					{
-						<partial name="_PatientRow" model="@patient" />
-					}
-				</tbody>
-			</table>
+			<div class="table-responsive">
+				<table id="js-datatable" class="table">
+					<thead>
+						<tr>
+							<th>Full Name</th>
+							<th>Phone Number</th>
+							<th>City</th>
+							<th>Next Appointment</th>
+							<th>last Appointment</th>
+							<th>Member Status</th>
+							<th>Register Date</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var patient in Model)
+						{
+							<partial name="_PatientRow" model="@patient" />
+						}
+					</tbody>
+				</table>
+
+			</div>
 		}
     </div>
 </div>

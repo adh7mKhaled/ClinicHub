@@ -11,6 +11,6 @@ public class Patient : BaseModel
 	public MaritalStatus MaritalStatus { get; set; }
 	public string? Notes { get; set; }
 	public string PhoneNumber { get; set; } = null!;
-	public string Address { get; set; } = null!;
+	public string City { get; set; } = null!;
 	public bool HasWhatsApp { get; set; }
 }

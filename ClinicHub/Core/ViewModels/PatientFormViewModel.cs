@@ -24,7 +24,7 @@ public class PatientFormViewModel
 
 	[Display(Name = "Phone Number")]
 	public string PhoneNumber { get; set; } = null!;
-	public string Address { get; set; } = null!;
+	public string City { get; set; } = null!;
 
 	[Display(Name = "Has WhatsApp")]
 	public bool HasWhatsApp { get; set; }

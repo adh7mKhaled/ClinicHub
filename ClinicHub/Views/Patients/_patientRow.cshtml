@@ -2,19 +2,17 @@
 
 <tr>
 	<td>@Model.FullName</td>
-	<td>@Model.Gender.ToString()</td>
-	<td>@Model.Address</td>
-	<td>@Model.CreatedOn.ToString("dd, MMM, yyyy")</td>
-	<td class="js-updated-on">
-		@Model.LastUpdatedOn?.ToString()
-	</td>
+	<td>@Model.PhoneNumber</td>
+	<td>@Model.City</td>
+	<td>@Model.CreatedOn.ToString()</td>
+	<td>@Model.CreatedOn.ToString()</td>
 	<td>
-		@Model.RegistrationStatus.ToString()
+		<span class="badge @(Model.RegistrationStatus == 0 ? "bg-secondary" : "bg-primary")">
+			@Model.RegistrationStatus.ToString()
+		</span>
 	</td>
-	<td class="js-status">
-		@(Model.IsDeleted ? "Deleted" : "Available")
-	</td>
-	<td class="text-end">
+	<td>@Model.CreatedOn.ToString("dd, MMM, yyyy")</td>
+	<td>
 		<div class="btn-group">
 			<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
 				Action
@@ -22,18 +20,21 @@
 			<ul class="dropdown-menu">
 				<li>
 					<a asp-controller="Patients" asp-action="Edit" class="dropdown-item" asp-route-Id="@Model.Id">
+						<i class="bi bi-pencil-square"></i>
 						Edit
 					</a>
 				</li>
 				<li>
 					<a asp-route-Id="@Model.Id" class="dropdown-item">
+						<i class="bi bi-person-badge"></i>
 						Details
 					</a>
 				</li>
 				<li>
 					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
 					   data-url="/Patients/ToggleStatus/@Model.Id">
-						Toggle Status
+						<i class="bi bi-trash"></i>
+						Delete Patient
 					</a>
 				</li>
 			</ul>

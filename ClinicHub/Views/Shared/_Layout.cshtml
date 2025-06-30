@@ -23,11 +23,12 @@
     <link rel="stylesheet" href="~/assets/vendor/simple-datatables/style.css">
 
 	<link href="~/lib/animate.css/animate.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/lib/sweetalert2/dist/sweetalert2.min.css"/>
 
     <script type="importmap"></script>
 	<link rel="stylesheet" href="~/lib/datatables/css/datatables.bootstrap4.min.css"/>
     @await RenderSectionAsync("Styles", required: false)
+
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
 
     <!-- Template Main CSS File -->
     <link rel="stylesheet" href="~/assets/css/style.css">
@@ -55,7 +56,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/lib/bootbox.js/bootbox.min.js"></script>
-	<script src="~/lib/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script src="~/lib/toastr.js/toastr.min.js"></script>
     @await RenderSectionAsync("Plugins", required: false)
 	<script src="~/lib/tinymce/tinymce.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/bnd60um55f6utxj85kneop6gfghiw4189ydsldhc0x43a8xy/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>

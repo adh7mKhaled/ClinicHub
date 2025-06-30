@@ -15,7 +15,7 @@ public class PatientServices : IPatientServices
 		_context.SaveChanges();
 	}
 
-	public IEnumerable<Patient> GetAll() => _context.Patients.ToList();
+	public IEnumerable<Patient> GetAll() => _context.Patients.Where(p => !p.IsDeleted).ToList();
 
 	public Patient? GetById(int id) => _context.Patients.Find(id);
 
