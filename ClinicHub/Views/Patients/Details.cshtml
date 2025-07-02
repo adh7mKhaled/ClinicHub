@@ -1,0 +1,87 @@
+﻿@model PatientViewModel
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<section class="section profile">
+	<div class="row">
+		<div class="col-xl-4">
+			<div class="card profile-card mx-auto">
+				<div class="card-header bg-primary text-white text-center py-4">
+					<h4 class="mb-1">Diane Cooper</h4>
+					<p class="mb-0">diane.cooper@example.com</p>
+				</div>
+				<div class="card-body">
+					<div class="tab-pane fade profile-overview active show" id="profile-overview" role="tabpanel">
+						<h5 class="card-title">Details</h5>
+
+						<div class="row">
+							<div class="col-lg-5 col-md-4 label">Full Name</div>
+							<div class="col-lg-7 col-md-8">@Model.FullName</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-5 col-md-4 label">Mobile Number</div>
+							<div class="col-lg-7 col-md-8">@Model.MobileNumber</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-5 col-md-4 label">Gender</div>
+							<div class="col-lg-7 col-md-8">@Model.Gender.ToString()</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-5 col-md-4 label">Birthday</div>
+							<div class="col-lg-7 col-md-8">@Model.DateOfBirth</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-5 col-md-4 label">City</div>
+							<div class="col-lg-7 col-md-8">@Model.City</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-5 col-md-4 label">Registration Status</div>
+							<div class="col-lg-7 col-md-8">@Model.RegistrationStatus</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-5 col-md-4 label">Registered Date</div>
+							<div class="col-lg-7 col-md-8">@Model.CreatedOn</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xl-8">
+			<div class="card">
+				<div class="card-body pt-3">
+					<ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
+
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" data-bs-toggle="tab" aria-selected="true" role="tab">Upcoming Appointments</button>
+						</li>
+
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" data-bs-toggle="tab"  aria-selected="false" role="tab" tabindex="-1">Past Appointments</button>
+						</li>
+
+					</ul>
+					<div class="tab-content pt-2">
+
+						<div class="tab-pane fade profile-overview active show" role="tabpanel">
+							
+						</div>
+
+						<div class="tab-pane fade profile-edit pt-3" role="tabpanel">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

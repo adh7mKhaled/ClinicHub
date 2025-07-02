@@ -70,6 +70,18 @@ public class PatientsController : Controller
 		return RedirectToAction(nameof(Index));
 	}
 
+	public IActionResult Details(int id)
+	{
+		var patient = _patientServices.GetById(id);
+
+		if (patient is null)
+			return NotFound();
+
+		var viewModel = _mapper.Map<PatientViewModel>(patient);
+
+		return View(viewModel);
+	}
+
 	public IActionResult ToggleStatus(int id)
 	{
 		var patient = _patientServices.GetById(id);

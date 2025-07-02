@@ -20,10 +20,10 @@ public class PatientFormViewModel
 
 	[Display(Name = "Marital Status")]
 	public MaritalStatus MaritalStatus { get; set; }
-	public string? Notes { get; set; }
 
 	[Display(Name = "Phone Number")]
-	public string PhoneNumber { get; set; } = null!;
+	public string MobileNumber { get; set; } = null!;
+	public string? Email { get; set; }
 	public string City { get; set; } = null!;
 
 	[Display(Name = "Has WhatsApp")]

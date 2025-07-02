@@ -2,7 +2,7 @@
 
 <tr>
 	<td>@Model.FullName</td>
-	<td>@Model.PhoneNumber</td>
+	<td>@Model.MobileNumber</td>
 	<td>@Model.City</td>
 	<td>@Model.CreatedOn.ToString()</td>
 	<td>@Model.CreatedOn.ToString()</td>
@@ -25,7 +25,7 @@
 					</a>
 				</li>
 				<li>
-					<a asp-route-Id="@Model.Id" class="dropdown-item">
+					<a asp-action="Details" asp-route-Id="@Model.Id" class="dropdown-item">
 						<i class="bi bi-person-badge"></i>
 						Details
 					</a>
