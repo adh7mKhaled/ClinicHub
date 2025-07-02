@@ -23,7 +23,7 @@ public class PatientsController : Controller
 
 	public IActionResult Create()
 	{
-		return View("_Form");
+		return PartialView("_Form");
 	}
 
 	[HttpPost]
@@ -39,7 +39,7 @@ public class PatientsController : Controller
 
 		_patientServices.Add(patient);
 
-		return RedirectToAction(nameof(Index));
+		return Ok();
 	}
 
 	public IActionResult Edit(int Id)
@@ -49,7 +49,7 @@ public class PatientsController : Controller
 		if (patient is null)
 			return NotFound();
 
-		return View("_Form", _mapper.Map<PatientFormViewModel>(patient));
+		return PartialView("_Form", _mapper.Map<PatientFormViewModel>(patient));
 	}
 
 	[HttpPost]

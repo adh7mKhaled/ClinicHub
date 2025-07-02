@@ -19,7 +19,9 @@
 			</button>
 			<ul class="dropdown-menu">
 				<li>
-					<a asp-controller="Patients" asp-action="Edit" class="dropdown-item" asp-route-Id="@Model.Id">
+					<a href="javascript:;" class="dropdown-item js-render-modal"
+					   data-title="Edit Patient"
+					   data-url="/Patients/Edit/@Model.Id">
 						<i class="bi bi-pencil-square"></i>
 						Edit
 					</a>

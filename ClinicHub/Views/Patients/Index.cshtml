@@ -24,7 +24,9 @@
 			</nav>
 		</div>
 		<div>
-			<a asp-action="Create" asp-controller="Patients" class="btn btn-sm mt-1 p-2" style="background-color: #4154f1; color: white;">
+			<a href="javascript:;" class="btn btn-sm mt-1 p-2 js-render-modal" style="background-color: #4154f1; color: white;"
+				data-title="Add Patient"
+				data-url="/Patients/Create">
 				<i class="bi bi-plus-lg"></i>
 				Add Patient
 			</a>
@@ -82,4 +84,5 @@
 @section Scripts
 {
 	<script src="~/js/patient.js" asp-append-version="true"></script>
+	<partial name="_ValidationScriptsPartial" />
 }

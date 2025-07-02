@@ -36,10 +36,10 @@ $(document).ready(function () {
                                 row.remove();
                             }, 1000);
 
-                            toastr.success('Patient deleted');
+                            showSuccessMessage('Patient deleted');
                         },
                         error: function () {
-                            toastr.error('Something went wrong!')
+                            showErrorMessage('Something went wrong!')
                         }
                     });
                 }
