@@ -6,17 +6,15 @@
 	data-ajax-success="showSuccessMessage"
 	data-ajax-failure="showErrorMessage">
 	<div class="row">
+		@if (Model?.Id > 0)
+		{
+			<input type="hidden" asp-for="Id"/>
+		}
 		<div class="col md-5">
 			<div class="row">
 				<div class="col mb-4">
-					<input type="text" class="form-control" placeholder="First Name" asp-for="FirstName">
-					<span asp-validation-for="FirstName" class="text-danger"></span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col mb-4">
-					<input type="text" class="form-control" placeholder="Last Name" asp-for="LastName">
-					<span asp-validation-for="LastName" class="text-danger"></span>
+					<input type="text" class="form-control" placeholder="Name" asp-for="Name">
+					<span asp-validation-for="Name" class="text-danger"></span>
 				</div>
 			</div>
 			<div class="row">
@@ -61,6 +59,12 @@
 				<div class="col mb-4">
 					<input type="date" class="form-control" asp-for="DateOfBirth" />
 					<span asp-validation-for="DateOfBirth" class="text-danger d-block"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col mb-4">
+					<textarea type="text" class="form-control" placeholder="Notes" asp-for="Notes"></textarea>
+					<span asp-validation-for="Notes" class="text-danger d-block"></span>
 				</div>
 			</div>
 			<div class="row">

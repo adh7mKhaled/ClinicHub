@@ -7,10 +7,7 @@ public class PatientFormViewModel
 	public int Id { get; set; }
 
 	[Display(Name = "First Name")]
-	public string FirstName { get; set; } = null!;
-
-	[Display(Name = "Last Name")]
-	public string LastName { get; set; } = null!;
+	public string Name { get; set; } = null!;
 
 	[AssertThat("DateOfBirth < Today()", ErrorMessage = Errors.NotAllowDates)]
 	[Display(Name = "Date Of Birth")]
@@ -21,9 +18,15 @@ public class PatientFormViewModel
 	[Display(Name = "Marital Status")]
 	public MaritalStatus MaritalStatus { get; set; }
 
-	[Display(Name = "Phone Number")]
+	public string? Notes { get; set; }
+
+	[Display(Name = "Phone Number"),
+		Remote("AllowUniqueMobileNumber", null!, AdditionalFields = "Id", ErrorMessage = Errors.Duplicated)]
 	public string MobileNumber { get; set; } = null!;
-	public string? Email { get; set; }
+
+	[Remote("AllowUniqueEmail", null!, AdditionalFields = "Id", ErrorMessage = Errors.Duplicated)]
+	public string Email { get; set; } = null!;
+
 	public string City { get; set; } = null!;
 
 	[Display(Name = "Has WhatsApp")]

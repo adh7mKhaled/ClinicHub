@@ -1,7 +1,7 @@
 ﻿namespace ClinicHub.Core.Enums;
 
-public enum RegistrationStatus
+public enum MemberStatus
 {
-	Pending,
 	Active,
+	Inactive,
 }

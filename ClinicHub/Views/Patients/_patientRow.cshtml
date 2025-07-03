@@ -1,16 +1,11 @@
 ﻿@model PatientViewModel
 
 <tr>
-	<td>@Model.FullName</td>
+	<td>@Model.Name</td>
 	<td>@Model.MobileNumber</td>
 	<td>@Model.City</td>
 	<td>@Model.CreatedOn.ToString()</td>
 	<td>@Model.CreatedOn.ToString()</td>
-	<td>
-		<span class="badge @(Model.RegistrationStatus == 0 ? "bg-secondary" : "bg-primary")">
-			@Model.RegistrationStatus.ToString()
-		</span>
-	</td>
 	<td>@Model.CreatedOn.ToString("dd, MMM, yyyy")</td>
 	<td>
 		<div class="btn-group">

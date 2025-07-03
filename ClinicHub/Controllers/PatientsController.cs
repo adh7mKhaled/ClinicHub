@@ -93,6 +93,23 @@ public class PatientsController : Controller
 		patient.LastUpdatedOn = DateTime.Now;
 		_patientServices.Save();
 
-		return Ok(patient.LastUpdatedOn.ToString());
+		return Ok();
+	}
+	public IActionResult AllowUniqueMobileNumber(PatientFormViewModel model)
+	{
+		var patient = _patientServices.Find(p => p.MobileNumber == model.MobileNumber);
+
+		var isAllowed = patient is null || patient.Id.Equals(model.Id);
+
+		return Json(isAllowed);
+	}
+
+	public IActionResult AllowUniqueEmail(PatientFormViewModel model)
+	{
+		var patient = _patientServices.Find(p => p.Email == model.Email);
+
+		var isAllowed = patient is null || patient.Id.Equals(model.Id);
+
+		return Json(isAllowed);
 	}
 }

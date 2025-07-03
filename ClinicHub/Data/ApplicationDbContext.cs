@@ -1,4 +1,6 @@
-﻿namespace ClinicHub.Data;
+﻿using System.Reflection;
+
+namespace ClinicHub.Data;
 
 public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
 {
@@ -8,4 +10,11 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
 	}
 
 	public DbSet<Patient> Patients { get; set; }
+
+	protected override void OnModelCreating(ModelBuilder builder)
+	{
+		builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+		base.OnModelCreating(builder);
+	}
 }

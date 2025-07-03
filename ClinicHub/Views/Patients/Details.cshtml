@@ -8,17 +8,20 @@
 	<div class="row">
 		<div class="col-xl-4">
 			<div class="card profile-card mx-auto">
-				<div class="card-header bg-primary text-white text-center py-4">
-					<h4 class="mb-1">Diane Cooper</h4>
-					<p class="mb-0">@Model.Email</p>
+				<div class="card-header bg-white text-black text-center py-4">
+					<h4 class="mb-1">@Model.Name</h4>
+					<p class="mb-0 text-muted">@Model.Email</p>
+					<span class="badge @(Model.MemberStatus == 0 ? "bg-success" : "bg-danger")">
+						@Model.MemberStatus.ToString() Patient
+					</span>
 				</div>
 				<div class="card-body">
 					<div class="tab-pane fade profile-overview active show" id="profile-overview" role="tabpanel">
 						<h5 class="card-title">Details</h5>
 
 						<div class="row">
-							<div class="col-lg-5 col-md-4 label">Full Name</div>
-							<div class="col-lg-7 col-md-8">@Model.FullName</div>
+							<div class="col-lg-5 col-md-4 label">Name</div>
+							<div class="col-lg-7 col-md-8">@Model.Name</div>
 						</div>
 
 						<div class="row">
@@ -39,11 +42,6 @@
 						<div class="row">
 							<div class="col-lg-5 col-md-4 label">City</div>
 							<div class="col-lg-7 col-md-8">@Model.City</div>
-						</div>
-
-						<div class="row">
-							<div class="col-lg-5 col-md-4 label">Registration Status</div>
-							<div class="col-lg-7 col-md-8">@Model.RegistrationStatus</div>
 						</div>
 
 						<div class="row">

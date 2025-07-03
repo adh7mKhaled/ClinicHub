@@ -1,4 +1,6 @@
-﻿namespace ClinicHub.Services;
+﻿using System.Linq.Expressions;
+
+namespace ClinicHub.Services;
 
 public class PatientServices : IPatientServices
 {
@@ -30,4 +32,7 @@ public class PatientServices : IPatientServices
 		return true;
 	}
 	public int Save() => _context.SaveChanges();
+
+	public Patient Find(Expression<Func<Patient, bool>> predicate) =>
+		_context.Patients.SingleOrDefault(predicate);
 }
