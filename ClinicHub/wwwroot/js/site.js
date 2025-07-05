@@ -7,6 +7,12 @@ function showErrorMessage(message = "Something went wrong!") {
 
 $(document).ready(function () {
 
+    $('#js-datatable').DataTable({
+        info: false,
+        stateSave: true,
+        responsive: true,
+    });
+
     // Handel bootstrap modal
     $('.js-render-modal').on('click', function () {
         var btn = $(this);

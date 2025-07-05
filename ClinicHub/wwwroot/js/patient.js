@@ -4,11 +4,6 @@
 });
 
 $(document).ready(function () {
-    $('#js-datatable').DataTable({
-        info: false,
-        stateSave: true,
-        responsive: true,
-    });
 
     $('.js-toggle-status').on('click', function () {
         var btn = $(this);

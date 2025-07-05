@@ -1,0 +1,86 @@
+﻿@model IEnumerable<UserViewModel>
+
+@{
+	ViewData["Title"] = "Users";
+}
+
+@section Styles
+{
+	<link rel="stylesheet" href="~/lib/datatables/css/datatables.bootstrap4.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+}
+
+<div class="pagetitle">
+	<div class="d-flex justify-content-between">
+		<div>
+			<h1>Users</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active">Users</li>
+				</ol>
+			</nav>
+		</div>
+		<div>
+			<a href="javascript:;" class="btn btn-sm mt-1 p-2 js-render-modal" style="background-color: #4154f1; color: white;"
+			   data-title="Add Users"
+			   data-url="Users/Create">
+				<i class="bi bi-plus-lg"></i>
+				Add User
+			</a>
+		</div>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		@if (!Model.Any())
+		{
+			<div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 18px;">
+				<i class="bi bi-exclamation-triangle me-1"></i>
+				No Users found!
+			</div>
+		}
+		else
+		{
+			<div class="table-responsive">
+				<table id="js-datatable" class="table">
+					<thead>
+						<tr>
+							<th>Full Name</th>
+							<th>Username</th>
+							<th>Email</th>
+							<th>Status</th>
+							<th>Created On</th>
+							<th>Last Updated On</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var user in Model)
+						{
+							<partial name="_UserRow" model="@user" />
+						}
+					</tbody>
+				</table>
+
+			</div>
+		}
+	</div>
+</div>
+
+@section Plugins
+{
+	<script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+	<script src="~/lib/datatables/js/datatables.bootstrap4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+	<script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+}
+
+@section Scripts
+{
+	<partial name="_ValidationScriptsPartial" />
+}

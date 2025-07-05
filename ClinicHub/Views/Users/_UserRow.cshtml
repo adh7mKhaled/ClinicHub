@@ -1,0 +1,52 @@
+﻿@model UserViewModel
+
+<tr>
+	<td>@Model.FullName</td>
+	<td>@Model.UserName</td>
+	<td>@Model.Email</td>
+	<td>
+		<span class="badge @(Model.IsDeleted ? "bg-danger" : "bg-success")">
+			@(Model.IsDeleted ? "Deleted" : "Available")
+		</span>
+	</td>
+	<td>@Model.CreatedOn</td>
+	<td>@Model.LastUpdatedOn</td>
+	<td>
+		<div class="btn-group">
+			<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
+				Action
+			</button>
+			<ul class="dropdown-menu">
+				<li>
+					<a href="javascript:;" class="dropdown-item js-render-modal"
+					   data-title="Edit Patient"
+					   data-url="/Patients/Edit/@Model.Id">
+						<i class="bi bi-pencil-square"></i>
+						Edit
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
+					   data-url="/Users/ToggleStatus/@Model.Id">
+						<i class="bi bi-trash"></i>
+						Toggle Status
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
+					   data-url="/Users/ResetPassword/@Model.Id">
+						<i class="bi bi-trash"></i>
+						Reset Password
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
+					   data-url="/Users/Unlock/@Model.Id">
+						<i class="bi bi-trash"></i>
+						Unlock
+					</a>
+				</li>
+			</ul>
+		</div>
+	</td>
+</tr>

@@ -2,7 +2,6 @@
 using ClinicHub.Data;
 using ClinicHub.Validators;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
 
@@ -30,6 +29,7 @@ public static class ConfigureServices
 		services.AddScoped<IPatientServices, PatientServices>();
 
 		services.AddScoped<IValidator<PatientFormViewModel>, PatientFormValidator>();
+		services.AddScoped<IValidator<UserFormViewModel>, UserFormValidator>();
 		services.AddFluentValidationAutoValidation();
 		services.AddFluentValidationClientsideAdapters();
 
