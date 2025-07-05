@@ -1,6 +1,5 @@
 using ClinicHub;
 using ClinicHub.Seeds;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +22,7 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();

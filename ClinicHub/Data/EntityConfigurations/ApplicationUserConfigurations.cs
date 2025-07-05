@@ -7,7 +7,7 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
 	public void Configure(EntityTypeBuilder<ApplicationUser> builder)
 	{
 		builder.HasIndex(x => x.UserName).IsUnique();
-		builder.HasIndex(x => x.UserName).IsUnique();
+		builder.HasIndex(x => x.FullName).IsUnique();
 		builder.HasIndex(x => x.Email).IsUnique();
 	}
 }
