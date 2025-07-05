@@ -1,4 +1,6 @@
-﻿namespace ClinicHub.Controllers;
+﻿using System.Security.Claims;
+
+namespace ClinicHub.Controllers;
 
 public class PatientsController : Controller
 {
@@ -36,6 +38,8 @@ public class PatientsController : Controller
 			return BadRequest();
 
 		var patient = _mapper.Map<Patient>(model);
+
+		patient.CreatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
 		_patientServices.Add(patient);
 

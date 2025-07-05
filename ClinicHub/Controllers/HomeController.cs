@@ -1,4 +1,3 @@
-using ClinicHub.Core.ViewModels;
 using System.Diagnostics;
 
 namespace ClinicHub.Controllers

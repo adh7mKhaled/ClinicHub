@@ -1,4 +1,6 @@
 using ClinicHub;
+using ClinicHub.Seeds;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,16 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+
+using var scope = scopeFactory.CreateScope();
+
+var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+await DefaultRoles.SeedRolesAsync(roleManager);
+await DefaultUsers.SeddAdminUserAsync(userManager);
 
 app.MapStaticAssets();
 
