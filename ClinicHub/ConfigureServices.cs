@@ -2,7 +2,6 @@
 using ClinicHub.Data;
 using ClinicHub.Validators;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
 
@@ -19,7 +18,7 @@ public static class ConfigureServices
 
 		services.AddDatabaseDeveloperPageExceptionFilter();
 
-		services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+		services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
 			.AddEntityFrameworkStores<ApplicationDbContext>();
 
 		services.AddControllersWithViews();

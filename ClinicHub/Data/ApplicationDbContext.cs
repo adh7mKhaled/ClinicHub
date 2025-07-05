@@ -2,7 +2,7 @@
 
 namespace ClinicHub.Data;
 
-public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
 {
 	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 		: base(options)
