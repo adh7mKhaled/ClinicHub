@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,19 +37,24 @@
 
 </head>
 <body>
-    <partial name="_Header" />
-    <partial name="_Aside" />
-    <partial name="_Modal" />
-    
-    <!--Start main-->
-    <main id="main" class="main">
-        <section class="section...">
-            @RenderBody();
-        </section>
-    </main>
-    <!--End main-->
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <partial name="_Header" />
+        <partial name="_Aside" />
+        <partial name="_Modal" />
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+        <main id="main" class="main">
+            <section class="section...">
+                @RenderBody();
+            </section>
+        </main>
+
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    }
+    else
+    {
+        @RenderBody()
+    }
 
     <!-- Vendor JS Files -->
     <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
