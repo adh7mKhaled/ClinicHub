@@ -44,3 +44,7 @@ body {
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
 }
+
+.no-caret::after {
+    display: none !important;
+}

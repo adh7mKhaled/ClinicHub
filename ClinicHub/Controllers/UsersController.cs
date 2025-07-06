@@ -7,15 +7,17 @@ public class UsersController : Controller
 {
 	private readonly UserManager<ApplicationUser> _userManager;
 	private readonly RoleManager<IdentityRole> _roleManager;
-	private readonly IValidator<UserFormViewModel> _validator;
+	private readonly IValidator<UserFormViewModel> _userFormValidator;
+	private readonly IValidator<ResetPasswordFormViewModel> _resetPassswordValidator;
 	private readonly IMapper _mapper;
 
 	public UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-		IValidator<UserFormViewModel> validator, IMapper mapper)
+		IValidator<UserFormViewModel> validator, IValidator<ResetPasswordFormViewModel> resetPassswordValidator, IMapper mapper)
 	{
 		_userManager = userManager;
 		_roleManager = roleManager;
-		_validator = validator;
+		_userFormValidator = validator;
+		_resetPassswordValidator = resetPassswordValidator;
 		_mapper = mapper;
 	}
 
@@ -46,7 +48,7 @@ public class UsersController : Controller
 	[HttpPost]
 	public async Task<IActionResult> Create(UserFormViewModel model)
 	{
-		var validationResult = _validator.Validate(model);
+		var validationResult = _userFormValidator.Validate(model);
 
 		if (!validationResult.IsValid)
 			return BadRequest();
@@ -94,7 +96,7 @@ public class UsersController : Controller
 	[HttpPost]
 	public async Task<IActionResult> Edit(UserFormViewModel model)
 	{
-		var validationResult = _validator.Validate(model);
+		var validationResult = _userFormValidator.Validate(model);
 
 		if (!validationResult.IsValid)
 			return BadRequest();
@@ -123,6 +125,46 @@ public class UsersController : Controller
 			}
 
 			await _userManager.UpdateSecurityStampAsync(user);
+			return Ok();
+		}
+		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
+	}
+
+	public async Task<IActionResult> ResetPassword(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id);
+
+		if (user is null)
+			return NotFound();
+
+		return PartialView("_ResetPasswordForm");
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> ResetPassword(ResetPasswordFormViewModel model)
+	{
+		var validationResult = _resetPassswordValidator.Validate(model);
+
+		if (!validationResult.IsValid)
+			return BadRequest();
+
+		var user = await _userManager.FindByIdAsync(model.Id);
+
+		if (user is null)
+			return NotFound();
+
+		var currentPassword = user.PasswordHash;
+
+		await _userManager.RemovePasswordAsync(user);
+		var result = await _userManager.AddPasswordAsync(user, model.Password);
+
+		if (!result.Succeeded)
+		{
+			user.LastUpdatedById = User.GetUserId();
+			user.LastUpdatedOn = DateTime.Now;
+
+			await _userManager.UpdateAsync(user);
+
 			return Ok();
 		}
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));

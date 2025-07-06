@@ -1,6 +1,5 @@
 ﻿using ClinicHub.Core.Mapping;
 using ClinicHub.Data;
-using ClinicHub.Validators;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
@@ -38,8 +37,7 @@ public static class ConfigureServices
 		services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 		services.AddScoped<IPatientServices, PatientServices>();
 
-		services.AddScoped<IValidator<PatientFormViewModel>, PatientFormValidator>();
-		services.AddScoped<IValidator<UserFormViewModel>, UserFormValidator>();
+		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 		services.AddFluentValidationAutoValidation();
 		services.AddFluentValidationClientsideAdapters();
 

@@ -27,7 +27,7 @@ $(document).ready(function () {
                 $.validator.unobtrusive.parse(modal); // handel clientSide validations on modal
             },
             error: function () {
-                showErrorMessage('Something went wrong!')
+                showErrorMessage()
             }
         })
 
