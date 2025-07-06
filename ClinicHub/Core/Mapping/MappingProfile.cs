@@ -8,5 +8,6 @@ public class MappingProfile : Profile
 		CreateMap<PatientFormViewModel, Patient>().ReverseMap();
 
 		CreateMap<ApplicationUser, UserViewModel>();
+		CreateMap<ApplicationUser, UserFormViewModel>().ReverseMap();
 	}
 }

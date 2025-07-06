@@ -13,26 +13,26 @@
 		<div class="col md-5">
 			<div class="row">
 				<div class="col mb-4">
-					<input type="text" class="form-control" placeholder="Full Name" asp-for="FullName">
+					<input type="text" class="form-control" placeholder="Full Name" asp-for="FullName" autocomplete="off">
 					<span asp-validation-for="FullName" class="text-danger"></span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col mb-4">
-					<input type="text" class="form-control" placeholder="UserName" asp-for="UserName">
+					<input type="text" class="form-control" placeholder="UserName" asp-for="UserName" autocomplete="off">
 					<span asp-validation-for="UserName" class="text-danger"></span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col mb-4">
-					<input type="text" class="form-control" placeholder="Email" asp-for="Email">
+					<input type="text" class="form-control" placeholder="Email" asp-for="Email" autocomplete="off">
 					<span asp-validation-for="Email" class="text-danger"></span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col mb-4">
 					<div class="form-group">
-						<select class="form-select" asp-for="SelectedRoles" asp-items="@Model.Roles">
+						<select class="form-select" asp-for="SelectedRoles" asp-items="@Model.Roles" autocomplete="off">
 							<option value="">-- Select roles --</option>
 						</select>
 						<span asp-validation-for="SelectedRoles" class="text-danger"></span>
@@ -43,13 +43,13 @@
 			{
 				<div class="row">
 					<div class="col mb-4">
-						<input type="text" class="form-control" placeholder="Password" asp-for="Password">
+						<input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
 						<span asp-validation-for="Password" class="text-danger"></span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col mb-4">
-						<input type="text" class="form-control" placeholder="Confirm Password" asp-for="ConfirmPassword">
+						<input type="password" class="form-control" placeholder="Confirm Password" asp-for="ConfirmPassword" autocomplete="off">
 						<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 					</div>
 				</div>

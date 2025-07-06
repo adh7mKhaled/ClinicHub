@@ -69,4 +69,62 @@ public class UsersController : Controller
 		}
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
+
+	public async Task<IActionResult> Edit(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id);
+
+		if (user is null)
+			return NotFound();
+
+		var viewModel = _mapper.Map<UserFormViewModel>(user);
+
+		viewModel.SelectedRoles = await _userManager.GetRolesAsync(user);
+
+		viewModel.Roles = await _roleManager.Roles
+			.Select(r => new SelectListItem
+			{
+				Text = r.Name,
+				Value = r.Name
+			}).ToListAsync();
+
+		return PartialView("_Form", viewModel);
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> Edit(UserFormViewModel model)
+	{
+		var validationResult = _validator.Validate(model);
+
+		if (!validationResult.IsValid)
+			return BadRequest();
+
+		var user = await _userManager.FindByIdAsync(model.Id!);
+
+		if (user is null)
+			return NotFound();
+
+		user = _mapper.Map(model, user);
+		user.LastUpdatedById = User.GetUserId();
+		user.LastUpdatedOn = DateTime.Now;
+
+		var result = await _userManager.UpdateAsync(user);
+
+		if (result.Succeeded)
+		{
+			var currentRoles = await _userManager.GetRolesAsync(user);
+
+			var rolesUpdated = currentRoles.SequenceEqual(model.SelectedRoles);
+
+			if (!rolesUpdated)
+			{
+				await _userManager.RemoveFromRolesAsync(user, currentRoles);
+				await _userManager.AddToRolesAsync(user, model.SelectedRoles);
+			}
+
+			await _userManager.UpdateSecurityStampAsync(user);
+			return Ok();
+		}
+		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
+	}
 }

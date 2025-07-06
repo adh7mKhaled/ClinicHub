@@ -29,7 +29,6 @@ public class PatientsController : Controller
 	}
 
 	[HttpPost]
-	[ValidateAntiForgeryToken]
 	public IActionResult Create(PatientFormViewModel model)
 	{
 		var validationResult = _validator.Validate(model);
@@ -57,7 +56,6 @@ public class PatientsController : Controller
 	}
 
 	[HttpPost]
-	[ValidateAntiForgeryToken]
 	public IActionResult Edit(PatientFormViewModel model)
 	{
 		var validationResult = _validator.Validate(model);

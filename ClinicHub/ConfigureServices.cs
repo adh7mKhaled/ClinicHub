@@ -23,7 +23,17 @@ public static class ConfigureServices
 			.AddDefaultUI()
 			.AddDefaultTokenProviders();
 
+		services.Configure<IdentityOptions>(options =>
+		{
+			options.Password.RequiredLength = 8;
+		});
+
 		services.AddControllersWithViews();
+
+		// Auto Validate Anti Forgery Token
+		services.AddMvc(options =>
+			options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())
+		);
 
 		services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 		services.AddScoped<IPatientServices, PatientServices>();
