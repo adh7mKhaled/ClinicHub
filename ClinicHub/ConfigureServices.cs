@@ -1,5 +1,6 @@
 ﻿using ClinicHub.Core.Mapping;
 using ClinicHub.Data;
+using ClinicHub.Helpers;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
@@ -33,6 +34,8 @@ public static class ConfigureServices
 		services.AddMvc(options =>
 			options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())
 		);
+
+		services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
 
 		services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 		services.AddScoped<IPatientServices, PatientServices>();
