@@ -169,4 +169,22 @@ public class UsersController : Controller
 		}
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
+
+	[HttpPost]
+	public async Task<IActionResult> Unlock(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id);
+
+		if (user is null)
+			return NotFound();
+
+		var isLocked = await _userManager.IsLockedOutAsync(user);
+
+		if (isLocked)
+			await _userManager.SetLockoutEndDateAsync(user, null!);
+		else
+			return BadRequest();
+
+		return Ok();
+	}
 }
