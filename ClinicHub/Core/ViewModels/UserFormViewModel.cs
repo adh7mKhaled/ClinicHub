@@ -10,9 +10,11 @@ public class UserFormViewModel
 	[Display(Name = "Full Name")]
 	public string FullName { get; set; } = null!;
 
-	[Display(Name = "User Name")]
+	[Display(Name = "User Name"),
+		Remote("AllowUniqueUsername", null!, AdditionalFields = "Id", ErrorMessage = Errors.Duplicated)]
 	public string UserName { get; set; } = null!;
 
+	[Remote("AllowUniqueEmail", null!, AdditionalFields = "Id", ErrorMessage = Errors.Duplicated)]
 	public string Email { get; set; } = null!;
 
 	[DataType(DataType.Password),

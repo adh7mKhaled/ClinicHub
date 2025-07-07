@@ -187,4 +187,22 @@ public class UsersController : Controller
 
 		return Ok();
 	}
+
+	public async Task<IActionResult> AllowUniqueUsername(UserFormViewModel model)
+	{
+		var user = await _userManager.FindByNameAsync(model.UserName!);
+
+		var isAllowed = user is null || user.Id.Equals(model.Id);
+
+		return Json(isAllowed);
+	}
+
+	public async Task<IActionResult> AllowUniqueEmail(UserFormViewModel model)
+	{
+		var user = await _userManager.FindByEmailAsync(model.Email);
+
+		var isAllowed = user is null || user.Id.Equals(model.Id);
+
+		return Json(isAllowed);
+	}
 }
