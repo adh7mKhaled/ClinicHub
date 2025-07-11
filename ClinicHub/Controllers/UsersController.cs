@@ -55,7 +55,7 @@ public class UsersController : Controller
 
 		ApplicationUser user = new()
 		{
-			FullName = model.UserName,
+			FullName = model.FullName,
 			UserName = model.UserName,
 			Email = model.Email,
 			CreatedById = User.GetUserId()
@@ -67,7 +67,9 @@ public class UsersController : Controller
 		{
 			await _userManager.AddToRolesAsync(user, model.SelectedRoles);
 
-			return Ok();
+			var viewModel = _mapper.Map<UserViewModel>(user);
+
+			return PartialView("_UserRow", viewModel);
 		}
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
@@ -125,7 +127,9 @@ public class UsersController : Controller
 			}
 
 			await _userManager.UpdateSecurityStampAsync(user);
-			return Ok();
+
+			var viewModel = _mapper.Map<UserViewModel>(user);
+			return PartialView("_UserRow", viewModel);
 		}
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
@@ -165,8 +169,12 @@ public class UsersController : Controller
 
 			await _userManager.UpdateAsync(user);
 
-			return Ok();
+			var viewModel = _mapper.Map<UserViewModel>(user);
+			return PartialView("_UserRow", viewModel);
 		}
+		user.PasswordHash = currentPassword;
+		await _userManager.UpdateAsync(user);
+
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
 

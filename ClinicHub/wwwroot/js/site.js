@@ -1,24 +1,47 @@
-﻿function showSuccessMessage(message = "Saved Successfully!") {
+﻿var updatedRow;
+var datatable;
+
+function showSuccessMessage(message = "Saved Successfully!") {
     toastr.success(message);
 }
 function showErrorMessage(message = "Something went wrong!") {
     toastr.error(message);
 }
+function onModalSuccess(item) {
+    showSuccessMessage();
+    $('#Modal').modal('hide');
 
-$(document).ready(function () {
+    if (updatedRow !== undefined) {
+        datatable.row(updatedRow).remove().draw();
+        updatedRow = undefined;
+    }
 
-    $('#js-datatable').DataTable({
+    var newRow = $(item);
+    datatable.row.add(newRow).draw();
+}
+
+var initDatatable = function () {
+    datatable = $('#js-datatable').DataTable({
         info: false,
         stateSave: true,
         responsive: true,
     });
+};
+
+$(document).ready(function () {
+
+    initDatatable();
 
     // Handel bootstrap modal
-    $('.js-render-modal').on('click', function () {
+    $('body').delegate('.js-render-modal', 'click', function () {
         var btn = $(this);
         var modal = $('#Modal');
 
         modal.find('#ModalLabel').text(btn.data('title'));
+
+        if (btn.data('update') !== undefined) {
+            updatedRow = btn.parents('tr');
+        }
 
         $.ajax({
             url: btn.data('url'),

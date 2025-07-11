@@ -3,7 +3,7 @@
 <form class="row g-3 pt-4" asp-action="@(!string.IsNullOrEmpty(Model.Id) ? "Edit" : "Create")"
 	  data-ajax-method="post"
 	  data-ajax="true"
-	  data-ajax-success="showSuccessMessage"
+	  data-ajax-success="onModalSuccess"
 	  data-ajax-failure="showErrorMessage">
 	<div class="row">
 		@if (!string.IsNullOrEmpty(Model.Id))

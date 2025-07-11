@@ -5,7 +5,7 @@
 
 $(document).ready(function () {
 
-    $('.js-toggle-status').on('click', function () {
+    $('body').delegate('.js-toggle-status', 'click', function () {
         var btn = $(this);
 
         bootbox.confirm({

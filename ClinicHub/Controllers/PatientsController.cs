@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+﻿using ClinicHub.Extensions;
 
 namespace ClinicHub.Controllers;
 
@@ -38,11 +38,13 @@ public class PatientsController : Controller
 
 		var patient = _mapper.Map<Patient>(model);
 
-		patient.CreatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+		patient.CreatedById = User.GetUserId();
 
 		_patientServices.Add(patient);
 
-		return Ok();
+		var viewModel = _mapper.Map<PatientViewModel>(patient);
+
+		return PartialView("_patientRow", viewModel);
 	}
 
 	public IActionResult Edit(int Id)
@@ -66,10 +68,13 @@ public class PatientsController : Controller
 		var patient = _mapper.Map<Patient>(model);
 
 		patient.LastUpdatedOn = DateTime.Now;
+		patient.LastUpdatedById = User.GetUserId();
 
 		_patientServices.Edit(patient);
 
-		return RedirectToAction(nameof(Index));
+		var viewModel = _mapper.Map<PatientViewModel>(patient);
+
+		return PartialView("_patientRow", viewModel);
 	}
 
 	public IActionResult Details(int id)
