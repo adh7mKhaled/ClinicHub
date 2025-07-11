@@ -5,12 +5,12 @@
 	<td>@Model.UserName</td>
 	<td>@Model.Email</td>
 	<td>
-		<span class="badge @(Model.IsDeleted ? "bg-danger" : "bg-success")">
+		<span class="badge @(Model.IsDeleted ? "bg-danger" : "bg-success") js-status">
 			@(Model.IsDeleted ? "Deleted" : "Available")
 		</span>
 	</td>
 	<td>@Model.CreatedOn</td>
-	<td>@Model.LastUpdatedOn</td>
+	<td class="js-updated-on">@Model.LastUpdatedOn</td>
 	<td>
 		<div class="btn-group">
 			<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,9 +27,9 @@
 					</a>
 				</li>
 				<li>
-					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
+					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-confirm"
 					   data-url="/Users/ToggleStatus/@Model.Id">
-						<i class="bi bi-trash"></i>
+						<i class="bi bi-toggles"></i>
 						Toggle Status
 					</a>
 				</li>
@@ -45,7 +45,7 @@
 					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-confirm"
 					   data-url="/Users/Unlock/@Model.Id"
 					   data-message="Are you sure that you to unlock this user?">
-						<i class="bi bi-trash"></i>
+						<i class="bi bi-unlock"></i>
 						Unlock
 					</a>
 				</li>

@@ -134,6 +134,24 @@ public class UsersController : Controller
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
 
+	public async Task<IActionResult> ToggleStatus(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id);
+
+		if (user is null) return NotFound();
+
+		user.IsDeleted = !user.IsDeleted;
+		user.LastUpdatedOn = DateTime.Now;
+		user.LastUpdatedById = User.GetUserId();
+
+		await _userManager.UpdateAsync(user);
+
+		if (user.IsDeleted)
+			await _userManager.UpdateSecurityStampAsync(user);
+
+		return Ok(user.LastUpdatedOn.ToString());
+	}
+
 	public async Task<IActionResult> ResetPassword(string id)
 	{
 		var user = await _userManager.FindByIdAsync(id);
