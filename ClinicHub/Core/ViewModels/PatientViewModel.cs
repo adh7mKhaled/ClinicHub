@@ -14,4 +14,19 @@ public class PatientViewModel
 	public string City { get; set; } = null!;
 	public DateTime CreatedOn { get; set; }
 	public DateTime? LastUpdatedOn { get; set; }
+	public int Age
+	{
+		get
+		{
+			var today = DateTime.Today;
+			var age = today.Year - DateOfBirth.Year;
+			if (age == 0)
+			{
+				age = today.Day - DateOfBirth.Day;
+				AgeFlag = true;
+			}
+			return age;
+		}
+	}
+	public bool AgeFlag { get; set; }
 }

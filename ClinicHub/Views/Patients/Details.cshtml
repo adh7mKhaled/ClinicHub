@@ -35,8 +35,13 @@
 						</div>
 
 						<div class="row">
-							<div class="col-lg-5 col-md-4 label">Birthday</div>
-							<div class="col-lg-7 col-md-8">@Model.DateOfBirth</div>
+							<div class="col-lg-5 col-md-4 label">Date of birth</div>
+							<div class="col-lg-7 col-md-8">@Model.DateOfBirth.ToString("dd, MMM, yyyy")</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-5 col-md-4 label">Age</div>
+							<div class="col-lg-7 col-md-8">@Model.Age @(Model.AgeFlag ? "Days" : "Years")</div>
 						</div>
 
 						<div class="row">

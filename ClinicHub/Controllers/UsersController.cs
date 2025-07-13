@@ -12,7 +12,8 @@ public class UsersController : Controller
 	private readonly IMapper _mapper;
 
 	public UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-		IValidator<UserFormViewModel> validator, IValidator<ResetPasswordFormViewModel> resetPassswordValidator, IMapper mapper)
+		IValidator<UserFormViewModel> validator, IValidator<ResetPasswordFormViewModel> resetPassswordValidator,
+		IMapper mapper)
 	{
 		_userManager = userManager;
 		_roleManager = roleManager;
@@ -25,9 +26,7 @@ public class UsersController : Controller
 	{
 		var users = await _userManager.Users.ToListAsync();
 
-		var viewModel = _mapper.Map<IEnumerable<UserViewModel>>(users);
-
-		return View(viewModel);
+		return View(_mapper.Map<IEnumerable<UserViewModel>>(users));
 	}
 
 	[AjaxOnly]
@@ -68,9 +67,7 @@ public class UsersController : Controller
 		{
 			await _userManager.AddToRolesAsync(user, model.SelectedRoles);
 
-			var viewModel = _mapper.Map<UserViewModel>(user);
-
-			return PartialView("_UserRow", viewModel);
+			return PartialView("_UserRow", _mapper.Map<UserViewModel>(user));
 		}
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
@@ -130,8 +127,7 @@ public class UsersController : Controller
 
 			await _userManager.UpdateSecurityStampAsync(user);
 
-			var viewModel = _mapper.Map<UserViewModel>(user);
-			return PartialView("_UserRow", viewModel);
+			return PartialView("_UserRow", _mapper.Map<UserViewModel>(user));
 		}
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
@@ -190,8 +186,7 @@ public class UsersController : Controller
 
 			await _userManager.UpdateAsync(user);
 
-			var viewModel = _mapper.Map<UserViewModel>(user);
-			return PartialView("_UserRow", viewModel);
+			return PartialView("_UserRow", _mapper.Map<UserViewModel>(user));
 		}
 		user.PasswordHash = currentPassword;
 		await _userManager.UpdateAsync(user);

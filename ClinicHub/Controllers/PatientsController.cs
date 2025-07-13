@@ -8,7 +8,8 @@ public class PatientsController : Controller
 	private readonly IMapper _mapper;
 	private readonly IValidator<PatientFormViewModel> _validator;
 
-	public PatientsController(IPatientServices patientServices, IMapper mapper, IValidator<PatientFormViewModel> validator)
+	public PatientsController(IPatientServices patientServices, IMapper mapper,
+		IValidator<PatientFormViewModel> validator)
 	{
 		_patientServices = patientServices;
 		_mapper = mapper;
@@ -18,9 +19,8 @@ public class PatientsController : Controller
 	public IActionResult Index()
 	{
 		var patients = _patientServices.GetAll();
-		var viewModel = _mapper.Map<IEnumerable<PatientViewModel>>(patients);
 
-		return View(viewModel);
+		return View(_mapper.Map<IEnumerable<PatientViewModel>>(patients));
 	}
 
 	[AjaxOnly]
@@ -43,9 +43,7 @@ public class PatientsController : Controller
 
 		_patientServices.Add(patient);
 
-		var viewModel = _mapper.Map<PatientViewModel>(patient);
-
-		return PartialView("_patientRow", viewModel);
+		return PartialView("_patientRow", _mapper.Map<PatientViewModel>(patient));
 	}
 
 	[AjaxOnly]
@@ -74,21 +72,14 @@ public class PatientsController : Controller
 
 		_patientServices.Edit(patient);
 
-		var viewModel = _mapper.Map<PatientViewModel>(patient);
-
-		return PartialView("_patientRow", viewModel);
+		return PartialView("_patientRow", _mapper.Map<PatientViewModel>(patient));
 	}
 
 	public IActionResult Details(int id)
 	{
 		var patient = _patientServices.GetById(id);
 
-		if (patient is null)
-			return NotFound();
-
-		var viewModel = _mapper.Map<PatientViewModel>(patient);
-
-		return View(viewModel);
+		return patient is null ? NotFound() : View(_mapper.Map<PatientViewModel>(patient));
 	}
 
 	public IActionResult ToggleStatus(int id)
