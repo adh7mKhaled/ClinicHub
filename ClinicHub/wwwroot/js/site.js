@@ -2,11 +2,26 @@
 var datatable;
 
 function showSuccessMessage(message = "Saved Successfully!") {
-    toastr.success(message);
+    Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: message,
+        customClass: {
+            confirmButton: "btn btn-primary"
+        }
+    });
 }
 function showErrorMessage(message = "Something went wrong!") {
-    toastr.error(message);
+    Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: message.responseText != undefined ? message.responseText : message,
+        customClass: {
+            confirmButton: "btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary"
+        }
+    });
 }
+
 function onModalSuccess(item) {
     showSuccessMessage();
     $('#Modal').modal('hide');

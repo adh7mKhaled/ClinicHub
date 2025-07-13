@@ -26,6 +26,9 @@
                             status.text(newStatus).toggleClass('bg-danger bg-success');
                             row.find('.js-updated-on').html(lastUpdatedOn);
                             row.addClass('animate__animated animate__flash');
+                            setTimeout(() => {
+                                row.removeClass('animate__animated animate__flash');
+                            }, 2000);
 
                             showSuccessMessage();
                         },

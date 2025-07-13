@@ -106,7 +106,7 @@ namespace ClinicHub.Areas.Identity.Pages.Account
 				// To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
 				var user = await _userManager.Users
-					.SingleOrDefaultAsync(u => u.NormalizedUserName == Input.Email.ToUpper() || u.NormalizedEmail == Input.Email.ToUpper() && !u.IsDeleted);
+					.SingleOrDefaultAsync(u => (u.NormalizedUserName == Input.Email.ToUpper() || u.NormalizedEmail == Input.Email.ToUpper()) && !u.IsDeleted);
 
 				if (user == null)
 				{
