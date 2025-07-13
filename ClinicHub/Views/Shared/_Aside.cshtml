@@ -30,11 +30,14 @@
                 <span>Reports</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" asp-controller="Users" asp-action="Index">
-                <i class="bi bi-person-fill-gear"></i>
-                <span>Users</span>
-            </a>
-        </li>
+        @if (User.IsInRole(AppRoles.Admin))
+        {
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-controller="Users" asp-action="Index">
+                    <i class="bi bi-person-fill-gear"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+        }
     </ul>
 </aside>

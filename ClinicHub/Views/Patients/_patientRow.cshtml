@@ -28,13 +28,16 @@
 						Details
 					</a>
 				</li>
-				<li>
-					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
-					   data-url="/Patients/ToggleStatus/@Model.Id">
-						<i class="bi bi-trash"></i>
-						Delete Patient
-					</a>
-				</li>
+				@if (User.IsInRole(AppRoles.Admin))
+				{
+					<li>
+						<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
+						   data-url="/Patients/ToggleStatus/@Model.Id">
+							<i class="bi bi-trash"></i>
+							Delete Patient
+						</a>
+					</li>
+				}
 			</ul>
 		</div>
 	</td>

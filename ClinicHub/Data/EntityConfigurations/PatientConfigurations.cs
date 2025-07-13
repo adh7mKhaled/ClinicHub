@@ -6,7 +6,6 @@ public class PatientConfigurations : IEntityTypeConfiguration<Patient>
 {
 	public void Configure(EntityTypeBuilder<Patient> builder)
 	{
-		builder.HasQueryFilter(x => !x.IsDeleted);
 		builder.HasIndex(x => x.MobileNumber).IsUnique();
 		builder.HasIndex(x => x.Email).IsUnique();
 		builder.Property(x => x.Name).HasMaxLength(100);

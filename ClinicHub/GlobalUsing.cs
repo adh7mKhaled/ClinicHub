@@ -2,6 +2,7 @@
 global using ClinicHub.Core.Enums;
 global using ClinicHub.Core.Models;
 global using ClinicHub.Core.ViewModels;
+global using ClinicHub.Filters;
 global using ClinicHub.Interfaces;
 global using ClinicHub.Services;
 global using FluentValidation;

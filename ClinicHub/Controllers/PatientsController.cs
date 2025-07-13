@@ -23,6 +23,7 @@ public class PatientsController : Controller
 		return View(viewModel);
 	}
 
+	[AjaxOnly]
 	public IActionResult Create()
 	{
 		return PartialView("_Form");
@@ -47,6 +48,7 @@ public class PatientsController : Controller
 		return PartialView("_patientRow", viewModel);
 	}
 
+	[AjaxOnly]
 	public IActionResult Edit(int Id)
 	{
 		var patient = _patientServices.GetById(Id);

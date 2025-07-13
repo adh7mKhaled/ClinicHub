@@ -30,6 +30,7 @@ public class UsersController : Controller
 		return View(viewModel);
 	}
 
+	[AjaxOnly]
 	public async Task<IActionResult> Create()
 	{
 		UserFormViewModel viewModel = new()
@@ -74,6 +75,7 @@ public class UsersController : Controller
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
 
+	[AjaxOnly]
 	public async Task<IActionResult> Edit(string id)
 	{
 		var user = await _userManager.FindByIdAsync(id);
@@ -152,6 +154,7 @@ public class UsersController : Controller
 		return Ok(user.LastUpdatedOn.ToString());
 	}
 
+	[AjaxOnly]
 	public async Task<IActionResult> ResetPassword(string id)
 	{
 		var user = await _userManager.FindByIdAsync(id);
