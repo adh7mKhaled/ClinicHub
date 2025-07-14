@@ -1,4 +1,5 @@
 ﻿using ClinicHub.Extensions;
+using ClinicHub.Services.Patients;
 
 namespace ClinicHub.Controllers;
 

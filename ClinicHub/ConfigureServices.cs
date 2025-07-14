@@ -1,6 +1,8 @@
 ﻿using ClinicHub.Core.Mapping;
 using ClinicHub.Data;
 using ClinicHub.Helpers;
+using ClinicHub.Services.Patients;
+using ClinicHub.Services.Specialties;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
@@ -39,6 +41,7 @@ public static class ConfigureServices
 
 		services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 		services.AddScoped<IPatientServices, PatientServices>();
+		services.AddScoped<ISpecialtyServices, SpecialtyServices>();
 
 		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 		services.AddFluentValidationAutoValidation();

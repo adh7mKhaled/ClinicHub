@@ -1,6 +1,6 @@
 ﻿namespace ClinicHub.Core.Models;
 
-public class Specialty
+public class Specialty : BaseModel
 {
 	public int Id { get; set; }
 	public string Name { get; set; } = null!;

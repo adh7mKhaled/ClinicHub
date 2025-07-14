@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace ClinicHub.Services;
+﻿namespace ClinicHub.Services.Patients;
 
 public interface IPatientServices
 {

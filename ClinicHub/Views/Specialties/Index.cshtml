@@ -1,37 +1,35 @@
-﻿@model IEnumerable<PatientViewModel>
+﻿@model IEnumerable<SpecialtyViewModel>
 
-@{
-	ViewData["Title"] = "Patients";
-}
+@{ViewData["Title"] = "Specialties";}
 
 <div class="pagetitle">
 	<div class="d-flex justify-content-between">
 		<div>
-			<h1>Patients</h1>
+			<h1>Specialties</h1>
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-					<li class="breadcrumb-item active">Patients</li>
+					<li class="breadcrumb-item active">Specialties</li>
 				</ol>
 			</nav>
 		</div>
 		<div>
 			<a href="javascript:;" class="btn btn-sm mt-1 p-2 js-render-modal" style="background-color: #4154f1; color: white;"
-				data-title="Add Patient"
-				data-url="/Patients/Create">
+			   data-title="Add Specialty"
+			   data-url="/Specialties/Create">
 				<i class="bi bi-plus-lg"></i>
-				Add Patient
+				Add Specialty
 			</a>
 		</div>
 	</div>
 </div>
 <div class="card">
-    <div class="card-body">
+	<div class="card-body">
 		@if (!Model.Any())
 		{
 			<div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 18px;">
 				<i class="bi bi-exclamation-triangle me-1"></i>
-				No Patients found!
+				No Specialties found!
 			</div>
 		}
 		else
@@ -41,29 +39,25 @@
 					<thead>
 						<tr>
 							<th>Name</th>
-							<th>Phone Number</th>
-							<th>City</th>
-							<th>Next Appointment</th>
-							<th>last Appointment</th>
-							<th>Register Date</th>
-							<th>Action</th>
+							<th>No.of Doctors</th>
+							<th>Status</th>
+							<th>Created on</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (var patient in Model)
 						{
-							<partial name="_PatientRow" model="@patient" />
+							@* <partial name="_PatientRow" model="@patient" /> *@
 						}
 					</tbody>
 				</table>
 
 			</div>
 		}
-    </div>
+	</div>
 </div>
 
 @section Scripts
 {
-	<script src="~/js/patient.js" asp-append-version="true"></script>
 	<partial name="_ValidationScriptsPartial" />
 }

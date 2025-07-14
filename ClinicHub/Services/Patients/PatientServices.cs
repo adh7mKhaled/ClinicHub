@@ -1,15 +1,8 @@
-﻿using System.Linq.Expressions;
+﻿namespace ClinicHub.Services.Patients;
 
-namespace ClinicHub.Services;
-
-public class PatientServices : IPatientServices
+public class PatientServices(IApplicationDbContext context) : IPatientServices
 {
-	private readonly IApplicationDbContext _context;
-
-	public PatientServices(IApplicationDbContext context)
-	{
-		_context = context;
-	}
+	private readonly IApplicationDbContext _context = context;
 
 	public void Add(Patient patient)
 	{
