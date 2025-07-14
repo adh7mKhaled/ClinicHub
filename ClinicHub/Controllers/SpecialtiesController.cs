@@ -69,6 +69,20 @@ public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper
 		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
 	}
 
+	public IActionResult ToggleStatus(int id)
+	{
+		var specialty = _specialtyServices.GetById(id);
+
+		if (specialty is null)
+			return NotFound();
+
+		specialty.IsDeleted = !specialty.IsDeleted;
+		specialty.LastUpdatedById = User.GetUserId();
+		specialty.LastUpdatedOn = DateTime.Now;
+
+		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
+	}
+
 	public IActionResult AllowUniqueName(SpecialtyFormViewModel model)
 	{
 		var specialty = _specialtyServices.Find(x => x.Name == model.Name);
