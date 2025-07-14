@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace ClinicHub.Data.EntityConfigurations;
+﻿namespace ClinicHub.Data.EntityConfigurations;
 
 public class PatientConfigurations : IEntityTypeConfiguration<Patient>
 {

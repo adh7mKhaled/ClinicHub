@@ -10,6 +10,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 	}
 
 	public DbSet<Patient> Patients { get; set; }
+	public DbSet<Specialty> Specialties { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder builder)
 	{
