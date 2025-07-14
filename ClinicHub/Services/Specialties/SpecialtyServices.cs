@@ -1,4 +1,5 @@
-﻿namespace ClinicHub.Services.Specialties;
+﻿
+namespace ClinicHub.Services.Specialties;
 
 public class SpecialtyServices(IApplicationDbContext context) : ISpecialtyServices
 {
@@ -24,4 +25,7 @@ public class SpecialtyServices(IApplicationDbContext context) : ISpecialtyServic
 
 		return true;
 	}
+
+	public Specialty Find(Expression<Func<Specialty, bool>> predicate) =>
+		_context.Specialties.SingleOrDefault(predicate)!;
 }

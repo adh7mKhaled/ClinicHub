@@ -6,4 +6,5 @@ public interface ISpecialtyServices
 	void Add(Specialty specialty);
 	Specialty? GetById(int id);
 	bool Edit(Specialty specialty);
+	Specialty Find(Expression<Func<Specialty, bool>> predicate);
 }

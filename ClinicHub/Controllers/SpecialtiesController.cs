@@ -68,4 +68,13 @@ public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper
 
 		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
 	}
+
+	public IActionResult AllowUniqueName(SpecialtyFormViewModel model)
+	{
+		var specialty = _specialtyServices.Find(x => x.Name == model.Name);
+
+		var isAllowed = specialty is null || specialty.Id.Equals(model.Id);
+
+		return Json(isAllowed);
+	}
 }
