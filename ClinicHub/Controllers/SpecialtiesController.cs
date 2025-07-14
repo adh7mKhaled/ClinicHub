@@ -80,6 +80,8 @@ public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper
 		specialty.LastUpdatedById = User.GetUserId();
 		specialty.LastUpdatedOn = DateTime.Now;
 
+		_specialtyServices.Save();
+
 		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
 	}
 

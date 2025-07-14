@@ -83,4 +83,78 @@ $(document).ready(function () {
 
         modal.modal('show');
     });
+
+    // Handel ToggleStatus 
+    $('body').delegate('.js-toggle-status', 'click', function () {
+        var btn = $(this);
+
+        bootbox.confirm({
+            message: 'Are you sure that you need to toggle this item status ?',
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-secondary'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: btn.data('url'),
+                        success: function (lastUpdatedOn) {
+                            var row = btn.parents('tr');
+                            var status = row.find('.js-status');
+                            var newStatus = status.text().trim() === 'Deleted' ? 'Available' : 'Deleted';
+                            status.text(newStatus).toggleClass('bg-danger bg-success');
+                            row.find('.js-updated-on').html(lastUpdatedOn);
+                            row.addClass('animate__animated animate__flash');
+                            setTimeout(() => {
+                                row.removeClass('animate__animated animate__flash');
+                            }, 2000);
+
+                            showSuccessMessage();
+                        },
+                        error: function () {
+                            showErrorMessage();
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    //Handle Confirm
+    $('body').delegate('.js-confirm', 'click', function () {
+        var btn = $(this);
+
+        bootbox.confirm({
+            message: btn.data('message'),
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-secondary'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.post({
+                        url: btn.data('url'),
+                        success: function () {
+                            showSuccessMessage();
+                        },
+                        error: function () {
+                            showErrorMessage();
+                        }
+                    });
+                }
+            }
+        });
+    });
 });
