@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<SpecialtyViewModel>
 
-@{ViewData["Title"] = "Specialties";}
+@{
+	ViewData["Title"] = "Specialties";
+}
 
 <div class="pagetitle">
 	<div class="d-flex justify-content-between">
@@ -34,24 +36,27 @@
 		}
 		else
 		{
-			<table class="table excludeDatatable">
-				<thead>
-					<tr>
-						<th scope="col">Name</th>
-						<th scope="col">No.of Doctors</th>
-						<th scope="col">Status</th>
-						<th scope="col">Created on</th>
-						<th scope="col">Last Updated On</th>
-						<th class="text-end" scope="col">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var specialty in Model)
-					{
-						<partial name="_SpecialtyRow" model="@specialty" />
-					}
-				</tbody>
-			</table>
+			<div class="datatable-container">
+				<table class="table excludeDatatable">
+					<thead>
+						<tr>
+							<th scope="col">Name</th>
+							<th scope="col">No.of Doctors</th>
+							<th scope="col">Status</th>
+							<th scope="col">Created on</th>
+							<th scope="col">Last Updated On</th>
+							<th class="text-end" scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var specialty in Model)
+						{
+							<partial name="_SpecialtyRow" model="@specialty" />
+						}
+					</tbody>
+				</table>
+
+			</div>
 		}
 	</div>
 </div>

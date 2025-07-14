@@ -3,19 +3,12 @@ using ClinicHub.Services.Patients;
 
 namespace ClinicHub.Controllers;
 
-public class PatientsController : Controller
+public class PatientsController(IPatientServices patientServices, IMapper mapper,
+	IValidator<PatientFormViewModel> validator) : Controller
 {
-	private readonly IPatientServices _patientServices;
-	private readonly IMapper _mapper;
-	private readonly IValidator<PatientFormViewModel> _validator;
-
-	public PatientsController(IPatientServices patientServices, IMapper mapper,
-		IValidator<PatientFormViewModel> validator)
-	{
-		_patientServices = patientServices;
-		_mapper = mapper;
-		_validator = validator;
-	}
+	private readonly IPatientServices _patientServices = patientServices;
+	private readonly IMapper _mapper = mapper;
+	private readonly IValidator<PatientFormViewModel> _validator = validator;
 
 	public IActionResult Index()
 	{

@@ -3,24 +3,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ClinicHub.Controllers;
 
-public class UsersController : Controller
+public class UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
+	IValidator<UserFormViewModel> validator, IValidator<ResetPasswordFormViewModel> resetPassswordValidator,
+	IMapper mapper) : Controller
 {
-	private readonly UserManager<ApplicationUser> _userManager;
-	private readonly RoleManager<IdentityRole> _roleManager;
-	private readonly IValidator<UserFormViewModel> _userFormValidator;
-	private readonly IValidator<ResetPasswordFormViewModel> _resetPassswordValidator;
-	private readonly IMapper _mapper;
-
-	public UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-		IValidator<UserFormViewModel> validator, IValidator<ResetPasswordFormViewModel> resetPassswordValidator,
-		IMapper mapper)
-	{
-		_userManager = userManager;
-		_roleManager = roleManager;
-		_userFormValidator = validator;
-		_resetPassswordValidator = resetPassswordValidator;
-		_mapper = mapper;
-	}
+	private readonly UserManager<ApplicationUser> _userManager = userManager;
+	private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+	private readonly IValidator<UserFormViewModel> _userFormValidator = validator;
+	private readonly IValidator<ResetPasswordFormViewModel> _resetPassswordValidator = resetPassswordValidator;
+	private readonly IMapper _mapper = mapper;
 
 	public async Task<IActionResult> Index()
 	{
