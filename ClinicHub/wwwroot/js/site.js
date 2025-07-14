@@ -26,14 +26,19 @@ function onModalSuccess(item) {
     showSuccessMessage();
     $('#Modal').modal('hide');
 
-    if (updatedRow !== undefined) {
+    var tableExists = $('body').find('.excludeDatatable').length;
+
+    if (updatedRow !== undefined & tableExists !== 0) {
+        $(updatedRow).remove();
+        updatedRow = undefined;
+    }
+    else if (updatedRow !== undefined){
         datatable.row(updatedRow).remove().draw();
         updatedRow = undefined;
     }
 
     var newRow = $(item);
 
-    var tableExists = $('body').find('.excludeDatatable').length;
     if (tableExists !== 0) {
         $('.excludeDatatable').append(newRow);
     }

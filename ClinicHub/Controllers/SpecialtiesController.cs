@@ -39,4 +39,33 @@ public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper
 
 		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
 	}
+
+	[AjaxOnly]
+	public IActionResult Edit(int id)
+	{
+		var specialty = _specialtyServices.GetById(id);
+
+		if (specialty is null)
+			return NotFound();
+
+		return PartialView("_Form", _mapper.Map<SpecialtyFormViewModel>(specialty));
+	}
+
+	[HttpPost]
+	[ValidateAntiForgeryToken]
+	public IActionResult Edit(SpecialtyFormViewModel model)
+	{
+		var validationResult = _validator.Validate(model);
+
+		if (!validationResult.IsValid)
+			return BadRequest();
+
+		var specialty = _mapper.Map<Specialty>(model);
+		specialty.LastUpdatedById = User.GetUserId();
+		specialty.LastUpdatedOn = DateTime.Now;
+
+		_specialtyServices.Edit(specialty);
+
+		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
+	}
 }

@@ -11,4 +11,17 @@ public class SpecialtyServices(IApplicationDbContext context) : ISpecialtyServic
 		_context.Specialties.Add(specialty);
 		_context.SaveChanges();
 	}
+
+	public Specialty? GetById(int id) => _context.Specialties.Find(id);
+
+	public bool Edit(Specialty specialty)
+	{
+		if (specialty is null)
+			return false;
+
+		_context.Specialties.Update(specialty);
+		_context.SaveChanges();
+
+		return true;
+	}
 }

@@ -10,7 +10,7 @@ public class MappingProfile : Profile
 		CreateMap<ApplicationUser, UserViewModel>();
 		CreateMap<ApplicationUser, UserFormViewModel>().ReverseMap();
 
-		CreateMap<Specialty, SpecialtyViewModel>().ReverseMap();
-		CreateMap<SpecialtyFormViewModel, Specialty>();
+		CreateMap<Specialty, SpecialtyViewModel>();
+		CreateMap<SpecialtyFormViewModel, Specialty>().ReverseMap();
 	}
 }
