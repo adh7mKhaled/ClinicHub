@@ -5,4 +5,10 @@ public class SpecialtyServices(IApplicationDbContext context) : ISpecialtyServic
 	private readonly IApplicationDbContext _context = context;
 
 	public IEnumerable<Specialty> GetAll() => _context.Specialties.Where(p => !p.IsDeleted).ToList();
+
+	public void Add(Specialty specialty)
+	{
+		_context.Specialties.Add(specialty);
+		_context.SaveChanges();
+	}
 }

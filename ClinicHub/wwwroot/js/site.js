@@ -32,7 +32,14 @@ function onModalSuccess(item) {
     }
 
     var newRow = $(item);
-    datatable.row.add(newRow).draw();
+
+    var tableExists = $('body').find('.excludeDatatable').length;
+    if (tableExists !== 0) {
+        $('.excludeDatatable').append(newRow);
+    }
+    else {
+        datatable.row.add(newRow).draw();
+    }
 }
 
 var initDatatable = function () {

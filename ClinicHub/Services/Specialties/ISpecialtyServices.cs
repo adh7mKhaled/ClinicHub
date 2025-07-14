@@ -3,4 +3,5 @@
 public interface ISpecialtyServices
 {
 	IEnumerable<Specialty> GetAll();
+	void Add(Specialty specialty);
 }

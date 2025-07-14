@@ -34,25 +34,24 @@
 		}
 		else
 		{
-			<div class="table-responsive">
-				<table id="js-datatable" class="table">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>No.of Doctors</th>
-							<th>Status</th>
-							<th>Created on</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var patient in Model)
-						{
-							@* <partial name="_PatientRow" model="@patient" /> *@
-						}
-					</tbody>
-				</table>
-
-			</div>
+			<table class="table excludeDatatable">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">No.of Doctors</th>
+						<th scope="col">Status</th>
+						<th scope="col">Created on</th>
+						<th scope="col">Last Updated On</th>
+						<th class="text-end" scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var specialty in Model)
+					{
+						<partial name="_SpecialtyRow" model="@specialty" />
+					}
+				</tbody>
+			</table>
 		}
 	</div>
 </div>
