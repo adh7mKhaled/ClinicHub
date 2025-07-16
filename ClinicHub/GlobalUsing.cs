@@ -1,9 +1,9 @@
 ﻿global using AutoMapper;
+global using ClinicHub.Core.Consts;
 global using ClinicHub.Core.Enums;
 global using ClinicHub.Core.Models;
 global using ClinicHub.Core.ViewModels;
 global using ClinicHub.Filters;
-global using ClinicHub.Interfaces;
 global using FluentValidation;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;

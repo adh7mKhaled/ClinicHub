@@ -1,18 +1,18 @@
-﻿using ClinicHub.Extensions;
-using ClinicHub.Services.Specialties;
+﻿using ClinicHub.Data.UnitOfWork;
+using ClinicHub.Extensions;
 
 namespace ClinicHub.Controllers;
 
-public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper mapper,
+public class SpecialtiesController(IUnitOfWork unitOfWork, IMapper mapper,
 	IValidator<SpecialtyFormViewModel> validator) : Controller
 {
-	private readonly ISpecialtyServices _specialtyServices = specialtyServices;
+	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
 	private readonly IValidator<SpecialtyFormViewModel> _validator = validator;
 
 	public IActionResult Index()
 	{
-		var specialties = _specialtyServices.GetAll();
+		var specialties = _unitOfWork.Specialties.GetAll();
 		return View(_mapper.Map<IEnumerable<SpecialtyViewModel>>(specialties));
 	}
 
@@ -35,7 +35,8 @@ public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper
 
 		specialty.CreatedById = User.GetUserId();
 
-		_specialtyServices.Add(specialty);
+		_unitOfWork.Specialties.Add(specialty);
+		_unitOfWork.Complete();
 
 		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
 	}
@@ -43,7 +44,7 @@ public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper
 	[AjaxOnly]
 	public IActionResult Edit(int id)
 	{
-		var specialty = _specialtyServices.GetById(id);
+		var specialty = _unitOfWork.Specialties.GetById(id);
 
 		if (specialty is null)
 			return NotFound();
@@ -64,14 +65,15 @@ public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper
 		specialty.LastUpdatedById = User.GetUserId();
 		specialty.LastUpdatedOn = DateTime.Now;
 
-		_specialtyServices.Edit(specialty);
+		_unitOfWork.Specialties.Update(specialty);
+		_unitOfWork.Complete();
 
 		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
 	}
 
 	public IActionResult ToggleStatus(int id)
 	{
-		var specialty = _specialtyServices.GetById(id);
+		var specialty = _unitOfWork.Specialties.GetById(id);
 
 		if (specialty is null)
 			return NotFound();
@@ -80,14 +82,14 @@ public class SpecialtiesController(ISpecialtyServices specialtyServices, IMapper
 		specialty.LastUpdatedById = User.GetUserId();
 		specialty.LastUpdatedOn = DateTime.Now;
 
-		_specialtyServices.Save();
+		_unitOfWork.Complete();
 
-		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
+		return Ok(specialty.LastUpdatedOn.ToString());
 	}
 
 	public IActionResult AllowUniqueName(SpecialtyFormViewModel model)
 	{
-		var specialty = _specialtyServices.Find(x => x.Name == model.Name);
+		var specialty = _unitOfWork.Specialties.Find(x => x.Name == model.Name);
 
 		var isAllowed = specialty is null || specialty.Id.Equals(model.Id);
 
