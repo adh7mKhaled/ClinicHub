@@ -12,6 +12,6 @@ public class Nurse : BaseModel
 	public string Address { get; set; } = null!;
 	public double Salary { get; set; }
 
-	public ICollection<Doctor> Doctors { get; set; } = [];
-	public ICollection<DoctorNurse> DoctorNurses { get; set; } = [];
+	public int DoctorId { get; set; }
+	public Doctor Doctor { get; set; } = default!;
 }

@@ -4,6 +4,7 @@ using ClinicHub.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicHub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250716213254_changeDoctorNurseTableToDoctorNurseAssignments")]
+    partial class changeDoctorNurseTableToDoctorNurseAssignments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,6 +194,21 @@ namespace ClinicHub.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("ClinicHub.Core.Models.DoctorNurseAssignments", b =>
+                {
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NurseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorId", "NurseId");
+
+                    b.HasIndex("NurseId");
+
+                    b.ToTable("DoctorNurseAssignments");
+                });
+
             modelBuilder.Entity("ClinicHub.Core.Models.Nurse", b =>
                 {
                     b.Property<int>("Id")
@@ -212,9 +230,6 @@ namespace ClinicHub.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -253,8 +268,6 @@ namespace ClinicHub.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("DoctorId");
 
                     b.HasIndex("Email")
                         .IsUnique();
@@ -543,25 +556,36 @@ namespace ClinicHub.Migrations
                     b.Navigation("Specialty");
                 });
 
+            modelBuilder.Entity("ClinicHub.Core.Models.DoctorNurseAssignments", b =>
+                {
+                    b.HasOne("ClinicHub.Core.Models.Doctor", "Doctor")
+                        .WithMany("DoctorNurses")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ClinicHub.Core.Models.Nurse", "Nurse")
+                        .WithMany("DoctorNurses")
+                        .HasForeignKey("NurseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Nurse");
+                });
+
             modelBuilder.Entity("ClinicHub.Core.Models.Nurse", b =>
                 {
                     b.HasOne("ClinicHub.Core.Models.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("ClinicHub.Core.Models.Doctor", "Doctor")
-                        .WithMany("Nurses")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("ClinicHub.Core.Models.ApplicationUser", "LastUpdatedBy")
                         .WithMany()
                         .HasForeignKey("LastUpdatedById");
 
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("Doctor");
 
                     b.Navigation("LastUpdatedBy");
                 });
@@ -649,7 +673,12 @@ namespace ClinicHub.Migrations
 
             modelBuilder.Entity("ClinicHub.Core.Models.Doctor", b =>
                 {
-                    b.Navigation("Nurses");
+                    b.Navigation("DoctorNurses");
+                });
+
+            modelBuilder.Entity("ClinicHub.Core.Models.Nurse", b =>
+                {
+                    b.Navigation("DoctorNurses");
                 });
 #pragma warning restore 612, 618
         }

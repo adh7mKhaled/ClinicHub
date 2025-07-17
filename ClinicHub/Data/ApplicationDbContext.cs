@@ -18,11 +18,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	{
 		builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-		builder.Entity<Doctor>()
-			.HasMany(x => x.Nurses)
-			.WithMany(x => x.Doctors)
-			.UsingEntity<DoctorNurse>();
-
 		var cascadeFks = builder.Model.GetEntityTypes()
 			.SelectMany(t => t.GetForeignKeys())
 			.Where(fk => fk.DeleteBehavior == DeleteBehavior.Cascade && !fk.IsOwnership);
