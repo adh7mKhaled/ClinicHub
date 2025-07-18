@@ -1,6 +1,8 @@
-﻿namespace ClinicHub.Core.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-public class Nurse : BaseModel
+namespace ClinicHub.Core.ViewModels;
+
+public class DoctorFormViewModel
 {
 	public int Id { get; set; }
 	public string Name { get; set; } = null!;
@@ -11,7 +13,7 @@ public class Nurse : BaseModel
 	public string MobileNumber { get; set; } = null!;
 	public string Address { get; set; } = null!;
 	public decimal Salary { get; set; }
+	public int SpecialtyId { get; set; }
 
-	public int DoctorId { get; set; }
-	public Doctor Doctor { get; set; } = default!;
+	public IEnumerable<SelectListItem>? Specialties { get; set; } = [];
 }

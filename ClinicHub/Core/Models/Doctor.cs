@@ -10,7 +10,7 @@ public class Doctor : BaseModel
 	public string Email { get; set; } = null!;
 	public string MobileNumber { get; set; } = null!;
 	public string Address { get; set; } = null!;
-	public double Salary { get; set; }
+	public decimal Salary { get; set; }
 
 	public int SpecialtyId { get; set; }
 	public Specialty Specialty { get; set; } = default!;

@@ -1,5 +1,4 @@
 ﻿using ClinicHub.Data.UnitOfWork;
-using ClinicHub.Extensions;
 
 namespace ClinicHub.Controllers;
 

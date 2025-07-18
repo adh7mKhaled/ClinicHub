@@ -3,6 +3,7 @@ global using ClinicHub.Core.Consts;
 global using ClinicHub.Core.Enums;
 global using ClinicHub.Core.Models;
 global using ClinicHub.Core.ViewModels;
+global using ClinicHub.Extensions;
 global using ClinicHub.Filters;
 global using FluentValidation;
 global using Microsoft.AspNetCore.Authorization;

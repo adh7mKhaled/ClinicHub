@@ -10,5 +10,6 @@
 		public const string DenySpecialCharacters = "^[^<>!#%$]*$";
 		public const string MobileNumber = "^01[0,1,2,5]{1}[0-9]{8}$";
 		public const string NationalID = "^[2,3]{1}[0-9]{13}$";
+		public const string NumbersOnly = "^(?:-(?:[1-9](?:\\d{0,2}(?:,\\d{3})+|\\d*))|(?:0|(?:[1-9](?:\\d{0,2}(?:,\\d{3})+|\\d*))))(?:.\\d+|)$";
 	}
 }
