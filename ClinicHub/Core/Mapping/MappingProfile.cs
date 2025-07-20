@@ -15,5 +15,6 @@ public class MappingProfile : Profile
 
 		CreateMap<DoctorFormViewModel, Doctor>();
 		CreateMap<Doctor, DoctorSearchResultViewModel>();
+		CreateMap<Doctor, DoctorViewModel>();
 	}
 }

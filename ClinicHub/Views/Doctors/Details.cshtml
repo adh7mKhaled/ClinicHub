@@ -1,0 +1,142 @@
+﻿@model DoctorViewModel
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<section class="section profile">
+	<div class="container-fluid">
+		<div class="row g-4">
+
+			<div class="col-lg-4">
+				<div class="card profile-card mx-auto">
+					<div class="card-header bg-white text-black text-center py-4">
+						<h4 class="mb-1">@Model.Name</h4>
+						<p class="mb-0 text-muted">@Model.Email</p>
+						<span class="badge @(Model.IsDeleted ? "bg-danger" : "bg-success") js-status">
+							@(Model.IsDeleted ? "Deleted" : "Active")
+						</span>
+					</div>
+					<div class="card-body">
+						<div class="tab-pane fade profile-overview active show" id="profile-overview" role="tabpanel">
+							<h5 class="card-title">Details</h5>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">Name</div>
+								<div class="col-lg-7 col-md-8">@Model.Name</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">National Id</div>
+								<div class="col-lg-7 col-md-8">@Model.NationalId</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">Mobile Number</div>
+								<div class="col-lg-7 col-md-8">@Model.MobileNumber</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">Specialty</div>
+								<div class="col-lg-7 col-md-8">@Model.Specialty</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">Salary</div>
+								<div class="col-lg-7 col-md-8">@Model.Salary</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">Gender</div>
+								<div class="col-lg-7 col-md-8">@Model.Gender.ToString()</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">Age</div>
+								<div class="col-lg-7 col-md-8">@Model.Age</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">Address</div>
+								<div class="col-lg-7 col-md-8">@Model.Address</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-5 col-md-4 label">Hire Date</div>
+								<div class="col-lg-7 col-md-8">@Model.CreatedOn.ToString("dd, MMM, yyyy")</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-8">
+				<div class="row mb-4 g-4">
+					<div class="col-md-4">
+						<div class="card stats-card h-100">
+							<div class="card-body text-center pt-4">
+								<h3 class="fw-bold">12</h3>
+								<p class="text-muted mb-0">Total Appointments</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card stats-card h-100">
+							<div class="card-body text-center pt-4">
+								<h3 class="fw-bold">28</h3>
+								<p class="text-muted mb-0">Today's Appointments</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card stats-card h-100">
+							<div class="card-body text-center pt-4">
+								<h3 class="fw-bold">5</h3>
+								<p class="text-muted mb-0">Nurses</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-body pt-3">
+						<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+							<li class="nav-item flex-fill" role="presentation">
+								<button class="nav-link w-100 active" data-bs-toggle="tab" data-bs-target="#today-appointments" role="tab">Today's Appointments</button>
+							</li>
+							<li class="nav-item flex-fill" role="presentation">
+								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#past-appointments" role="tab">Past Appointments</button>
+							</li>
+							<li class="nav-item flex-fill" role="presentation">
+								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#nurses-assigned-to-doctor" role="tab">Nurses</button>
+							</li>
+						</ul>
+						<div class="tab-content pt-2" id="borderedTabJustifiedContent">
+							<div class="tab-pane fade show active" id="today-appointments" role="tabpanel">
+								<div class="table-responsive">
+									<table class="table table-hover mb-0">
+										<thead></thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="past-appointments" role="tabpanel">
+								<table class="table table-hover mb-0">
+									<thead></thead>
+									<tbody></tbody>
+								</table>
+							</div>
+							<div class="tab-pane fade" id="nurses-assigned-to-doctor" role="tabpanel">
+								<table class="table table-hover mb-0">
+									<thead></thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -26,6 +26,21 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 		return PartialView("_Result", _mapper.Map<DoctorSearchResultViewModel>(doctor));
 	}
 
+	public IActionResult Details(int id)
+	{
+		var doctor = _unitOfWork.Doctors.GetById(id);
+
+		if (doctor is null)
+			return NotFound();
+
+		var viewModel = _mapper.Map<DoctorViewModel>(doctor);
+
+		var specialty = _unitOfWork.Specialties.GetById(doctor.SpecialtyId);
+		viewModel.Specialty = specialty!.Name;
+
+		return View(viewModel);
+	}
+
 	public IActionResult Create()
 	{
 		var specialties = _unitOfWork.Specialties.GetAll();
