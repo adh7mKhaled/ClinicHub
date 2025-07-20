@@ -1,0 +1,30 @@
+﻿@model DoctorSearchResultViewModel
+
+<div class="card">
+    <div class="card-body p-4">
+        @if (Model is null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show d-flex flex-column" role="alert">
+                <span>
+                    <i class="bi bi-exclamation-triangle me-1"></i>
+                    No doctors were found!
+                </span>
+                <a class="btn btn-primary btn-sm mt-3" asp-action="Create" style="width: 199px;">Add Doctor</a>
+            </div>
+        }
+
+        else
+        {
+            <div class="d-flex">
+                <div class="d-flex flex-column">
+                    <h4>@Model.Name</h4>
+                    <div>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-Id="@Model.Id">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

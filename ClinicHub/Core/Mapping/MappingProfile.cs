@@ -14,5 +14,6 @@ public class MappingProfile : Profile
 		CreateMap<SpecialtyFormViewModel, Specialty>().ReverseMap();
 
 		CreateMap<DoctorFormViewModel, Doctor>();
+		CreateMap<Doctor, DoctorSearchResultViewModel>();
 	}
 }

@@ -10,6 +10,22 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 	private readonly IMapper _mapper = mapper;
 	private readonly IValidator<DoctorFormViewModel> _validator = validator;
 
+	public IActionResult Index()
+	{
+		return View();
+	}
+
+	[HttpPost]
+	public IActionResult Search(SearchFormViewModel model)
+	{
+		if (!ModelState.IsValid)
+			return View(nameof(Index), model);
+
+		var doctor = _unitOfWork.Doctors.Find(x => x.Email == model.Value || x.MobileNumber == model.Value || x.NationalId == model.Value);
+
+		return PartialView("_Result", _mapper.Map<DoctorSearchResultViewModel>(doctor));
+	}
+
 	public IActionResult Create()
 	{
 		var specialties = _unitOfWork.Specialties.GetAll();
@@ -37,6 +53,9 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 		doctor.CreatedById = User.GetUserId();
 		doctor.CreatedOn = DateTime.Now;
+
+		_unitOfWork.Doctors.Add(doctor);
+		_unitOfWork.Complete();
 
 		return Ok();
 	}

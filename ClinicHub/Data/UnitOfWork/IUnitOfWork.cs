@@ -6,6 +6,7 @@ public interface IUnitOfWork
 {
 	IBaseRepository<Patient> Patients { get; }
 	IBaseRepository<Specialty> Specialties { get; }
+	IBaseRepository<Doctor> Doctors { get; }
 
 	int Complete();
 }

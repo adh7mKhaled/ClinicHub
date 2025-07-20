@@ -10,6 +10,8 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 
 	public IBaseRepository<Specialty> Specialties => new BaseRepository<Specialty>(_context);
 
+	public IBaseRepository<Doctor> Doctors => new BaseRepository<Doctor>(_context);
+
 	public int Complete()
 	{
 		return _context.SaveChanges();
