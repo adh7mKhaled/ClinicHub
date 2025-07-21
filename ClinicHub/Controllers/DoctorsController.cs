@@ -74,4 +74,31 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 		return Ok();
 	}
+
+	public IActionResult UniqueNationalId(DoctorFormViewModel model)
+	{
+		var doctor = _unitOfWork.Doctors.Find(x => x.NationalId == model.NationalId);
+
+		var isAllowed = doctor is null || doctor.Id.Equals(model.Id);
+
+		return Json(isAllowed);
+	}
+
+	public IActionResult UniqueEmail(DoctorFormViewModel model)
+	{
+		var doctor = _unitOfWork.Doctors.Find(x => x.Email == model.Email);
+
+		var isAllowed = doctor is null || doctor.Id.Equals(model.Id);
+
+		return Json(isAllowed);
+	}
+
+	public IActionResult UniqueMobileNumber(DoctorFormViewModel model)
+	{
+		var doctor = _unitOfWork.Doctors.Find(x => x.MobileNumber == model.MobileNumber);
+
+		var isAllowed = doctor is null || doctor.Id.Equals(model.Id);
+
+		return Json(isAllowed);
+	}
 }

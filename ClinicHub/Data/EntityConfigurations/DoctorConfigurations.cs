@@ -9,6 +9,7 @@ public class DoctorConfigurations : IEntityTypeConfiguration<Doctor>
 		builder.Property(x => x.Address).HasMaxLength(100);
 		builder.Property(e => e.NationalId).HasMaxLength(20);
 		builder.HasIndex(x => x.MobileNumber).IsUnique();
+		builder.HasIndex(x => x.NationalId).IsUnique();
 		builder.HasIndex(x => x.Email).IsUnique();
 	}
 }
