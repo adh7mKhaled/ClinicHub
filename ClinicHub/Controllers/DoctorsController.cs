@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace ClinicHub.Controllers;
 
 public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
-	IValidator<DoctorFormViewModel> validator) : Controller
+	IValidator<DoctorFormViewModel> validator, IUniquenessValidator uniquenessValidator) : Controller
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
 	private readonly IValidator<DoctorFormViewModel> _validator = validator;
+	private readonly IUniquenessValidator _uniquenessValidator = uniquenessValidator;
 
 	public IActionResult Index()
 	{
@@ -77,28 +78,16 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 	public IActionResult UniqueNationalId(DoctorFormViewModel model)
 	{
-		var doctor = _unitOfWork.Doctors.Find(x => x.NationalId == model.NationalId);
-
-		var isAllowed = doctor is null || doctor.Id.Equals(model.Id);
-
-		return Json(isAllowed);
+		return _uniquenessValidator.IsUnique(_unitOfWork.Doctors, d => d.NationalId == model.NationalId, model.Id, d => d.Id);
 	}
 
 	public IActionResult UniqueEmail(DoctorFormViewModel model)
 	{
-		var doctor = _unitOfWork.Doctors.Find(x => x.Email == model.Email);
-
-		var isAllowed = doctor is null || doctor.Id.Equals(model.Id);
-
-		return Json(isAllowed);
+		return _uniquenessValidator.IsUnique(_unitOfWork.Doctors, x => x.Email == model.Email, model.Id, d => d.Id);
 	}
 
 	public IActionResult UniqueMobileNumber(DoctorFormViewModel model)
 	{
-		var doctor = _unitOfWork.Doctors.Find(x => x.MobileNumber == model.MobileNumber);
-
-		var isAllowed = doctor is null || doctor.Id.Equals(model.Id);
-
-		return Json(isAllowed);
+		return _uniquenessValidator.IsUnique(_unitOfWork.Doctors, x => x.MobileNumber == model.MobileNumber, model.Id, d => d.Id);
 	}
 }

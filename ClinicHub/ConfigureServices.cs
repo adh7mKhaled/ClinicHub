@@ -2,6 +2,7 @@
 using ClinicHub.Data;
 using ClinicHub.Data.UnitOfWork;
 using ClinicHub.Helpers;
+using ClinicHub.Services;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
@@ -39,6 +40,7 @@ public static class ConfigureServices
 		services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
 
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
+		services.AddScoped<IUniquenessValidator, UniquenessValidator>();
 
 		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 		services.AddFluentValidationAutoValidation();

@@ -5,6 +5,7 @@ global using ClinicHub.Core.Models;
 global using ClinicHub.Core.ViewModels;
 global using ClinicHub.Extensions;
 global using ClinicHub.Filters;
+global using ClinicHub.Services;
 global using FluentValidation;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;

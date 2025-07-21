@@ -3,11 +3,12 @@
 namespace ClinicHub.Controllers;
 
 public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
-	IValidator<PatientFormViewModel> validator) : Controller
+	IValidator<PatientFormViewModel> validator, IUniquenessValidator uniquenessValidator) : Controller
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
 	private readonly IValidator<PatientFormViewModel> _validator = validator;
+	private readonly IUniquenessValidator _uniquenessValidator = uniquenessValidator;
 
 	public IActionResult Index()
 	{
@@ -92,19 +93,11 @@ public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 	}
 	public IActionResult AllowUniqueMobileNumber(PatientFormViewModel model)
 	{
-		var patient = _unitOfWork.Patients.Find(p => p.MobileNumber == model.MobileNumber);
-
-		var isAllowed = patient is null || patient.Id.Equals(model.Id);
-
-		return Json(isAllowed);
+		return _uniquenessValidator.IsUnique(_unitOfWork.Patients, p => p.MobileNumber == model.MobileNumber, model.Id, p => p.Id);
 	}
 
 	public IActionResult AllowUniqueEmail(PatientFormViewModel model)
 	{
-		var patient = _unitOfWork.Patients.Find(p => p.Email == model.Email);
-
-		var isAllowed = patient is null || patient.Id.Equals(model.Id);
-
-		return Json(isAllowed);
+		return _uniquenessValidator.IsUnique(_unitOfWork.Patients, p => p.Email == model.Email, model.Id, p => p.Id);
 	}
 }

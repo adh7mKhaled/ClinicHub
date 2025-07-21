@@ -1,14 +1,14 @@
 ﻿using ClinicHub.Data.UnitOfWork;
-using ClinicHub.Extensions;
 
 namespace ClinicHub.Controllers;
 
 public class SpecialtiesController(IUnitOfWork unitOfWork, IMapper mapper,
-	IValidator<SpecialtyFormViewModel> validator) : Controller
+	IValidator<SpecialtyFormViewModel> validator, IUniquenessValidator uniquenessValidator) : Controller
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
 	private readonly IValidator<SpecialtyFormViewModel> _validator = validator;
+	private readonly IUniquenessValidator _uniquenessValidator = uniquenessValidator;
 
 	public IActionResult Index()
 	{
@@ -89,10 +89,6 @@ public class SpecialtiesController(IUnitOfWork unitOfWork, IMapper mapper,
 
 	public IActionResult AllowUniqueName(SpecialtyFormViewModel model)
 	{
-		var specialty = _unitOfWork.Specialties.Find(x => x.Name == model.Name);
-
-		var isAllowed = specialty is null || specialty.Id.Equals(model.Id);
-
-		return Json(isAllowed);
+		return _uniquenessValidator.IsUnique(_unitOfWork.Specialties, s => s.Name == model.Name, model.Id, s => s.Id);
 	}
 }

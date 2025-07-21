@@ -9,17 +9,17 @@ public class DoctorFormViewModel
 
 	public string Name { get; set; } = null!;
 
-	[Remote("UniqueNationalId", controller: null!, AdditionalFields = "Id", ErrorMessage = Errors.InValideMobileNumber)]
+	[Remote("UniqueNationalId", controller: null!, AdditionalFields = "Id", ErrorMessage = Errors.Duplicated)]
 	public string NationalId { get; set; } = null!;
 
 	public int Age { get; set; }
 
 	public Gender Gender { get; set; }
 
-	[Remote("UniqueEmail", controller: null!, AdditionalFields = "Id", ErrorMessage = Errors.InValideMobileNumber)]
+	[Remote("UniqueEmail", controller: null!, AdditionalFields = "Id", ErrorMessage = Errors.Duplicated)]
 	public string Email { get; set; } = null!;
 
-	[Remote("UniqueMobileNumber", controller: null!, AdditionalFields = "Id", ErrorMessage = Errors.InValideMobileNumber)]
+	[Remote("UniqueMobileNumber", controller: null!, AdditionalFields = "Id", ErrorMessage = Errors.Duplicated)]
 	public string MobileNumber { get; set; } = null!;
 
 	public string Address { get; set; } = null!;
