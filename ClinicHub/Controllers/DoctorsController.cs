@@ -44,17 +44,12 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 	public IActionResult Create()
 	{
-		var specialties = _unitOfWork.Specialties.GetAll();
 		DoctorFormViewModel viewModel = new()
 		{
-			Specialties = specialties.Select(s => new SelectListItem
-			{
-				Text = s.Name,
-				Value = s.Id.ToString()
-			})
+			Specialties = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Specialties.GetAll())
 		};
 
-		return View(viewModel);
+		return View("Form", viewModel);
 	}
 
 	[HttpPost]
@@ -73,7 +68,40 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 		_unitOfWork.Doctors.Add(doctor);
 		_unitOfWork.Complete();
 
-		return Ok();
+		return RedirectToAction(nameof(Details), new { id = doctor.Id });
+	}
+
+	public IActionResult Edit(int id)
+	{
+		var doctor = _unitOfWork.Doctors.GetById(id);
+
+		if (doctor is null)
+			return NotFound();
+
+		var viewModel = _mapper.Map<DoctorFormViewModel>(doctor);
+
+		viewModel.Specialties = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Specialties.GetAll());
+
+		return View("Form", viewModel);
+	}
+
+	[HttpPost]
+	public IActionResult Edit(DoctorFormViewModel model)
+	{
+		var validationResult = _validator.Validate(model);
+
+		if (!validationResult.IsValid)
+			return BadRequest();
+
+		var doctor = _mapper.Map<Doctor>(model);
+
+		doctor.LastUpdatedById = User.GetUserId();
+		doctor.LastUpdatedOn = DateTime.Now;
+
+		_unitOfWork.Doctors.Update(doctor);
+		_unitOfWork.Complete();
+
+		return RedirectToAction(nameof(Details), new { id = doctor.Id });
 	}
 
 	public IActionResult UniqueNationalId(DoctorFormViewModel model)

@@ -27,5 +27,8 @@ public class DoctorFormValidator : AbstractValidator<DoctorFormViewModel>
 
 		RuleFor(x => x.Age)
 			.InclusiveBetween(25, 60).WithMessage(Errors.MaxMinLength);
+
+		RuleFor(x => x.Salary)
+			.GreaterThanOrEqualTo(5000);
 	}
 }

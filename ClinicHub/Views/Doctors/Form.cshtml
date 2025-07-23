@@ -14,12 +14,17 @@
                 </div>
             </div>
             <div>
-                <h3 class="mb-0 fw-bold text-primary">Add New Doctor</h3>
+                <h3 class="mb-0 fw-bold text-primary">@(Model?.Id > 0 ? "Edit" : "Add") Doctor</h3>
                 <p class="text-muted mb-0">Fill out the doctor’s personal, contact, and professional information below.</p>
             </div>
         </div>
 
-        <form asp-action="Create" method="post" novalidate>
+        <form asp-action="@(Model?.Id > 0 ? "Edit" : "Create")" method="post" novalidate>
+            @if (Model?.Id > 0)
+            {
+                <input type="hidden" asp-for="Id" />
+            }
+
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
                     <input asp-for="Name" class="form-control" placeholder="Full Name" >
@@ -34,7 +39,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <input asp-for="Age" class="form-control" placeholder="Age" value="">
+                    <input asp-for="Age" class="form-control" placeholder="Age">
                     <span asp-validation-for="Age" class="text-danger small"></span>
                 </div>
 
@@ -63,7 +68,7 @@
 
             <div class="row g-3 mb-5">
                 <div class="col-md-6">
-                    <select asp-for="SpecialtyId" class="form-select" asp-items="@Model.Specialties">
+                    <select asp-for="SpecialtyId" class="form-select" asp-items="@Model!.Specialties">
                         <option value="">-- Select Specialty --</option>
                     </select>
                     <span asp-validation-for="SpecialtyId" class="text-danger small"></span>
@@ -72,7 +77,7 @@
                 <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input asp-for="Salary" class="form-control" placeholder="Salary" value="">
+                        <input asp-for="Salary" class="form-control" placeholder="Salary">
                     </div>
                     <span asp-validation-for="Salary" class="text-danger small"></span>
                 </div>
