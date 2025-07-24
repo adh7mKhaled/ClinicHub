@@ -1,14 +1,17 @@
 ﻿using ClinicHub.Data.UnitOfWork;
+using HashidsNet;
 
 namespace ClinicHub.Controllers;
 
 public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
-	IValidator<PatientFormViewModel> validator, IUniquenessValidator uniquenessValidator) : Controller
+	IValidator<PatientFormViewModel> validator, IUniquenessValidator uniquenessValidator,
+	IHashids hashids) : Controller
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
 	private readonly IValidator<PatientFormViewModel> _validator = validator;
 	private readonly IUniquenessValidator _uniquenessValidator = uniquenessValidator;
+	private readonly IHashids _hashids = hashids;
 
 	public IActionResult Index()
 	{
@@ -42,9 +45,9 @@ public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 	}
 
 	[AjaxOnly]
-	public IActionResult Edit(int Id)
+	public IActionResult Edit(int id)
 	{
-		var patient = _unitOfWork.Patients.GetById(Id);
+		var patient = _unitOfWork.Patients.GetById(id);
 
 		if (patient is null)
 			return NotFound();
@@ -71,9 +74,11 @@ public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 		return PartialView("_patientRow", _mapper.Map<PatientViewModel>(patient));
 	}
 
-	public IActionResult Details(int id)
+	public IActionResult Details(string key)
 	{
-		var patient = _unitOfWork.Patients.GetById(id);
+		var patientId = _hashids.Decode(key)[0];
+
+		var patient = _unitOfWork.Patients.GetById(patientId);
 
 		return patient is null ? NotFound() : View(_mapper.Map<PatientViewModel>(patient));
 	}

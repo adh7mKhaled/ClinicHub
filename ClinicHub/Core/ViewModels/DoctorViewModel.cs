@@ -2,7 +2,7 @@
 
 public class DoctorViewModel
 {
-	public int Id { get; set; }
+	public string? Key { get; set; }
 	public string Name { get; set; } = null!;
 	public string NationalId { get; set; } = null!;
 	public int Age { get; set; }

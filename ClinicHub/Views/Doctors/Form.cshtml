@@ -14,15 +14,15 @@
                 </div>
             </div>
             <div>
-                <h3 class="mb-0 fw-bold text-primary">@(Model?.Id > 0 ? "Edit" : "Add") Doctor</h3>
+                <h3 class="mb-0 fw-bold text-primary">@(!string.IsNullOrEmpty(Model!.Key) ? "Edit" : "Add") Doctor</h3>
                 <p class="text-muted mb-0">Fill out the doctor’s personal, contact, and professional information below.</p>
             </div>
         </div>
 
-        <form asp-action="@(Model?.Id > 0 ? "Edit" : "Create")" method="post" novalidate>
-            @if (Model?.Id > 0)
+        <form asp-action="@(!string.IsNullOrEmpty(Model!.Key) ? "Edit" : "Create")" method="post" novalidate>
+            @if (!string.IsNullOrEmpty(Model!.Key))
             {
-                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Key" />
             }
 
             <div class="row g-3 mb-4">

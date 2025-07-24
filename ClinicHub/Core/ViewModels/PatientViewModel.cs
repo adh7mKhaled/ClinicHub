@@ -3,6 +3,7 @@
 public class PatientViewModel
 {
 	public int Id { get; set; }
+	public string? Key { get; set; }
 	public string Name { get; set; } = null!;
 	public DateTime DateOfBirth { get; set; }
 	public Gender Gender { get; set; }

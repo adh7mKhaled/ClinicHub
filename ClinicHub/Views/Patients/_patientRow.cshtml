@@ -1,4 +1,7 @@
 ﻿@model PatientViewModel
+@inject IHashids _hashids
+
+@{ Model.Key = @_hashids.Encode(Model.Id);}
 
 <tr>
 	<td>@Model.Name</td>
@@ -23,7 +26,7 @@
 					</a>
 				</li>
 				<li>
-					<a asp-action="Details" asp-route-Id="@Model.Id" class="dropdown-item">
+					<a asp-action="Details" asp-route-key="@Model.Key" class="dropdown-item">
 						<i class="bi bi-person-badge"></i>
 						Details
 					</a>

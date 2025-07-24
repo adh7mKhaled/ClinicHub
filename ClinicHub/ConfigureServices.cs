@@ -2,8 +2,8 @@
 using ClinicHub.Data;
 using ClinicHub.Data.UnitOfWork;
 using ClinicHub.Helpers;
-using ClinicHub.Services;
 using FluentValidation.AspNetCore;
+using HashidsNet;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
 
@@ -31,6 +31,8 @@ public static class ConfigureServices
 		});
 
 		services.AddControllersWithViews();
+
+		services.AddSingleton<IHashids>(_ => new Hashids(minHashLength: 8));
 
 		// Auto Validate Anti Forgery Token
 		services.AddMvc(options =>
