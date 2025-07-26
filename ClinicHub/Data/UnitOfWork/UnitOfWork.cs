@@ -12,6 +12,8 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 
 	public IBaseRepository<Doctor> Doctors => new BaseRepository<Doctor>(_context);
 
+	public IBaseRepository<Nurse> Nurses => new BaseRepository<Nurse>(_context);
+
 	public int Complete()
 	{
 		return _context.SaveChanges();

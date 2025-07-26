@@ -1,0 +1,65 @@
+﻿@model IEnumerable<NurseViewModel>
+
+@{ ViewData["Title"] = "Nurses"; }
+
+<div class="pagetitle">
+	<div class="d-flex justify-content-between">
+		<div>
+			<h1>Nurses</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active">Nurses</li>
+				</ol>
+			</nav>
+		</div>
+		<div>
+			<a href="javascript:;" class="btn btn-sm mt-1 p-2 js-render-modal" style="background-color: #4154f1; color: white;"
+			   data-title="Add Nurse"
+			   data-url="/Nurses/Create">
+				<i class="bi bi-plus-lg"></i>
+				Add Nurse
+			</a>
+		</div>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		@if (!Model.Any())
+		{
+			<div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 18px;">
+				<i class="bi bi-exclamation-triangle me-1"></i>
+				No Nurses found!
+			</div>
+		}
+		else
+		{
+			<div class="datatable-container">
+				<table id="js-datatable" class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Assigned to doctor</th>
+							<th>No.of appoinments</th>
+							<th>Status</th>
+							<th>Next Appointment</th>
+							<th>Hire Date</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var nurse in Model)
+						{
+							<partial name="_NurseRow" model="@nurse" />
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+	</div>
+</div>
+
+@section Scripts
+{
+	<partial name="_ValidationScriptsPartial" />
+}

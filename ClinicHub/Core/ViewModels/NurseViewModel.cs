@@ -1,8 +1,9 @@
-﻿namespace ClinicHub.Core.Models;
+﻿namespace ClinicHub.Core.ViewModels;
 
-public class Nurse : BaseModel
+public class NurseViewModel
 {
 	public int Id { get; set; }
+	public string? Key { get; set; }
 	public string Name { get; set; } = null!;
 	public string NationalId { get; set; } = null!;
 	public int Age { get; set; }
@@ -12,7 +13,7 @@ public class Nurse : BaseModel
 	public string Address { get; set; } = null!;
 	public decimal Salary { get; set; }
 	public DateOnly HireDate { get; set; }
+	public bool IsDeleted { get; set; }
 
-	public int DoctorId { get; set; }
-	public Doctor Doctor { get; set; } = default!;
+	public string Doctor { get; set; } = null!;
 }

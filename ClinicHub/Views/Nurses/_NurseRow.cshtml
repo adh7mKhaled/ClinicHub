@@ -1,0 +1,49 @@
+﻿@model NurseViewModel
+
+@inject IHashids _hashids
+
+@{ Model.Key = @_hashids.Encode(Model.Id); } 
+
+<tr>
+	<td>@Model.Name</td>
+	<td>@Model.Doctor</td>
+	<td>-@*number of appoinments*@</td>
+	<td>
+		<span class="badge @(!Model.IsDeleted ? "bg-success" : "bg-danger")">
+			@(!Model.IsDeleted ? "Active" : "Inactive")
+		</span>
+	</td>
+	<td>-@*DateTime of next appoinment*@</td>
+	<td>@Model.HireDate</td>
+	<td>
+		<div class="btn-group">
+			<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
+				Action
+			</button>
+			<ul class="dropdown-menu">
+				<li>
+					<a href="javascript:;" class="dropdown-item js-render-modal"
+					   data-title="Edit Nurse"
+					   data-url="/Nurses/Edit/@Model.Id"
+					   data-update="true">
+						<i class="bi bi-pencil-square"></i>
+						Edit
+					</a>
+				</li>
+				<li>
+					<a asp-action="Details" asp-route-key="@Model.Key" class="dropdown-item">
+						<i class="bi bi-person-badge"></i>
+						Details
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" class="dropdown-item flex-stack px-3"
+						data-url="/Nurses/ToggleStatus/@Model.Id">
+						<i class="bi bi-trash"></i>
+						ToggleStatus
+					</a>
+				</li>
+			</ul>
+		</div>
+	</td>
+</tr>

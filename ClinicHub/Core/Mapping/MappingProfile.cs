@@ -21,5 +21,8 @@ public class MappingProfile : Profile
 		CreateMap<DoctorFormViewModel, Doctor>().ReverseMap();
 		CreateMap<Doctor, DoctorSearchResultViewModel>();
 		CreateMap<Doctor, DoctorViewModel>();
+
+		CreateMap<Nurse, NurseViewModel>()
+			.ForMember(dest => dest.Doctor, opt => opt.MapFrom(src => src.Doctor.Name));
 	}
 }
