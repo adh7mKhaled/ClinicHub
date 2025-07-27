@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace ClinicHub.Core.Mapping;
+﻿namespace ClinicHub.Core.Mapping;
 
 public class MappingProfile : Profile
 {
@@ -21,8 +19,12 @@ public class MappingProfile : Profile
 		CreateMap<DoctorFormViewModel, Doctor>().ReverseMap();
 		CreateMap<Doctor, DoctorSearchResultViewModel>();
 		CreateMap<Doctor, DoctorViewModel>();
+		CreateMap<Doctor, SelectListItem>()
+			.ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
+			.ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
 
 		CreateMap<Nurse, NurseViewModel>()
 			.ForMember(dest => dest.Doctor, opt => opt.MapFrom(src => src.Doctor.Name));
+		CreateMap<NurseFormViewModel, Nurse>();
 	}
 }

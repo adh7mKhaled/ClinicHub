@@ -1,5 +1,4 @@
-﻿using ClinicHub.Data.UnitOfWork;
-using HashidsNet;
+﻿using HashidsNet;
 
 namespace ClinicHub.Controllers;
 

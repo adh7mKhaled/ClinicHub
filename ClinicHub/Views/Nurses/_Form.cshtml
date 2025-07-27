@@ -1,7 +1,7 @@
-﻿@model DoctorFormViewModel
+﻿@model NurseFormViewModel
 
 @{
-    ViewData["Title"] = "Add New Doctor";
+    ViewData["Title"] = "Add New Nurse";
 }
 
 <div class="card">
@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div>
-                <h3 class="mb-0 fw-bold text-primary">@(!string.IsNullOrEmpty(Model!.Key) ? "Edit" : "Add") Doctor</h3>
-                <p class="text-muted mb-0">Fill out the doctor’s personal, contact, and professional information below.</p>
+                <h3 class="mb-0 fw-bold text-primary">@(!string.IsNullOrEmpty(Model!.Key) ? "Edit" : "Add") Nurse</h3>
+				<p class="text-muted mb-0">Fill out the nurse’s personal, contact, and professional information below.</p>
             </div>
         </div>
 
@@ -27,8 +27,8 @@
 
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
-                    <input asp-for="Name" class="form-control" placeholder="Full Name" >
-                    <span asp-validation-for="Name" class="text-danger small"></span>
+                    <input asp-for="Name" class="form-control" placeholder="Full Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-6">
@@ -40,12 +40,12 @@
                 </div>
 
                 <div class="col-md-6">
-                    <input asp-for="Age" class="form-control" placeholder="Age">
+                    <input asp-for="Age" class="form-control" type="number" placeholder="Age" value="">
                     <span asp-validation-for="Age" class="text-danger small"></span>
                 </div>
 
                 <div class="col-md-6">
-                    <input asp-for="NationalId" class="form-control" placeholder="National ID Number">
+                    <input asp-for="NationalId" class="form-control" placeholder="National ID">
                     <span asp-validation-for="NationalId" class="text-danger small"></span>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <input asp-for="MobileNumber" class="form-control" placeholder="Mobile Number (e.g. +1234567890)" aria-label="Mobile Number">
+                    <input asp-for="MobileNumber" class="form-control" placeholder="Mobile Number (e.g. +01234567890)">
                     <span asp-validation-for="MobileNumber" class="text-danger small"></span>
                 </div>
 
@@ -67,13 +67,18 @@
                 </div>
             </div>
 
-            <div class="row g-3 mb-5">
+            <div class="row g-3 mb-4">
                 <div class="col-md-6">
-                    <select asp-for="SpecialtyId" class="form-select js-select2" asp-items="@Model!.Specialties"
-                        data-placeholder="Select Specialty">
+                    <select asp-for="DoctorId" class="form-select js-select2" data-placeholder="Select Doctor"
+                        asp-items="@Model.Doctors">
                         <option value=""></option>
                     </select>
-                    <span asp-validation-for="SpecialtyId" class="text-danger small"></span>
+                    <span asp-validation-for="DoctorId" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <input asp-for="HireDate" type="date" class="form-control" placeholder="Hire Date">
+                    <span asp-validation-for="HireDate" class="text-danger small"></span>
                 </div>
 
                 <div class="col-md-6">
@@ -92,7 +97,7 @@
                 <button type="reset" class="btn btn-outline-secondary px-4">
                     <i class="bi bi-arrow-clockwise me-1"></i> Reset
                 </button>
-                <a href="@Url.Action("Index")" class="btn btn-light px-4">
+                <a asp-action="Index" class="btn btn-light px-4">
                     <i class="bi bi-x-circle me-1"></i> Cancel
                 </a>
             </div>

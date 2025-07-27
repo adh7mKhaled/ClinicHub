@@ -2,12 +2,12 @@
 
 namespace ClinicHub.Validators;
 
-public class DoctorFormValidator : AbstractValidator<DoctorFormViewModel>
+public class NurseFormValidator : AbstractValidator<NurseFormViewModel>
 {
-	public DoctorFormValidator()
+	public NurseFormValidator()
 	{
 		RuleFor(x => x.Name)
-			.MaximumLength(100).WithMessage(Errors.MaxLength)
+			.MaximumLength(50).WithMessage(Errors.MaxLength)
 			.Matches(RegexPatterns.CharactersOnly_English).WithMessage(Errors.OnlyEnglishLetters);
 
 		RuleFor(x => x.Address)
@@ -16,19 +16,18 @@ public class DoctorFormValidator : AbstractValidator<DoctorFormViewModel>
 		RuleFor(x => x.MobileNumber)
 			.Matches(RegexPatterns.MobileNumber).WithMessage(Errors.InValideMobileNumber);
 
-		RuleFor(x => x.MobileNumber)
-			.MaximumLength(20).WithMessage(Errors.MaxLength);
-
 		RuleFor(x => x.NationalId)
 			.Matches(RegexPatterns.NationalID).WithMessage(Errors.InValideNationalID);
 
 		RuleFor(x => x.Email)
-			.NotEmpty().EmailAddress();
+			.NotEmpty()
+			.EmailAddress();
 
 		RuleFor(x => x.Age)
 			.InclusiveBetween(25, 60).WithMessage(Errors.MaxMinLength);
 
 		RuleFor(x => x.Salary)
-			.GreaterThanOrEqualTo(5000);
+			.NotNull()
+			.GreaterThan(0);
 	}
 }

@@ -47,6 +47,14 @@ function onModalSuccess(item) {
     }
 }
 
+function applySelect2() {
+    $('.js-select2').select2();
+    $('.js-select2').select2().on('change', function () {
+        var form = $(this).closest('form');
+        form.validate().element(this);
+    });
+}
+
 var initDatatable = function () {
     datatable = $('#js-datatable').DataTable({
         info: false,
@@ -58,7 +66,8 @@ var initDatatable = function () {
 $(document).ready(function () {
 
     initDatatable();
-
+    applySelect2();
+    
     // Handel bootstrap modal
     $('body').delegate('.js-render-modal', 'click', function () {
         var btn = $(this);
@@ -75,6 +84,7 @@ $(document).ready(function () {
             success: function (form) {
                 modal.find('.modal-body').html(form);
                 $.validator.unobtrusive.parse(modal); // handel clientSide validations on modal
+                applySelect2();
             },
             error: function () {
                 showErrorMessage()

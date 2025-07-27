@@ -48,3 +48,17 @@ body {
 .no-caret::after {
     display: none !important;
 }
+.form-control {
+    height: 39px;
+}
+
+/* Start override select2 */
+.select2-container--default .select2-selection--single {
+    height: 38px;
+    display: flex;
+    align-items: center;
+}
+
+textarea.form-control {
+    height: 60px;
+}
