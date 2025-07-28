@@ -1,6 +1,4 @@
-﻿using ClinicHub.Data.UnitOfWork;
-
-namespace ClinicHub.Controllers;
+﻿namespace ClinicHub.Controllers;
 
 public class SpecialtiesController(IUnitOfWork unitOfWork, IMapper mapper,
 	IValidator<SpecialtyFormViewModel> validator, IUniquenessValidator uniquenessValidator) : Controller

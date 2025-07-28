@@ -22,10 +22,7 @@
 			</button>
 			<ul class="dropdown-menu">
 				<li>
-					<a href="javascript:;" class="dropdown-item js-render-modal"
-					   data-title="Edit Nurse"
-					   data-url="/Nurses/Edit/@Model.Id"
-					   data-update="true">
+					<a asp-action="Edit" asp-route-key="@Model.Key" class="dropdown-item js-render-modal">
 						<i class="bi bi-pencil-square"></i>
 						Edit
 					</a>

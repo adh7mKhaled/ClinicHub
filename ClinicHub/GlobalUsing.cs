@@ -8,6 +8,7 @@ global using ClinicHub.Extensions;
 global using ClinicHub.Filters;
 global using ClinicHub.Services;
 global using FluentValidation;
+global using HashidsNet;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

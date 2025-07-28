@@ -16,7 +16,7 @@ public class NurseFormViewModel
 	public string MobileNumber { get; set; } = null!;
 	public string Address { get; set; } = null!;
 	public decimal? Salary { get; set; }
-	public DateOnly HireDate { get; set; } = DateOnly.FromDateTime(DateTime.Today);
+	public DateOnly HireDate { get; set; }
 
 	[Display(Name = "Doctor")]
 	public int DoctorId { get; set; }

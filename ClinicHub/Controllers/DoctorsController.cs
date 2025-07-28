@@ -1,7 +1,4 @@
 ﻿using ClinicHub.Data.Repositories;
-using ClinicHub.Data.UnitOfWork;
-using HashidsNet;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ClinicHub.Controllers;
 

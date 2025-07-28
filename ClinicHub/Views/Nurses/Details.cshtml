@@ -1,4 +1,4 @@
-﻿@model PatientViewModel
+﻿@model NurseViewModel
 
 @{
 	ViewData["Title"] = "Details";
@@ -11,8 +11,8 @@
 				<div class="card-header bg-white text-black text-center py-4">
 					<h4 class="mb-1">@Model.Name</h4>
 					<p class="mb-0 text-muted">@Model.Email</p>
-					<span class="badge @(Model.MemberStatus == 0 ? "bg-success" : "bg-danger")">
-						@Model.MemberStatus.ToString() Patient
+					<span class="badge @(Model.IsDeleted ? "bg-danger" : "bg-success") js-status">
+						@(Model.IsDeleted ? "Deleted" : "Active")
 					</span>
 				</div>
 				<div class="card-body">
@@ -25,8 +25,23 @@
 						</div>
 
 						<div class="row">
+							<div class="col-lg-6 col-md-4 label">National Id</div>
+							<div class="col-lg-6 col-md-8">@Model.NationalId</div>
+						</div>
+
+						<div class="row">
 							<div class="col-lg-6 col-md-4 label">Mobile Number</div>
 							<div class="col-lg-6 col-md-8">@Model.MobileNumber</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6 col-md-4 label">Doctor assigned to it </div>
+							<div class="col-lg-6 col-md-8">@Model.Doctor</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6 col-md-4 label">Salary</div>
+							<div class="col-lg-6 col-md-8">@Model.Salary</div>
 						</div>
 
 						<div class="row">
@@ -35,23 +50,18 @@
 						</div>
 
 						<div class="row">
-							<div class="col-lg-6 col-md-4 label">Date of birth</div>
-							<div class="col-lg-6 col-md-8">@Model.DateOfBirth.ToString("dd, MMM, yyyy")</div>
-						</div>
-
-						<div class="row">
 							<div class="col-lg-6 col-md-4 label">Age</div>
-							<div class="col-lg-6 col-md-8">@Model.Age @(Model.AgeFlag ? "Days" : "Years")</div>
+							<div class="col-lg-6 col-md-8">@Model.Age</div>
 						</div>
 
 						<div class="row">
-							<div class="col-lg-6 col-md-4 label">City</div>
-							<div class="col-lg-6 col-md-8">@Model.City</div>
+							<div class="col-lg-6 col-md-4 label">Address</div>
+							<div class="col-lg-6 col-md-8">@Model.Address</div>
 						</div>
 
 						<div class="row">
-							<div class="col-lg-6 col-md-4 label">Registered Date</div>
-							<div class="col-lg-6 col-md-8">@Model.CreatedOn</div>
+							<div class="col-lg-6 col-md-4 label">Hire Date</div>
+							<div class="col-lg-6 col-md-8">@Model.HireDate</div>
 						</div>
 
 					</div>
@@ -65,22 +75,20 @@
 					<ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
 
 						<li class="nav-item" role="presentation">
-							<button class="nav-link active" data-bs-toggle="tab" aria-selected="true" role="tab">Upcoming Appointments</button>
+							<button class="nav-link active" data-bs-toggle="tab" aria-selected="true" role="tab">Today's Appointments</button>
 						</li>
 
 						<li class="nav-item" role="presentation">
-							<button class="nav-link" data-bs-toggle="tab"  aria-selected="false" role="tab" tabindex="-1">Past Appointments</button>
+							<button class="nav-link" data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1">Appointments History</button>
 						</li>
 
 					</ul>
 					<div class="tab-content pt-2">
 
 						<div class="tab-pane fade profile-overview active show" role="tabpanel">
-							
 						</div>
 
 						<div class="tab-pane fade profile-edit pt-3" role="tabpanel">
-
 						</div>
 					</div>
 				</div>

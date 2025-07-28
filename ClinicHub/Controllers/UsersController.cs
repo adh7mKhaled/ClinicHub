@@ -1,7 +1,4 @@
-﻿using ClinicHub.Extensions;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace ClinicHub.Controllers;
+﻿namespace ClinicHub.Controllers;
 
 public class UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
 	IValidator<UserFormViewModel> validator, IValidator<ResetPasswordFormViewModel> resetPassswordValidator,

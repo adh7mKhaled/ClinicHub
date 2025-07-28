@@ -1,6 +1,4 @@
-﻿using HashidsNet;
-
-namespace ClinicHub.Controllers;
+﻿namespace ClinicHub.Controllers;
 
 public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 	IValidator<PatientFormViewModel> validator, IUniquenessValidator uniquenessValidator,

@@ -19,8 +19,8 @@
             </div>
         </div>
 
-        <form asp-action="@(!string.IsNullOrEmpty(Model!.Key) ? "Edit" : "Create")" method="post" novalidate>
-            @if (!string.IsNullOrEmpty(Model!.Key))
+        <form asp-action="@(string.IsNullOrEmpty(Model.Key) ? "Create" : "Edit")" method="post" novalidate>
+            @if (!string.IsNullOrEmpty(Model.Key))
             {
                 <input type="hidden" asp-for="Key" />
             }
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <input asp-for="Age" class="form-control" type="number" placeholder="Age" value="">
+                    <input asp-for="Age" class="form-control" type="number" placeholder="Age">
                     <span asp-validation-for="Age" class="text-danger small"></span>
                 </div>
 
