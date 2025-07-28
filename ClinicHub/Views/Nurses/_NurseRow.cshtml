@@ -9,8 +9,8 @@
 	<td>@Model.Doctor</td>
 	<td>-@*number of appoinments*@</td>
 	<td>
-		<span class="badge @(!Model.IsDeleted ? "bg-success" : "bg-danger")">
-			@(!Model.IsDeleted ? "Active" : "Inactive")
+		<span class="badge @(!Model.IsDeleted ? "bg-success" : "bg-danger") js-status">
+			@(!Model.IsDeleted ? "Available" : "Deleted")
 		</span>
 	</td>
 	<td>-@*DateTime of next appoinment*@</td>
@@ -34,10 +34,10 @@
 					</a>
 				</li>
 				<li>
-					<a href="javascript:;" class="dropdown-item flex-stack px-3"
-						data-url="/Nurses/ToggleStatus/@Model.Id">
-						<i class="bi bi-trash"></i>
-						ToggleStatus
+					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
+					   data-url="/Nurses/ToggleStatus/@Model.Id">
+						<i class="bi bi-toggles"></i>
+						Toggle Status
 					</a>
 				</li>
 			</ul>

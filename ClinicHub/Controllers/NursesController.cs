@@ -89,4 +89,18 @@ public class NursesController(IUnitOfWork unitOfWork, IMapper mapper, IValidator
 
 		return View(_mapper.Map<NurseViewModel>(nurse));
 	}
+
+	public IActionResult ToggleStatus(int id)
+	{
+		var patient = _unitOfWork.Nurses.GetById(id);
+
+		if (patient is null)
+			return BadRequest();
+
+		patient.IsDeleted = !patient.IsDeleted;
+		patient.LastUpdatedOn = DateTime.Now;
+		_unitOfWork.Complete();
+
+		return Ok();
+	}
 }

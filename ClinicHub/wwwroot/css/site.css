@@ -51,7 +51,9 @@ body {
 .form-control {
     height: 39px;
 }
-
+#dt-search-0 {
+    height: 30px;
+}
 /* Start override select2 */
 .select2-container--default .select2-selection--single {
     height: 38px;
