@@ -1,5 +1,4 @@
 ﻿using ClinicHub.Consts;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ClinicHub.Core.ViewModels;
 

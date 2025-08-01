@@ -1,12 +1,15 @@
-﻿namespace ClinicHub.Controllers;
+﻿using ClinicHub.Data.Repositories;
+
+namespace ClinicHub.Controllers;
 
 public class NursesController(IUnitOfWork unitOfWork, IMapper mapper, IValidator<NurseFormViewModel> validator,
-	IHashids hashids) : Controller
+	IHashids hashids, IUniquenessValidator uniquenessValidator) : Controller
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
 	private readonly IValidator<NurseFormViewModel> _validator = validator;
 	private readonly IHashids _hashids = hashids;
+	private readonly IUniquenessValidator _uniquenessValidator = uniquenessValidator;
 
 	public IActionResult Index()
 	{
@@ -102,5 +105,30 @@ public class NursesController(IUnitOfWork unitOfWork, IMapper mapper, IValidator
 		_unitOfWork.Complete();
 
 		return Ok();
+	}
+
+	private IActionResult CheckUnique<T>(string key, IBaseRepository<T> repository, Expression<Func<T,
+		bool>> predicate, Func<T, int> entityIdSelector) where T : class
+	{
+		int id = 0;
+		if (!string.IsNullOrEmpty(key))
+			id = _hashids.Decode(key)[0];
+
+		return _uniquenessValidator.IsUnique(repository, predicate, id, entityIdSelector);
+	}
+
+	public IActionResult UniqueNationalId(NurseFormViewModel model)
+	{
+		return CheckUnique(model.Key!, _unitOfWork.Nurses, x => x.NationalId == model.NationalId, d => d.Id);
+	}
+
+	public IActionResult UniqueEmail(NurseFormViewModel model)
+	{
+		return CheckUnique(model.Key!, _unitOfWork.Nurses, x => x.Email == model.Email, d => d.Id);
+	}
+
+	public IActionResult UniqueMobileNumber(NurseFormViewModel model)
+	{
+		return CheckUnique(model.Key!, _unitOfWork.Nurses, x => x.MobileNumber == model.MobileNumber, d => d.Id);
 	}
 }
