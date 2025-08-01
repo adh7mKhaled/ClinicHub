@@ -43,6 +43,8 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 		var viewModel = _mapper.Map<DoctorViewModel>(doctor);
 
+		viewModel.Nurses = _unitOfWork.Nurses.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted).ToList();
+
 		var specialty = _unitOfWork.Specialties.GetById(doctor.SpecialtyId);
 		viewModel.Specialty = specialty!.Name;
 		viewModel.Key = key;

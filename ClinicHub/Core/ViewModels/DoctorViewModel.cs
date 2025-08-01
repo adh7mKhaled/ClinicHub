@@ -16,4 +16,11 @@ public class DoctorViewModel
 	public string Specialty { get; set; } = null!;
 
 	public ICollection<Nurse> Nurses { get; set; } = [];
+	public int NumberOfNurses
+	{
+		get
+		{
+			return Nurses.Count;
+		}
+	}
 }

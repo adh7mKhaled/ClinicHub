@@ -97,7 +97,7 @@
 					<div class="col-md-4">
 						<div class="card stats-card h-100">
 							<div class="card-body text-center pt-4">
-								<h3 class="fw-bold">5</h3>
+								<h3 class="fw-bold">@Model.NumberOfNurses</h3>
 								<p class="text-muted mb-0">Nurses</p>
 							</div>
 						</div>
@@ -133,9 +133,22 @@
 								</table>
 							</div>
 							<div class="tab-pane fade" id="nurses-assigned-to-doctor" role="tabpanel">
-								<table class="table table-hover mb-0">
-									<thead></thead>
-									<tbody></tbody>
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Email</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var nurse in Model.Nurses)
+										{
+											<tr>
+												<td>@nurse.Name</td>
+												<td>@nurse.Email</td>
+											</tr>
+										}
+									</tbody>
 								</table>
 							</div>
 						</div>
