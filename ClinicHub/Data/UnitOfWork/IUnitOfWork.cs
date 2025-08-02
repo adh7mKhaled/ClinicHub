@@ -8,6 +8,7 @@ public interface IUnitOfWork
 	IBaseRepository<Specialty> Specialties { get; }
 	IBaseRepository<Doctor> Doctors { get; }
 	IBaseRepository<Nurse> Nurses { get; }
+	IBaseRepository<DoctorSchedule> DoctorSchedules { get; }
 
 	int Complete();
 }

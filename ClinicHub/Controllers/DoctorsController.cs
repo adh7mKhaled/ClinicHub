@@ -56,7 +56,11 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 	{
 		DoctorFormViewModel viewModel = new()
 		{
-			Specialties = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Specialties.GetAll())
+			Specialties = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Specialties.GetAll()),
+
+			WorkDays = Enum.GetValues<DayOfWeek>()
+			.Select(d => new WorkDayViewModel { Day = d })
+			.ToList()
 		};
 
 		return View("Form", viewModel);
@@ -78,6 +82,19 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 		_unitOfWork.Doctors.Add(doctor);
 		_unitOfWork.Complete();
 
+		var schedules = model.WorkDays
+		.Where(x => x.IsSelected)
+		.Select(d => new DoctorSchedule
+		{
+			DoctorId = doctor.Id,
+			DayOfWeek = d.Day,
+			StartTime = d.StartTime!.Value,
+			EndTime = d.EndTime!.Value
+		});
+
+		_unitOfWork.DoctorSchedules.AddRange(schedules);
+		_unitOfWork.Complete();
+
 		return RedirectToAction(nameof(Details), new { key = _hashids.Encode(doctor.Id) });
 	}
 
@@ -92,6 +109,31 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 		var viewModel = _mapper.Map<DoctorFormViewModel>(doctor);
 		viewModel.Specialties = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Specialties.GetAll());
 		viewModel.Key = key;
+
+		var workDays = Enum.GetValues<DayOfWeek>()
+			.Select(d => new WorkDayViewModel { Day = d })
+			.ToList();
+
+		var existingSchedules = _unitOfWork.DoctorSchedules.GetAll()
+			.Where(x => x.DoctorId == doctor.Id && !x.IsDeleted)
+			.ToList();
+
+		foreach (var schedule in workDays)
+		{
+			var match = existingSchedules.FirstOrDefault(x => x.DayOfWeek == schedule.Day);
+
+			if (match is not null)
+			{
+				schedule.Day = match.DayOfWeek;
+				schedule.StartTime = match.StartTime;
+				schedule.EndTime = match.EndTime;
+				schedule.IsSelected = true;
+
+				existingSchedules.Remove(match);
+			}
+		}
+
+		viewModel.WorkDays = workDays;
 
 		return View("Form", viewModel);
 	}
@@ -111,6 +153,47 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 		doctor.LastUpdatedOn = DateTime.Now;
 
 		_unitOfWork.Doctors.Update(doctor);
+		_unitOfWork.Complete();
+
+		var existingSchedules = _unitOfWork.DoctorSchedules.GetAll()
+			.Where(x => x.DoctorId == doctor.Id && !x.IsDeleted)
+			.ToList();
+
+		var newSchedules = model.WorkDays
+			.Where(x => x.IsSelected)
+			.Select(d => new DoctorSchedule
+			{
+				DoctorId = doctor.Id,
+				DayOfWeek = d.Day,
+				StartTime = d.StartTime!.Value,
+				EndTime = d.EndTime!.Value
+			})
+			.ToList();
+
+		foreach (var existing in existingSchedules)
+		{
+			var match = newSchedules.FirstOrDefault(s => s.DayOfWeek == existing.DayOfWeek);
+			if (match is not null)
+			{
+				if (existing.StartTime != match.StartTime || existing.EndTime != match.EndTime)
+				{
+					existing.StartTime = match.StartTime;
+					existing.EndTime = match.EndTime;
+					_unitOfWork.DoctorSchedules.Update(existing);
+				}
+
+				newSchedules.Remove(match);
+			}
+			else
+			{
+				existing.IsDeleted = true;
+				_unitOfWork.DoctorSchedules.Update(existing);
+			}
+		}
+
+		if (newSchedules.Any())
+			_unitOfWork.DoctorSchedules.AddRange(newSchedules);
+
 		_unitOfWork.Complete();
 
 		return RedirectToAction(nameof(Details), new { key = model.Key });

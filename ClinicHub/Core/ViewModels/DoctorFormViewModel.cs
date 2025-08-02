@@ -29,4 +29,5 @@ public class DoctorFormViewModel
 	public int SpecialtyId { get; set; }
 
 	public IEnumerable<SelectListItem> Specialties { get; set; } = [];
+	public List<WorkDayViewModel> WorkDays { get; set; } = [];
 }
