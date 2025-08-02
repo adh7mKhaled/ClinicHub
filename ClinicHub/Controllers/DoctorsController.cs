@@ -43,7 +43,9 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 		var viewModel = _mapper.Map<DoctorViewModel>(doctor);
 
-		viewModel.Nurses = _unitOfWork.Nurses.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted).ToList();
+		viewModel.Nurses = [.. _unitOfWork.Nurses.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted)];
+
+		viewModel.DoctorSchedules = [.. _unitOfWork.DoctorSchedules.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted)];
 
 		var specialty = _unitOfWork.Specialties.GetById(doctor.SpecialtyId);
 		viewModel.Specialty = specialty!.Name;

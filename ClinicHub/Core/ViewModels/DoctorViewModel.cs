@@ -14,7 +14,7 @@ public class DoctorViewModel
 	public bool IsDeleted { get; set; }
 	public DateTime CreatedOn { get; set; }
 	public string Specialty { get; set; } = null!;
-
+	public IEnumerable<DoctorSchedule> DoctorSchedules { get; set; } = [];
 	public ICollection<Nurse> Nurses { get; set; } = [];
 	public int NumberOfNurses
 	{

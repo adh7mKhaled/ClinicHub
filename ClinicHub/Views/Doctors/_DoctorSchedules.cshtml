@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DoctorSchedule>
+
+@if (!Model.Any())
+{
+	<div class="alert alert-info alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+		No Woring days Found!
+	</div>
+}
+else
+{
+    <div class="table-responsive rounded-3 overflow-hidden shadow-sm">
+        <table class="table table-hover mb-0">
+            <thead class="table-secondary text-center align-middle">
+                <tr>
+                    <th>Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach (var day in Model)
+                {
+                    <tr>
+                        <td><span class="badge bg-primary">@day.DayOfWeek</span></td>
+                        <td>@DateTime.Today.Add(day.StartTime).ToString("hh:mm tt")</td>
+                        <td>@DateTime.Today.Add(day.EndTime).ToString("hh:mm tt")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
