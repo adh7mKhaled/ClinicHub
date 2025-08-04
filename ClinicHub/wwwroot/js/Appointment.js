@@ -23,33 +23,33 @@
         }
     });
 
-    //$('#AppointmentDate').on('change', function () {
-    //    var selectedDate = $(this).val();
-    //    var doctorId = $('#DoctorId').val();
-    //    var availableTimesList = $('#AvailableDates');
+    $('#AppointmentDate').on('change', function () {
+        var selectedDate = $(this).val();
+        var doctorId = $('#DoctorId').val();
+        var availableTimesList = $('#AvailableDates');
 
-    //    availableTimesList.empty();
-    //    availableTimesList.append('<option></option>');
+        availableTimesList.empty();
+        availableTimesList.append('<option></option>');
 
-    //    if (selectedDate) {
-    //        $.ajax({
-    //            url: '/Appointments/GetAvailableTimes',
-    //            type: 'GET',
-    //            data: {
-    //                date: selectedDate,
-    //                doctorId: doctorId
-    //            },
-    //            success: function (availableTimes) {
-    //                $.each(availableTimes, function (i, date) {
-    //                    var item = $('<option></option>').attr("value", date.value).text(date.text);
-    //                    availableTimesList.append(item);
-    //                });
-    //            },
-    //            error: function () {
-    //                showErrorMessage();
-    //            }
-    //        })
-    //    }
-    //});
+        if (selectedDate) {
+            $.ajax({
+                url: '/Appointments/GetAvailableTimes',
+                type: 'GET',
+                data: {
+                    date: selectedDate,
+                    doctorId: doctorId
+                },
+                success: function (availableTimes) {
+                    $.each(availableTimes, function (i, date) {
+                        var item = $('<option></option>').attr("value", date.value).text(date.text);
+                        availableTimesList.append(item);
+                    });
+                },
+                error: function () {
+                    showErrorMessage();
+                }
+            })
+        }
+    });
 
 });

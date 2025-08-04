@@ -8,7 +8,7 @@ public class DoctorSchedule
 	public TimeSpan StartTime { get; set; }
 	public TimeSpan EndTime { get; set; }
 	public bool IsDeleted { get; set; }
-	public int BookingInterval { get; set; }
+	public int BookingInterval { get; set; } = 30;
 
 	public Doctor Doctor { get; set; } = null!;
 }

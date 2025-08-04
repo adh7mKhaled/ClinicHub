@@ -1,9 +1,7 @@
 ﻿using ClinicHub.Core.Mapping;
 using ClinicHub.Data;
-using ClinicHub.Data.UnitOfWork;
 using ClinicHub.Helpers;
 using FluentValidation.AspNetCore;
-using HashidsNet;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
 

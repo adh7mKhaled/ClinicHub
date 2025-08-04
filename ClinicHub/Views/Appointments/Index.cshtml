@@ -1,4 +1,4 @@
-﻿@model AppointmentViewModel
+﻿@model AppointmentFormViewModel
 
 @{
     ViewData["Title"] = "Appointments";
@@ -11,16 +11,17 @@
         </h5>
     </div>
     <div class="card-body p-4">
-        <form asp-action="CreateAppointment" method="post">
+        <form asp-action="Create" method="post">
             <div class="mb-4">
                 <h6 class="fw-bold text-secondary mb-3"><i class="bi bi-info-circle me-1"></i> Appointment Details</h6>
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Patient <span class="text-danger">*</span></label>
-                    <select class="form-select js-select2" data-placeholder="Select Patient" asp-items="@Model.Patients">
+                    <select class="form-select js-select2" data-placeholder="Select Patient" asp-items="@Model.Patients"
+                        asp-for="PatientId">
                         <option value="">Select Patient</option>
                     </select>
-                    <span class="text-danger small"></span>
+                    <span asp-validation-for="PatientId" class="text-danger small"></span>
                 </div>
 
                 <div class="mb-3">
@@ -29,7 +30,7 @@
                         asp-items="Model.Specialties" asp-for="SpecialtyId">
                         <option value="">Select Specialty</option>
                     </select>
-                    <span class="text-danger small"></span>
+                    <span asp-validation-for="SpecialtyId" class="text-danger small"></span>
                 </div>
                 
                 <div class="mb-3">
@@ -37,7 +38,7 @@
                     <select class="form-select js-select2" data-placeholder="Select Doctor" asp-for="DoctorId">
                         <option value="">Select Doctor</option>
                     </select>
-                    <span class="text-danger small"></span>
+                    <span asp-validation-for="DoctorId" class="text-danger small"></span>
                 </div>
 
             </div>
@@ -49,7 +50,8 @@
                     <label class="form-label fw-semibold">Appointment Date <span class="text-danger">*</span></label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
-                        <input type="date" class="form-control" asp-for="AppointmentDate"/>
+                        <input type="date" class="form-control" asp-for="AppointmentDate" value=""/>
+                        <span asp-validation-for="AppointmentDate" class="text-danger small"></span>
                     </div>
                 </div>
 
@@ -59,6 +61,7 @@
                         asp-for="AvailableDates">
                         <option value=""></option>
                     </select>
+                    <span asp-validation-for="AvailableDates" class="text-danger small"></span>
                 </div>
             </div>
 
@@ -76,4 +79,5 @@
 
 @section Scripts {
     <script src="~/js/appointment.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
 }
