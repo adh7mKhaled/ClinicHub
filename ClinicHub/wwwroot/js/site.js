@@ -48,11 +48,13 @@ function onModalSuccess(item) {
 }
 
 function applySelect2() {
-    $('.js-select2').select2();
-    $('.js-select2').select2().on('change', function () {
+    $('.js-select2').select2({
+        closeOnSelect: true
+    });
+/*    $('.js-select2').select2().on('change', function () {
         var form = $(this).closest('form');
         form.validate().element(this);
-    });
+    });*/
 }
 
 var initDatatable = function () {
