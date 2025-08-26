@@ -76,7 +76,12 @@
     },
     {
       "library": "bootstrap-daterangepicker@3.0.5",
-      "destination": "wwwroot/lib/bootstrap-daterangepicker/"
+      "destination": "wwwroot/lib/bootstrap-daterangepicker/",
+      "files": [
+        "daterangepicker.min.js",
+        "moment.min.js",
+        "daterangepicker.min.css"
+      ]
     }
   ]
 }

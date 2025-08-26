@@ -63,6 +63,4 @@ $(document).ready(function () {
         }
     });
 
-    $(".js-flatpicker").flatpickr();
-
 });

@@ -67,6 +67,10 @@ var initDatatable = function () {
 
 $(document).ready(function () {
 
+    $(".js-datepicker").daterangepicker({
+        singleDatePicker: true,
+    })
+
     initDatatable();
     applySelect2();
     
