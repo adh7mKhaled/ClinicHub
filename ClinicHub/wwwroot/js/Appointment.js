@@ -1,4 +1,15 @@
-﻿$(document).ready(function () {
+﻿function appointmentSuccessMessage(message = "Saved Successfully!") {
+    showSuccessMessage();
+
+    $('#appointmentForm')[0].reset();
+
+    $('.js-select2').val(null).trigger('change');
+
+    var form = $("#appointmentForm");
+    form.find(".text-danger").empty();
+}
+
+$(document).ready(function () {
 
     $('#SpecialtyId').on('change', function () {
         var specialtyId = $(this).val();
@@ -51,5 +62,7 @@
             })
         }
     });
+
+    $(".js-flatpicker").flatpickr();
 
 });

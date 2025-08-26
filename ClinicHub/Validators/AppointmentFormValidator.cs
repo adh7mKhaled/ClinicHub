@@ -15,8 +15,7 @@ public class AppointmentFormValidator : AbstractValidator<AppointmentFormViewMod
 			{
 				bool exists = ExistsAsync(model.DoctorId, model.PatientId, model.AppointmentDate);
 				return !exists;
-			})
-			.WithMessage("An appointment with this doctor, patient, date, and time already exists.");
+			});
 	}
 
 	public bool ExistsAsync(int doctorId, int patientId, DateOnly date)
