@@ -8,13 +8,42 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 
 	public IActionResult Index()
 	{
+		var appointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(_unitOfWork.Appointments.GetAll());
+
+		return View(appointments);
+	}
+
+	public IActionResult Create()
+	{
 		AppointmentFormViewModel viewModel = new()
 		{
 			Specialties = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Specialties.GetAll()),
 			Patients = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Patients.GetAll())
 		};
 
-		return View(viewModel);
+		return View("Form", viewModel);
+	}
+
+	[HttpPost]
+	public IActionResult Create(AppointmentFormViewModel model)
+	{
+		var validationResult = _validator.Validate(model);
+
+		if (!validationResult.IsValid)
+			return BadRequest();
+
+		var appointment = new Appointment
+		{
+			PatientId = model.PatientId,
+			DoctorId = model.DoctorId,
+			AppointmentDate = model.AppointmentDate,
+			AppointmentTime = model.AvailableDates
+		};
+
+		_unitOfWork.Appointments.Add(appointment);
+		_unitOfWork.Complete();
+
+		return Ok();
 	}
 
 	[AjaxOnly]
@@ -54,28 +83,6 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 		});
 
 		return Ok(list);
-	}
-
-	[HttpPost]
-	public IActionResult Create(AppointmentFormViewModel model)
-	{
-		var validationResult = _validator.Validate(model);
-
-		if (!validationResult.IsValid)
-			return BadRequest();
-
-		var appointment = new Appointment
-		{
-			PatientId = model.PatientId,
-			DoctorId = model.DoctorId,
-			AppointmentDate = model.AppointmentDate,
-			AppointmentTime = model.AvailableDates
-		};
-
-		_unitOfWork.Appointments.Add(appointment);
-		_unitOfWork.Complete();
-
-		return Ok();
 	}
 
 	private List<TimeSpan> GenerateTimeSlots(TimeSpan startTime, TimeSpan endTime, int BookingInterval)

@@ -1,0 +1,87 @@
+﻿@model AppointmentFormViewModel
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<div class="card shadow-sm border-0 rounded-3 mb-5">
+    <div class="card-header text-secondary py-3">
+        <h5 class="mb-0 fw-bold">
+            <i class="bi bi-calendar-plus me-2"></i> Book an Appointment
+        </h5>
+    </div>
+    <div class="card-body p-4">
+        <form asp-action="Create" id="appointmentForm"
+              data-ajax-method="post"
+              data-ajax="true"
+              data-ajax-success="appointmentSuccessMessage"
+              data-ajax-failure="showErrorMessage('You cannot book an appointment for the same patient on the same day with the same doctor.')">
+            <div class="mb-4">
+                <h6 class="fw-bold text-secondary mb-3"><i class="bi bi-info-circle me-1"></i> Appointment Details</h6>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Patient <span class="text-danger">*</span></label>
+                    <select class="form-select js-select2" data-placeholder="Select Patient" asp-items="@Model.Patients"
+                        asp-for="PatientId">
+                        <option value="">Select Patient</option>
+                    </select>
+                    <span asp-validation-for="PatientId" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Specialty <span class="text-danger">*</span></label>
+                    <select class="form-select js-select2" data-placeholder="Select Specialty" 
+                        asp-items="Model.Specialties" asp-for="SpecialtyId">
+                        <option value="">Select Specialty</option>
+                    </select>
+                    <span asp-validation-for="SpecialtyId" class="text-danger small"></span>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Doctor <span class="text-danger">*</span></label>
+                    <select class="form-select js-select2" data-placeholder="Select Doctor" asp-for="DoctorId">
+                        <option value="">Select Doctor</option>
+                    </select>
+                    <span asp-validation-for="DoctorId" class="text-danger small"></span>
+                </div>
+
+            </div>
+
+            <div class="mb-4">
+                <h6 class="fw-bold text-secondary mb-3"><i class="bi bi-clock-history me-1"></i> Schedule</h6>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Appointment Date <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
+                        <input type="text" class="form-control js-datepicker" asp-for="AppointmentDate" value="" />
+                        <span asp-validation-for="AppointmentDate" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Available Time Slots <span class="text-danger">*</span></label>
+                    <select class="form-select js-select2" data-placeholder="Select Time" data-minimum-results-for-search="Infinity"
+                        asp-for="AvailableDates">
+                        <option value=""></option>
+                    </select>
+                    <span asp-validation-for="AvailableDates" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-start gap-3 mt-4">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-check-circle me-1"></i> Book Appointment
+                </button>
+                <a asp-action="Index" asp-controller="Appointments" class="btn btn-primary px-4">
+                    <i class="bi bi-list-ul me-1"></i> View All Appointments
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/appointment.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
+}

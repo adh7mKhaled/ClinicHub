@@ -82,6 +82,10 @@
         "moment.min.js",
         "daterangepicker.min.css"
       ]
+    },
+    {
+      "library": "sweetalert2@11.22.5",
+      "destination": "wwwroot/lib/sweetalert2/"
     }
   ]
 }
