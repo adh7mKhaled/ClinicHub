@@ -8,7 +8,17 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 
 	public IActionResult Index()
 	{
-		var appointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(_unitOfWork.Appointments.GetAll());
+		var appointments = _unitOfWork.Appointments.GetAll()
+			.OrderByDescending(a => a.AppointmentDate)
+			.ThenBy(a => a.AppointmentTime)
+			.Select(x => new AppointmentViewModel
+			{
+				PatientName = _unitOfWork.Patients.GetById(x.PatientId)!.Name,
+				DoctorName = _unitOfWork.Doctors.GetById(x.DoctorId)!.Name,
+				AppointmentDate = x.AppointmentDate,
+				TimeSlot = x.AppointmentTime
+			})
+			.ToList();
 
 		return View(appointments);
 	}
