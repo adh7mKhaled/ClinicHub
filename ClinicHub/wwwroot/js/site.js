@@ -69,6 +69,7 @@ $(document).ready(function () {
 
     $(".js-datepicker").daterangepicker({
         singleDatePicker: true,
+        minDate: new Date(),
     })
 
     initDatatable();

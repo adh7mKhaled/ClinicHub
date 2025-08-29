@@ -9,7 +9,8 @@ public class AppointmentFormViewModel
 	public int PatientId { get; set; }
 
 	[Display(Name = "Appointment dates")]
-	public DateOnly AppointmentDate { get; set; }
+	[AssertThat("AppointmentDate >= Today()", ErrorMessage = Errors.NotAllowedPastDates)]
+	public DateTime AppointmentDate { get; set; } = DateTime.Today;
 
 	[Display(Name = "Time slots")]
 	public TimeSpan AvailableDates { get; set; }

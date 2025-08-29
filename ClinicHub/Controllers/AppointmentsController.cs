@@ -26,7 +26,7 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 			.Include(x => x.Patient);
 
 		if (todayOnly)
-			query = query.Where(x => x.AppointmentDate == DateOnly.FromDateTime(DateTime.Today));
+			query = query.Where(x => x.AppointmentDate == DateTime.Today);
 
 		if (!string.IsNullOrEmpty(searchValue))
 			query = query.Where(x => x.Patient!.Name.Contains(searchValue!) || x.Doctor!.Name.Contains(searchValue!));
@@ -87,7 +87,7 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 	}
 
 	[AjaxOnly]
-	public IActionResult GetAvailableTimes(DateOnly date, int doctorId)
+	public IActionResult GetAvailableTimes(DateTime date, int doctorId)
 	{
 		var schedule = _unitOfWork.DoctorSchedules.GetAll()
 			.Where(x => !x.IsDeleted)

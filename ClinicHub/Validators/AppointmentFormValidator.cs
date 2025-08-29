@@ -18,7 +18,7 @@ public class AppointmentFormValidator : AbstractValidator<AppointmentFormViewMod
 			});
 	}
 
-	public bool ExistsAsync(int doctorId, int patientId, DateOnly date)
+	public bool ExistsAsync(int doctorId, int patientId, DateTime date)
 	{
 		var isExists = _context.Appointments
 			.Any(x => x.DoctorId == doctorId &&
