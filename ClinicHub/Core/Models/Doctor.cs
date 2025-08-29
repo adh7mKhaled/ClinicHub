@@ -16,4 +16,5 @@ public class Doctor : BaseModel
 	public Specialty Specialty { get; set; } = default!;
 
 	public ICollection<Nurse> Nurses { get; set; } = [];
+	public ICollection<Appointment> Appointments { get; set; } = [];
 }

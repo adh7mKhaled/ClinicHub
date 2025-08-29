@@ -81,7 +81,7 @@
 					<div class="col-md-4">
 						<div class="card stats-card h-100">
 							<div class="card-body text-center pt-4">
-								<h3 class="fw-bold">12</h3>
+								<h3 class="fw-bold">@Model.NumberOfTotalAppointments</h3>
 								<p class="text-muted mb-0">Total Appointments</p>
 							</div>
 						</div>
@@ -89,7 +89,7 @@
 					<div class="col-md-4">
 						<div class="card stats-card h-100">
 							<div class="card-body text-center pt-4">
-								<h3 class="fw-bold">28</h3>
+								<h3 class="fw-bold">@Model.TodayAppointmentsCount</h3>
 								<p class="text-muted mb-0">Today's Appointments</p>
 							</div>
 						</div>
@@ -105,13 +105,13 @@
 				</div>
 
 				<div class="card">
-					<div class="card-body pt-3">
+					<div class="card-body pt-3 pb-0">
 						<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
 							<li class="nav-item flex-fill" role="presentation">
-								<button class="nav-link w-100 active" data-bs-toggle="tab" data-bs-target="#today-appointments" role="tab">Today's Appointments</button>
+								<button class="nav-link w-100 active" data-bs-toggle="tab" data-bs-target="#today-appointments" role="tab">Today's appointments</button>
 							</li>
 							<li class="nav-item flex-fill" role="presentation">
-								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#past-appointments" role="tab">Past Appointments</button>
+								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#past-and-upcoming-appointments" role="tab">Past and upcoming appointments</button>
 							</li>
 							<li class="nav-item flex-fill" role="presentation">
 								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#nurses-assigned-to-doctor" role="tab">Nurses</button>
@@ -122,18 +122,10 @@
 						</ul>
 						<div class="tab-content pt-2" id="borderedTabJustifiedContent">
 							<div class="tab-pane fade show active" id="today-appointments" role="tabpanel">
-								<div class="table-responsive">
-									<table class="table table-hover mb-0">
-										<thead></thead>
-										<tbody></tbody>
-									</table>
-								</div>
+								<partial name="_Appointments" model="Model.TodayAppointments" />
 							</div>
-							<div class="tab-pane fade" id="past-appointments" role="tabpanel">
-								<table class="table table-hover mb-0">
-									<thead></thead>
-									<tbody></tbody>
-								</table>
+							<div class="tab-pane fade" id="past-and-upcoming-appointments" role="tabpanel">
+								<partial name="_Appointments" model="Model.PastAndUpcomingAppointments" />
 							</div>
 							<div class="tab-pane fade" id="nurses-assigned-to-doctor" role="tabpanel">
 								<table class="table table-hover">

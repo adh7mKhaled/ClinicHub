@@ -47,6 +47,25 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 		viewModel.DoctorSchedules = [.. _unitOfWork.DoctorSchedules.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted)];
 
+		var appointments = _unitOfWork.Appointments.GetQueryable()
+			.Include(a => a.Patient)
+			.Include(a => a.Doctor)
+			.Where(x => x.DoctorId == doctorId)
+			.OrderByDescending(a => a.AppointmentDate);
+
+		viewModel.TodayAppointmentsCount = appointments
+			.Where(a => a.AppointmentDate.Date == DateTime.Today)
+			.Count();
+
+		var PastAndUpcomingAppointments = appointments
+			.Where(a => a.AppointmentDate.Date != DateTime.Today);
+
+		var TodayAppointments = appointments
+			.Where(a => a.AppointmentDate.Date == DateTime.Today);
+
+		viewModel.PastAndUpcomingAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(PastAndUpcomingAppointments);
+		viewModel.TodayAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(TodayAppointments);
+
 		var specialty = _unitOfWork.Specialties.GetById(doctor.SpecialtyId);
 		viewModel.Specialty = specialty!.Name;
 		viewModel.Key = key;

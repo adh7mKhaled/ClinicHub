@@ -15,12 +15,22 @@ public class DoctorViewModel
 	public DateTime CreatedOn { get; set; }
 	public string Specialty { get; set; } = null!;
 	public IEnumerable<DoctorSchedule> DoctorSchedules { get; set; } = [];
+	public IEnumerable<AppointmentViewModel> PastAndUpcomingAppointments { get; set; } = [];
+	public IEnumerable<AppointmentViewModel> TodayAppointments { get; set; } = [];
+	public int TodayAppointmentsCount { get; set; }
 	public ICollection<Nurse> Nurses { get; set; } = [];
 	public int NumberOfNurses
 	{
 		get
 		{
 			return Nurses.Count;
+		}
+	}
+	public int NumberOfTotalAppointments
+	{
+		get
+		{
+			return PastAndUpcomingAppointments.Count() + TodayAppointments.Count();
 		}
 	}
 }
