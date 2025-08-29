@@ -2,8 +2,9 @@
 
 public class AppointmentViewModel
 {
+	public int Id { get; set; }
 	public string PatientName { get; set; } = null!;
 	public string DoctorName { get; set; } = null!;
-	public DateOnly AppointmentDate { get; set; }
-	public TimeSpan TimeSlot { get; set; }
+	public string AppointmentDate { get; set; } = null!;
+	public string TimeSlot { get; set; } = null!;
 }

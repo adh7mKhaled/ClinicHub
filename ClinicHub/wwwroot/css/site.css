@@ -68,3 +68,9 @@ textarea.form-control {
 .form-select {
     height: 38px;
 }
+
+.dt-spinner + div {
+    display: none !important;
+}
+
+/*End Custom Style*/

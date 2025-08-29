@@ -1,4 +1,6 @@
-﻿namespace ClinicHub.Controllers;
+﻿using ClinicHub.Core.Models;
+
+namespace ClinicHub.Controllers;
 
 public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IValidator<AppointmentFormViewModel> validator) : Controller
 {
@@ -8,19 +10,36 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 
 	public IActionResult Index()
 	{
-		var appointments = _unitOfWork.Appointments.GetAll()
-			.OrderByDescending(a => a.AppointmentDate)
-			.ThenBy(a => a.AppointmentTime)
-			.Select(x => new AppointmentViewModel
-			{
-				PatientName = _unitOfWork.Patients.GetById(x.PatientId)!.Name,
-				DoctorName = _unitOfWork.Doctors.GetById(x.DoctorId)!.Name,
-				AppointmentDate = x.AppointmentDate,
-				TimeSlot = x.AppointmentTime
-			})
-			.ToList();
+		return View();
+	}
 
-		return View(appointments);
+	[HttpPost, IgnoreAntiforgeryToken]
+	public IActionResult GetAppointments(bool todayOnly)
+	{
+		var skip = int.Parse(Request.Form["start"]!);
+		var pageSize = int.Parse(Request.Form["length"]!);
+
+		var searchValue = Request.Form["search[value]"];
+
+		IQueryable<Appointment> query = _unitOfWork.Appointments.GetQueryable()
+			.Include(x => x.Doctor)
+			.Include(x => x.Patient);
+
+		if (todayOnly)
+			query = query.Where(x => x.AppointmentDate == DateOnly.FromDateTime(DateTime.Today));
+
+		if (!string.IsNullOrEmpty(searchValue))
+			query = query.Where(x => x.Patient!.Name.Contains(searchValue!) || x.Doctor!.Name.Contains(searchValue!));
+
+		var data = query.Skip(skip).Take(pageSize).ToList();
+
+		var mappedData = _mapper.Map<IEnumerable<AppointmentViewModel>>(data);
+
+		var recordsTotal = query.Count();
+
+		var jsonData = new { recordsFiltered = recordsTotal, recordsTotal, data = mappedData };
+
+		return Ok(jsonData);
 	}
 
 	public IActionResult Create()

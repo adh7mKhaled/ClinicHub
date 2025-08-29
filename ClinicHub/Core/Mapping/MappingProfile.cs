@@ -33,5 +33,10 @@ public class MappingProfile : Profile
 		CreateMap<DoctorSchedule, SelectListItem>()
 			.ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
 			.ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.DayOfWeek));
+
+		CreateMap<Appointment, AppointmentViewModel>()
+			.ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient!.Name))
+			.ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor!.Name))
+			.ForMember(dest => dest.TimeSlot, opt => opt.MapFrom(src => DateTime.Today.Add(src.AppointmentTime).ToString("hh:mm tt")));
 	}
 }

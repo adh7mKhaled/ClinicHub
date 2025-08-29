@@ -4,6 +4,19 @@
     ViewData["Title"] = "Appointments";
 }
 
+<div class="pagetitle">
+    <div class="d-flex justify-content-between">
+        <div>
+            <h1>Apppointments</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow-sm border-0 rounded-3 mb-5">
     <div class="card-header text-secondary py-3">
         <h5 class="mb-0 fw-bold">
@@ -74,7 +87,7 @@
                     <i class="bi bi-check-circle me-1"></i> Book Appointment
                 </button>
                 <a asp-action="Index" asp-controller="Appointments" class="btn btn-primary px-4">
-                    <i class="bi bi-list-ul me-1"></i> View All Appointments
+                    <i class="bi bi-list-ul me-1"></i> Show Appointments
                 </a>
             </div>
         </form>

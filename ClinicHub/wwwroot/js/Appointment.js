@@ -63,4 +63,36 @@ $(document).ready(function () {
         }
     });
 
+    var table = $('#Appointments').DataTable({
+        serverSide: true,
+        processing: true,
+        stateSave: true,   
+        language: {
+            processing: '<div class= "d-flex justify-content-center text-primary align-items-center dt-spinner" ><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div><span class="text-muted ps-2">Loading...</span></div>'
+        },
+        ajax: {
+            url: '/Appointments/GetAppointments',
+            type: 'POST',
+            data: function (d) {
+                d.todayOnly = $('#todayOnly').is(':checked');
+            }
+        },
+        columnDefs: [{
+            targets: 0,
+            visible: false,
+            searchable: false
+        }],
+        columns: [
+            { data: 'id', "name": "Id", "className": "d-none" },
+            { data: 'patientName', "name": "PatientName" },
+            { data: 'doctorName', "name": "DoctorName" },
+            { data: 'appointmentDate', "name": "AppointmentDate" },
+            { data: 'timeSlot', "name": "TimeSlot" }
+        ]
+    });
+
+    $('#todayOnly').on('change', function () {
+        table.ajax.reload();
+    });
+
 });
