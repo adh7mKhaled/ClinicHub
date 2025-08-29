@@ -34,8 +34,8 @@ $(document).ready(function () {
         }
     });
 
-    $('#AppointmentDate').on('change', function () {
-        var selectedDate = $(this).val();
+    function loadAvailableTimes() {
+        var selectedDate = $('#AppointmentDate').val();
         var doctorId = $('#DoctorId').val();
         var availableTimesList = $('#AvailableDates');
 
@@ -59,9 +59,13 @@ $(document).ready(function () {
                 error: function () {
                     showErrorMessage();
                 }
-            })
+            });
         }
-    });
+    }
+
+    $('#AppointmentDate').on('change', loadAvailableTimes);
+    $('#DoctorId').on('change', loadAvailableTimes);
+
 
     var table = $('#Appointments').DataTable({
         serverSide: true,

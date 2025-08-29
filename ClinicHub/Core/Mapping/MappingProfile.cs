@@ -38,6 +38,6 @@ public class MappingProfile : Profile
 			.ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient!.Name))
 			.ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor!.Name))
 			.ForMember(dest => dest.TimeSlot, opt => opt.MapFrom(src => DateTime.Today.Add(src.AppointmentTime).ToString("hh:mm tt")))
-			.ForMember(dest => dest.AppointmentDate, opt => opt.MapFrom(src => DateTime.Today.Add(src.AppointmentTime).ToString("dd, MMM yyyy")));
+			.ForMember(dest => dest.AppointmentDate, opt => opt.MapFrom(src => src.AppointmentDate.ToString("dd, MMM, yyyy")));
 	}
 }
