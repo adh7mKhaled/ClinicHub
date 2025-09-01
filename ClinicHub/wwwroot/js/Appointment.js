@@ -78,7 +78,15 @@ $(document).ready(function () {
             url: '/Appointments/GetAppointments',
             type: 'POST',
             data: function (d) {
-                d.todayOnly = $('#todayOnly').is(':checked');
+                var val = $('#appointmentDate').val();
+                if (val) {
+                    var dates = val.split(" - ");
+                    d.startDate = dates[0];
+                    d.endDate = dates[1];
+                } else {
+                    d.startDate = null;
+                    d.endDate = null;
+                }
             }
         },
         columnDefs: [{
@@ -95,7 +103,22 @@ $(document).ready(function () {
         ]
     });
 
-    $('#todayOnly').on('change', function () {
+    $('.js-datepicker-appointment').daterangepicker({
+        autoUpdateInput: false,
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        }
+    });
+
+    $('.js-datepicker-appointment').on('apply.daterangepicker', function (ev, picker) {
+        $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+        table.ajax.reload();
+    });
+
+    $('.js-datepicker-appointment').on('cancel.daterangepicker', function (ev, picker) {
+        $(this).val('');
         table.ajax.reload();
     });
 

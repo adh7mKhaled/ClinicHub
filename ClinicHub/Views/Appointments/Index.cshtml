@@ -18,11 +18,11 @@
 <div class="card">
     <div class="card-body">
         <div class="mb-3 d-flex align-items-center mt-3">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="todayOnly">
-                <label class="form-check-label fw-semibold ms-2" for="todayOnly">
-                    Show only today's appointments
-                </label>
+            <div class="input-group w-auto">
+                <span class="input-group-text bg-light">
+                    <i class="bi bi-calendar-date"></i>
+                </span>
+                <input type="text" id="appointmentDate" class="form-control js-datepicker-appointment" placeholder="Filter by date" autocomplete="off"/>
             </div>
         </div>
 

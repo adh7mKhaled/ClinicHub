@@ -14,7 +14,7 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 	}
 
 	[HttpPost, IgnoreAntiforgeryToken]
-	public IActionResult GetAppointments(bool todayOnly)
+	public IActionResult GetAppointments(DateTime? startDate, DateTime? endDate)
 	{
 		var skip = int.Parse(Request.Form["start"]!);
 		var pageSize = int.Parse(Request.Form["length"]!);
@@ -25,8 +25,8 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 			.Include(x => x.Doctor)
 			.Include(x => x.Patient);
 
-		if (todayOnly)
-			query = query.Where(x => x.AppointmentDate == DateTime.Today);
+		if (startDate.HasValue && endDate.HasValue)
+			query = query.Where(x => x.AppointmentDate >= startDate && x.AppointmentDate <= endDate);
 
 		if (!string.IsNullOrEmpty(searchValue))
 			query = query.Where(x => x.Patient!.Name.Contains(searchValue!) || x.Doctor!.Name.Contains(searchValue!));
