@@ -12,8 +12,6 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 
 	public IBaseRepository<Doctor> Doctors => new BaseRepository<Doctor>(_context);
 
-	public IBaseRepository<Nurse> Nurses => new BaseRepository<Nurse>(_context);
-
 	public IBaseRepository<DoctorSchedule> DoctorSchedules => new BaseRepository<DoctorSchedule>(_context);
 
 	public IBaseRepository<Appointment> Appointments => new BaseRepository<Appointment>(_context);

@@ -10,7 +10,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	}
 
 	public DbSet<Doctor> Doctors { get; set; }
-	public DbSet<Nurse> Nurses { get; set; }
 	public DbSet<Patient> Patients { get; set; }
 	public DbSet<Specialty> Specialties { get; set; }
 	public DbSet<DoctorSchedule> DoctorSchedules { get; set; }

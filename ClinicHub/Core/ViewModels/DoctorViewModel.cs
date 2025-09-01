@@ -18,14 +18,6 @@ public class DoctorViewModel
 	public IEnumerable<AppointmentViewModel> PastAndUpcomingAppointments { get; set; } = [];
 	public IEnumerable<AppointmentViewModel> TodayAppointments { get; set; } = [];
 	public int TodayAppointmentsCount { get; set; }
-	public ICollection<Nurse> Nurses { get; set; } = [];
-	public int NumberOfNurses
-	{
-		get
-		{
-			return Nurses.Count;
-		}
-	}
 	public int NumberOfTotalAppointments
 	{
 		get

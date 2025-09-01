@@ -97,8 +97,8 @@
 					<div class="col-md-4">
 						<div class="card stats-card h-100">
 							<div class="card-body text-center pt-4">
-								<h3 class="fw-bold">@Model.NumberOfNurses</h3>
-								<p class="text-muted mb-0">Nurses</p>
+								<h3 class="fw-bold"></h3>
+								<p class="text-muted mb-0"></p>
 							</div>
 						</div>
 					</div>
@@ -111,10 +111,10 @@
 								<button class="nav-link w-100 active" data-bs-toggle="tab" data-bs-target="#today-appointments" role="tab">Today's appointments</button>
 							</li>
 							<li class="nav-item flex-fill" role="presentation">
-								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#past-and-upcoming-appointments" role="tab">Past and upcoming appointments</button>
+								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#past-appointments" role="tab">Past appointments</button>
 							</li>
 							<li class="nav-item flex-fill" role="presentation">
-								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#nurses-assigned-to-doctor" role="tab">Nurses</button>
+								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#past-appointments" role="tab">Upcoming appointments</button>
 							</li>
 							<li class="nav-item flex-fill" role="presentation">
 								<button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#working-days" role="tab">Working days</button>
@@ -127,24 +127,7 @@
 							<div class="tab-pane fade" id="past-and-upcoming-appointments" role="tabpanel">
 								<partial name="_Appointments" model="Model.PastAndUpcomingAppointments" />
 							</div>
-							<div class="tab-pane fade" id="nurses-assigned-to-doctor" role="tabpanel">
-								<table class="table table-hover">
-									<thead>
-										<tr>
-											<th>Name</th>
-											<th>Email</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach (var nurse in Model.Nurses)
-										{
-											<tr>
-												<td>@nurse.Name</td>
-												<td>@nurse.Email</td>
-											</tr>
-										}
-									</tbody>
-								</table>
+							<div class="tab-pane fade" id="past-appointments" role="tabpanel">
 							</div>
 							<div class="tab-pane fade table-responsive" id="working-days" role="tabpanel">
 								<partial name="_DoctorSchedules" model="Model.DoctorSchedules"/>

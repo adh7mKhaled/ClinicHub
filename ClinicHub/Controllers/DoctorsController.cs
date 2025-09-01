@@ -43,8 +43,6 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 		var viewModel = _mapper.Map<DoctorViewModel>(doctor);
 
-		viewModel.Nurses = [.. _unitOfWork.Nurses.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted)];
-
 		viewModel.DoctorSchedules = [.. _unitOfWork.DoctorSchedules.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted)];
 
 		var appointments = _unitOfWork.Appointments.GetQueryable()
