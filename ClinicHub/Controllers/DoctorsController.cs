@@ -51,18 +51,18 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 			.Where(x => x.DoctorId == doctorId)
 			.OrderByDescending(a => a.AppointmentDate);
 
-		viewModel.TodayAppointmentsCount = appointments
-			.Where(a => a.AppointmentDate.Date == DateTime.Today)
-			.Count();
-
-		var PastAndUpcomingAppointments = appointments
-			.Where(a => a.AppointmentDate.Date != DateTime.Today);
+		var PastAppointments = appointments
+			.Where(a => a.AppointmentDate.Date < DateTime.Today);
 
 		var TodayAppointments = appointments
 			.Where(a => a.AppointmentDate.Date == DateTime.Today);
 
-		viewModel.PastAndUpcomingAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(PastAndUpcomingAppointments);
+		var upcomingAppointments = appointments
+			.Where(a => a.AppointmentDate.Date > DateTime.Today);
+
+		viewModel.PastAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(PastAppointments);
 		viewModel.TodayAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(TodayAppointments);
+		viewModel.UpcomingAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(upcomingAppointments);
 
 		var specialty = _unitOfWork.Specialties.GetById(doctor.SpecialtyId);
 		viewModel.Specialty = specialty!.Name;

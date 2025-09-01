@@ -14,15 +14,14 @@ public class DoctorViewModel
 	public bool IsDeleted { get; set; }
 	public DateTime CreatedOn { get; set; }
 	public string Specialty { get; set; } = null!;
+
 	public IEnumerable<DoctorSchedule> DoctorSchedules { get; set; } = [];
-	public IEnumerable<AppointmentViewModel> PastAndUpcomingAppointments { get; set; } = [];
+	public IEnumerable<AppointmentViewModel> PastAppointments { get; set; } = [];
+	public IEnumerable<AppointmentViewModel> UpcomingAppointments { get; set; } = [];
 	public IEnumerable<AppointmentViewModel> TodayAppointments { get; set; } = [];
-	public int TodayAppointmentsCount { get; set; }
-	public int NumberOfTotalAppointments
-	{
-		get
-		{
-			return PastAndUpcomingAppointments.Count() + TodayAppointments.Count();
-		}
-	}
+
+	public int NoOfTodayAppointments => TodayAppointments.Count();
+	public int NoOfUpcomingAppointments => UpcomingAppointments.Count();
+	public int NoOfTotalAppointments => 
+		PastAppointments.Count() + TodayAppointments.Count() + UpcomingAppointments.Count();
 }
