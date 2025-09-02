@@ -12,9 +12,26 @@ public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 	public IActionResult Index()
 	{
-		var patients = _unitOfWork.Patients.GetAll();
+		return View();
+	}
 
-		return View(_mapper.Map<IEnumerable<PatientViewModel>>(patients));
+	[HttpPost]
+	public IActionResult Search(SearchFormViewModel model)
+	{
+		if (!ModelState.IsValid)
+			return View(nameof(Index), model);
+
+		var query = _unitOfWork.Patients.GetQueryable();
+
+		var patient = query.SingleOrDefault(x => x.Email == model.Value || x.MobileNumber == model.Value);
+
+		var viewModel = _mapper.ProjectTo<PatientSearchResultViewModel>(query)
+			.SingleOrDefault(x => x.Email == model.Value || x.MobileNumber == model.Value);
+
+		if (patient is not null)
+			viewModel!.Key = _hashids.Encode(patient.Id);
+
+		return PartialView("_Result", viewModel);
 	}
 
 	[AjaxOnly]
@@ -38,18 +55,14 @@ public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 		_unitOfWork.Patients.Add(patient);
 		_unitOfWork.Complete();
 
-		return PartialView("_patientRow", _mapper.Map<PatientViewModel>(patient));
+		return RedirectToAction(nameof(Details), new { key = _hashids.Encode(patient.Id) });
 	}
 
-	[AjaxOnly]
-	public IActionResult Edit(int id)
+	public IActionResult Edit(string key)
 	{
-		var patient = _unitOfWork.Patients.GetById(id);
+		var patient = _unitOfWork.Patients.GetById(_hashids.Decode(key)[0]);
 
-		if (patient is null)
-			return NotFound();
-
-		return PartialView("_Form", _mapper.Map<PatientFormViewModel>(patient));
+		return patient is null ? NotFound() : PartialView("_Form", _mapper.Map<PatientFormViewModel>(patient));
 	}
 
 	[HttpPost]
@@ -68,14 +81,12 @@ public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 		_unitOfWork.Patients.Update(patient);
 		_unitOfWork.Complete();
 
-		return PartialView("_patientRow", _mapper.Map<PatientViewModel>(patient));
+		return Ok();
 	}
 
 	public IActionResult Details(string key)
 	{
-		var patientId = _hashids.Decode(key)[0];
-
-		var patient = _unitOfWork.Patients.GetById(patientId);
+		var patient = _unitOfWork.Patients.GetById(_hashids.Decode(key)[0]);
 
 		return patient is null ? NotFound() : View(_mapper.Map<PatientViewModel>(patient));
 	}

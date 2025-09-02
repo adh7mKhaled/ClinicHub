@@ -6,6 +6,7 @@ public class MappingProfile : Profile
 	{
 		CreateMap<Patient, PatientViewModel>();
 		CreateMap<PatientFormViewModel, Patient>().ReverseMap();
+		CreateProjection<Patient, PatientSearchResultViewModel>();
 		CreateMap<Patient, SelectListItem>()
 			.ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
 			.ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));

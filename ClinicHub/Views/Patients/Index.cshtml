@@ -1,65 +1,62 @@
-﻿@model IEnumerable<PatientViewModel>
+﻿@model SearchFormViewModel
 
 @{
-	ViewData["Title"] = "Patients";
+    ViewData["Title"] = "Patients";
 }
-
 <div class="pagetitle">
-	<div class="d-flex justify-content-between">
-		<div>
-			<h1>Patients</h1>
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-					<li class="breadcrumb-item active">Patients</li>
-				</ol>
-			</nav>
-		</div>
-		<div>
-			<a href="javascript:;" class="btn btn-sm mt-1 p-2 js-render-modal" style="background-color: #4154f1; color: white;"
-				data-title="Add Patient"
-				data-url="/Patients/Create">
-				<i class="bi bi-plus-lg"></i>
-				Add Patient
-			</a>
-		</div>
-	</div>
-</div>
-<div class="card">
-    <div class="card-body">
-		@if (!Model.Any())
-		{
-			<div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 18px;">
-				<i class="bi bi-exclamation-triangle me-1"></i>
-				No Patients found!
-			</div>
-		}
-		else
-		{
-			<div class="datatable-container">
-				<table id="js-datatable" class="table">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>City</th>
-							<th>Next Appointment</th>
-							<th>Status</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var patient in Model)
-						{
-							<partial name="_PatientRow" model="@patient" />
-						}
-					</tbody>
-				</table>
-			</div>			
-		}
+    <div class="d-flex justify-content-between">
+        <div>
+            <h1>Patients</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Patients</li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <a href="javascript:;" class="btn btn-sm mt-1 p-2 js-render-modal" style="background-color: #4154f1; color: white;"
+               data-title="Add Patient"
+               data-url="Patients/Create">
+                <i class="bi bi-plus-lg"></i>
+                Add Patient
+            </a>
+        </div>
     </div>
 </div>
 
+<form class="row g-3 m-0"
+      asp-action="Search"
+      data-ajax-method="post"
+      data-ajax="true"
+      data-ajax-update="#Result"
+      data-ajax-failure="showErrorMessage">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body p-4">
+            <h5 class="fw-bold text-secondary mb-3">
+                <i class="bi bi-people me-2"></i> Find a patient
+            </h5>
+
+            <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                    <i class="bi bi-search text-muted"></i>
+                </span>
+                <input asp-for="Value"
+                       class="form-control border-start-0 search-input"
+                       placeholder="Search by mobile, or email ..."
+                       autocomplete="off" />
+                <button class="btn btn-primary px-4 d-flex align-items-center" type="submit">
+                    <i class="bi bi-arrow-right-circle me-1"></i> Search
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div id="Result"></div>
+
 @section Scripts
 {
-	<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

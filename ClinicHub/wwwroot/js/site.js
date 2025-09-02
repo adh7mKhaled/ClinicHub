@@ -65,6 +65,24 @@ var initDatatable = function () {
     });
 };
 
+function applyDatePickerOnModal() {
+    $(".js-datepicker").daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        autoUpdateInput: false,
+    });
+
+    $('.js-datepicker').on('apply.daterangepicker', function (ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY'));
+        $(this).valid();
+    });
+
+    $('.js-datepicker').on('cancel.daterangepicker', function () {
+        $(this).val('');
+        $(this).valid();
+    });
+}
+
 $(document).ready(function () {
 
     $(".js-datepicker").daterangepicker({
@@ -92,6 +110,7 @@ $(document).ready(function () {
                 modal.find('.modal-body').html(form);
                 $.validator.unobtrusive.parse(modal); // handel clientSide validations on modal
                 applySelect2();
+                applyDatePickerOnModal();
             },
             error: function () {
                 showErrorMessage()

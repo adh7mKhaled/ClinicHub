@@ -9,7 +9,7 @@ public class PatientFormViewModel
 	[Display(Name = "First Name")]
 	public string Name { get; set; } = null!;
 
-	[AssertThat("DateOfBirth < Today()", ErrorMessage = Errors.NotAllowDates)]
+	[AssertThat("DateOfBirth < Today()", ErrorMessage = Errors.NotAllowFutureDate)]
 	[Display(Name = "Date Of Birth")]
 	public DateTime DateOfBirth { get; set; }
 

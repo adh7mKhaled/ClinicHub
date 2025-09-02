@@ -9,7 +9,7 @@
 		public const string DuplicatedBook = "Book with the same title is already exists with the same author";
 		public const string NotAllowedExtension = "Only .png, .jpg, .jpeg files are allowed!";
 		public const string MaxSize = "File cannot be more that 2 MB!";
-		public const string NotAllowDates = "Date cannot be today!";
+		public const string NotAllowFutureDate = "Date cannot be in the future or today!";
 		public const string InvalidRange = "{PropertyName} shouid be between {From} and {To}!";
 		public const string ConfirmPasswordNotMatch = "The password and confirmation password do not match.";
 		public const string WeakPassword = "passwords must contain an uppercase character, lowercase character, a digit, and a non-alphanumeric character. Passwords must be at least 8 characters long.";
