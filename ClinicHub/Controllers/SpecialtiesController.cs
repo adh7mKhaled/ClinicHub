@@ -1,4 +1,7 @@
-﻿namespace ClinicHub.Controllers;
+﻿using AutoMapper.QueryableExtensions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+namespace ClinicHub.Controllers;
 
 public class SpecialtiesController(IUnitOfWork unitOfWork, IMapper mapper,
 	IValidator<SpecialtyFormViewModel> validator, IUniquenessValidator uniquenessValidator) : Controller
@@ -10,8 +13,10 @@ public class SpecialtiesController(IUnitOfWork unitOfWork, IMapper mapper,
 
 	public IActionResult Index()
 	{
-		var specialties = _unitOfWork.Specialties.GetAll();
-		return View(_mapper.Map<IEnumerable<SpecialtyViewModel>>(specialties));
+		var query = _unitOfWork.Specialties.GetQueryable()
+			.Include(x => x.Doctors);
+
+		return View(_mapper.ProjectTo<SpecialtyViewModel>(query).ToList());
 	}
 
 	[AjaxOnly]
@@ -66,7 +71,11 @@ public class SpecialtiesController(IUnitOfWork unitOfWork, IMapper mapper,
 		_unitOfWork.Specialties.Update(specialty);
 		_unitOfWork.Complete();
 
-		return PartialView("_SpecialtyRow", _mapper.Map<SpecialtyViewModel>(specialty));
+		var query = _unitOfWork.Specialties.GetQueryable();
+
+		var viewModel = _mapper.ProjectTo<SpecialtyViewModel>(query).SingleOrDefault(x => x.Id == specialty.Id);
+
+		return PartialView("_SpecialtyRow", viewModel);
 	}
 
 	public IActionResult ToggleStatus(int id)

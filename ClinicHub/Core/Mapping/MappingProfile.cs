@@ -10,17 +10,18 @@ public class MappingProfile : Profile
 			.ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
 			.ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
 
-		CreateMap<ApplicationUser, UserViewModel>();
+		CreateProjection<ApplicationUser, UserViewModel>();
 		CreateMap<ApplicationUser, UserFormViewModel>().ReverseMap();
 
-		CreateMap<Specialty, SpecialtyViewModel>();
+		CreateProjection<Specialty, SpecialtyViewModel>()
+			.ForMember(dest => dest.NoOfDoctors, opt => opt.MapFrom(src => src.Doctors.Count()));
 		CreateMap<SpecialtyFormViewModel, Specialty>().ReverseMap();
 		CreateMap<Specialty, SelectListItem>()
 			.ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
 			.ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
 
 		CreateMap<DoctorFormViewModel, Doctor>().ReverseMap();
-		CreateMap<Doctor, DoctorSearchResultViewModel>();
+		CreateProjection<Doctor, DoctorSearchResultViewModel>();
 		CreateMap<Doctor, DoctorViewModel>();
 		CreateMap<Doctor, SelectListItem>()
 			.ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
@@ -30,7 +31,7 @@ public class MappingProfile : Profile
 			.ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
 			.ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.DayOfWeek));
 
-		CreateMap<Appointment, AppointmentViewModel>()
+		CreateProjection<Appointment, AppointmentViewModel>()
 			.ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient!.Name))
 			.ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor!.Name))
 			.ForMember(dest => dest.TimeSlot, opt => opt.MapFrom(src => DateTime.Today.Add(src.AppointmentTime).ToString("hh:mm tt")))

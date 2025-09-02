@@ -8,4 +8,5 @@ public class SpecialtyViewModel
 	public DateTime CreatedOn { get; set; }
 	public DateTime? LastUpdatedOn { get; set; }
 	public bool IsDeleted { get; set; }
+	public int NoOfDoctors { get; set; }
 }

@@ -13,6 +13,7 @@ public class PatientViewModel
 	public string MobileNumber { get; set; } = null!;
 	public string Email { get; set; } = null!;
 	public string City { get; set; } = null!;
+	public bool IsDeleted { get; set; }
 	public DateTime CreatedOn { get; set; }
 	public DateTime? LastUpdatedOn { get; set; }
 	public int Age

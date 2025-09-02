@@ -31,9 +31,7 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 		if (!string.IsNullOrEmpty(searchValue))
 			query = query.Where(x => x.Patient!.Name.Contains(searchValue!) || x.Doctor!.Name.Contains(searchValue!));
 
-		var data = query.Skip(skip).Take(pageSize).ToList();
-
-		var mappedData = _mapper.Map<IEnumerable<AppointmentViewModel>>(data);
+		var mappedData = _mapper.ProjectTo<AppointmentViewModel>(query).Skip(skip).Take(pageSize).ToList();
 
 		var recordsTotal = query.Count();
 

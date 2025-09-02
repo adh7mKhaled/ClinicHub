@@ -5,11 +5,13 @@
 
 <tr>
 	<td>@Model.Name</td>
-	<td>@Model.MobileNumber</td>
 	<td>@Model.City</td>
-	<td>@Model.CreatedOn.ToString()</td>
-	<td>@Model.CreatedOn.ToString()</td>
-	<td>@Model.CreatedOn.ToString("dd, MMM, yyyy")</td>
+	<td>@Model.CreatedOn</td>
+	<td>
+		<span class="badge @(Model.IsDeleted ? "bg-danger" : "bg-success") js-status">
+			@(Model.IsDeleted ? "Deleted" : "Available")
+		</span>
+	</td>
 	<td>
 		<div class="btn-group">
 			<button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,10 +36,10 @@
 				@if (User.IsInRole(AppRoles.Admin))
 				{
 					<li>
-						<a href="javascript:;" class="dropdown-item flex-stack px-3"
+						<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
 						   data-url="/Patients/ToggleStatus/@Model.Id">
-							<i class="bi bi-trash"></i>
-							Delete Patient
+							<i class="bi bi-toggles"></i>
+							Toggle Status
 						</a>
 					</li>
 				}

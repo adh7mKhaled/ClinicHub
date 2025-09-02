@@ -1,4 +1,5 @@
-﻿using ClinicHub.Data.Repositories;
+﻿using ClinicHub.Core.Models;
+using ClinicHub.Data.Repositories;
 
 namespace ClinicHub.Controllers;
 
@@ -23,12 +24,15 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 		if (!ModelState.IsValid)
 			return View(nameof(Index), model);
 
-		var doctor = _unitOfWork.Doctors.Find(x => x.Email == model.Value || x.MobileNumber == model.Value || x.NationalId == model.Value);
+		var query = _unitOfWork.Doctors.GetQueryable();
 
-		var viewModel = _mapper.Map<DoctorSearchResultViewModel>(doctor);
+		var doctor = query.SingleOrDefault(x => x.Email == model.Value || x.MobileNumber == model.Value || x.NationalId == model.Value);
+
+		var viewModel = _mapper.ProjectTo<DoctorSearchResultViewModel>(query)
+			.SingleOrDefault(x => x.Email == model.Value || x.MobileNumber == model.Value || x.NationalId == model.Value);
 
 		if (doctor is not null)
-			viewModel.Key = _hashids.Encode(doctor.Id);
+			viewModel!.Key = _hashids.Encode(doctor.Id);
 
 		return PartialView("_Result", viewModel);
 	}
@@ -43,7 +47,7 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 		var viewModel = _mapper.Map<DoctorViewModel>(doctor);
 
-		viewModel.DoctorSchedules = [.. _unitOfWork.DoctorSchedules.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted)];
+		viewModel.DoctorSchedules = _unitOfWork.DoctorSchedules.GetAll().Where(x => x.DoctorId == doctorId && !x.IsDeleted).ToList();
 
 		var appointments = _unitOfWork.Appointments.GetQueryable()
 			.Include(a => a.Patient)
@@ -60,9 +64,9 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 		var upcomingAppointments = appointments
 			.Where(a => a.AppointmentDate.Date > DateTime.Today);
 
-		viewModel.PastAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(PastAppointments);
-		viewModel.TodayAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(TodayAppointments);
-		viewModel.UpcomingAppointments = _mapper.Map<IEnumerable<AppointmentViewModel>>(upcomingAppointments);
+		viewModel.PastAppointments = _mapper.ProjectTo<AppointmentViewModel>(PastAppointments).ToList();
+		viewModel.TodayAppointments = _mapper.ProjectTo<AppointmentViewModel>(TodayAppointments).ToList();
+		viewModel.UpcomingAppointments = _mapper.ProjectTo<AppointmentViewModel>(upcomingAppointments).ToList();
 
 		var specialty = _unitOfWork.Specialties.GetById(doctor.SpecialtyId);
 		viewModel.Specialty = specialty!.Name;

@@ -1,4 +1,6 @@
-﻿namespace ClinicHub.Controllers;
+﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+namespace ClinicHub.Controllers;
 
 public class UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
 	IValidator<UserFormViewModel> validator, IValidator<ResetPasswordFormViewModel> resetPassswordValidator,
@@ -12,9 +14,9 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
 
 	public async Task<IActionResult> Index()
 	{
-		var users = await _userManager.Users.ToListAsync();
+		var query = _userManager.Users;
 
-		return View(_mapper.Map<IEnumerable<UserViewModel>>(users));
+		return View(await _mapper.ProjectTo<UserViewModel>(query).ToListAsync());
 	}
 
 	[AjaxOnly]
@@ -90,7 +92,8 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
 		if (!validationResult.IsValid)
 			return BadRequest();
 
-		var user = await _userManager.FindByIdAsync(model.Id!);
+		IQueryable<ApplicationUser> query = _userManager.Users;
+		var user = query.SingleOrDefault(x => x.Id == model.Id);
 
 		if (user is null)
 			return NotFound();
@@ -115,7 +118,7 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
 
 			await _userManager.UpdateSecurityStampAsync(user);
 
-			return PartialView("_UserRow", _mapper.Map<UserViewModel>(user));
+			return PartialView("_UserRow", _mapper.ProjectTo<UserViewModel>(query).SingleOrDefault(x => x.Id == model.Id));
 		}
 		return BadRequest(string.Join(',', result.Errors.Select(e => e.Description)));
 	}
@@ -157,7 +160,8 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
 		if (!validationResult.IsValid)
 			return BadRequest();
 
-		var user = await _userManager.FindByIdAsync(model.Id);
+		IQueryable<ApplicationUser> query = _userManager.Users;
+		var user = query.SingleOrDefault(x => x.Id == model.Id);
 
 		if (user is null)
 			return NotFound();
@@ -167,14 +171,14 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
 		await _userManager.RemovePasswordAsync(user);
 		var result = await _userManager.AddPasswordAsync(user, model.Password);
 
-		if (!result.Succeeded)
+		if (result.Succeeded)
 		{
 			user.LastUpdatedById = User.GetUserId();
 			user.LastUpdatedOn = DateTime.Now;
 
 			await _userManager.UpdateAsync(user);
 
-			return PartialView("_UserRow", _mapper.Map<UserViewModel>(user));
+			return PartialView("_UserRow", _mapper.ProjectTo<UserViewModel>(query).SingleOrDefault(x => x.Id == model.Id));
 		}
 		user.PasswordHash = currentPassword;
 		await _userManager.UpdateAsync(user);

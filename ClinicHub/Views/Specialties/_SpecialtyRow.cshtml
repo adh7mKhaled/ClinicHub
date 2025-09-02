@@ -2,7 +2,7 @@
 
 <tr>
 	<td>@Model.Name</td>
-	<td>0</td>
+	<td>@Model.NoOfDoctors</td>
 	<td>
 		<span class="badge @(Model.IsDeleted ? "bg-danger" : "bg-success") js-status">
 			@(Model.IsDeleted ? "Deleted" : "Available")
@@ -26,15 +26,9 @@
 					</a>
 				</li>
 				<li>
-					<a asp-action="Details" asp-route-Id="@Model.Id" class="dropdown-item">
-						<i class="bi bi-person-badge"></i>
-						Details
-					</a>
-				</li>
-				<li>
 					<a href="javascript:;" class="dropdown-item flex-stack px-3 js-toggle-status"
 						data-url="/Specialties/ToggleStatus/@Model.Id">
-						<i class="bi bi-trash"></i>
+						<i class="bi bi-toggles"></i>
 						Toggle Status
 					</a>
 				</li>
