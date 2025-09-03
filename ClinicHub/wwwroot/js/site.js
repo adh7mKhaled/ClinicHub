@@ -162,6 +162,45 @@ $(document).ready(function () {
         });
     });
 
+    $('body').delegate('.js-toggle-status-patient-doctor', 'click', function () {
+        var btn = $(this);
+
+        bootbox.confirm({
+            message: 'Are you sure that you need to toggle this item status ?',
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-secondary'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: btn.data('url'),
+                        success: function () {
+                            var status = $('.card-header .js-status');
+                            var newStatus = status.text().trim() === 'Inactive' ? 'Active' : 'Inactive';
+                            status.text(newStatus).toggleClass('bg-danger bg-success');
+                            status.addClass('animate__animated animate__flash');
+                            setTimeout(() => {
+                                status.removeClass('animate__animated animate__flash');
+                            }, 2000);
+
+                            showSuccessMessage();
+                        },
+                        error: function () {
+                            showErrorMessage();
+                        }
+                    });
+                }
+            }
+        });
+    });
+
     //Handle Confirm
     $('body').delegate('.js-confirm', 'click', function () {
         var btn = $(this);

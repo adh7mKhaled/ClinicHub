@@ -1,7 +1,9 @@
 ﻿@model DoctorViewModel
+@inject IHashids _hashids
 
 @{
 	ViewData["Title"] = "Details";
+	var doctorId = _hashids.Decode(Model.Key)[0];
 }
 
 <section class="section profile">
@@ -13,14 +15,19 @@
 					<div class="card-header bg-white text-black text-center py-4">
 						<h4 class="mb-1">@Model.Name</h4>
 						<p class="mb-0 text-muted">@Model.Email</p>
-						<span class="badge @(Model.IsDeleted ? "bg-danger" : "bg-success") js-status">
-							@(Model.IsDeleted ? "Deleted" : "Active")
+						<span class="badge @(!Model.IsDeleted ? "bg-success" : "bg-danger") js-status">
+							@(!Model.IsDeleted ? "Active" : "Inactive")
 						</span>
 					</div>
 					<div class="card-body">
 						<div class="tab-pane fade profile-overview active show" id="profile-overview" role="tabpanel">
 							<h5 class="card-title d-flex justify-content-between align-items-center">
 								Details
+								<a href="javascript:;" class="btn btn-sm btn-outline-primary js-toggle-status-patient-doctor"
+								   data-url="/Doctors/ToggleStatus/@doctorId">
+									<i class="bi bi-toggles"></i>
+									Toggle Status
+								</a>
 							</h5>
 
 							<div class="row">

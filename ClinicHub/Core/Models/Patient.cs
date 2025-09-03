@@ -6,7 +6,6 @@ public class Patient : BaseModel
 	public string Name { get; set; } = null!;
 	public DateTime DateOfBirth { get; set; }
 	public Gender Gender { get; set; }
-	public MemberStatus MemberStatus { get; set; } = MemberStatus.Active;
 	public MaritalStatus MaritalStatus { get; set; }
 	public string? Notes { get; set; }
 	public string MobileNumber { get; set; } = null!;

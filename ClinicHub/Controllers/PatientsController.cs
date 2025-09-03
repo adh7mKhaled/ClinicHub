@@ -93,9 +93,7 @@ public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 	public IActionResult ToggleStatus(int id)
 	{
-		var patient = _unitOfWork.Patients.GetById(id);
-
-		if (patient is null)
+		if (_unitOfWork.Patients.GetById(id) is not { } patient)
 			return BadRequest();
 
 		patient.IsDeleted = !patient.IsDeleted;

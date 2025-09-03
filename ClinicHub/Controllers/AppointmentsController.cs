@@ -44,8 +44,8 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 	{
 		AppointmentFormViewModel viewModel = new()
 		{
-			Specialties = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Specialties.GetAll()),
-			Patients = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Patients.GetAll())
+			Specialties = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Specialties.GetAll().Where(x => !x.IsDeleted)),
+			Patients = _mapper.Map<IEnumerable<SelectListItem>>(_unitOfWork.Patients.GetAll().Where(x => !x.IsDeleted))
 		};
 
 		return View("Form", viewModel);
@@ -77,7 +77,7 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 	public IActionResult GetDoctors(int specialtyId)
 	{
 		var doctors = _unitOfWork.Doctors.GetAll()
-			.Where(x => x.SpecialtyId == specialtyId)
+			.Where(x => x.SpecialtyId == specialtyId && !x.IsDeleted)
 			.OrderBy(x => x.Name)
 			.ToList();
 

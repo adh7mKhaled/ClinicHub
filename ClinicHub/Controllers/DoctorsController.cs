@@ -222,6 +222,18 @@ public class DoctorsController(IUnitOfWork unitOfWork, IMapper mapper,
 		return RedirectToAction(nameof(Details), new { key = model.Key });
 	}
 
+	public IActionResult ToggleStatus(int id)
+	{
+		if (_unitOfWork.Doctors.GetById(id) is not { } doctor)
+			return BadRequest();
+
+		doctor.IsDeleted = !doctor.IsDeleted;
+		doctor.LastUpdatedOn = DateTime.Now;
+		_unitOfWork.Complete();
+
+		return Ok();
+	}
+
 	private IActionResult CheckUnique<T>(string key, IBaseRepository<T> repository, Expression<Func<T,
 		bool>> predicate, Func<T, int> entityIdSelector) where T : class
 	{
