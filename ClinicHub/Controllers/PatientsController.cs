@@ -86,9 +86,18 @@ public class PatientsController(IUnitOfWork unitOfWork, IMapper mapper,
 
 	public IActionResult Details(string key)
 	{
-		var patient = _unitOfWork.Patients.GetById(_hashids.Decode(key)[0]);
+		if (_unitOfWork.Patients.GetById(_hashids.Decode(key)[0]) is not { } patient)
+			return NotFound();
 
-		return patient is null ? NotFound() : View(_mapper.Map<PatientViewModel>(patient));
+		var viewModel = _mapper.Map<PatientViewModel>(patient);
+
+		var appointments = _unitOfWork.Appointments.GetQueryable();
+
+		appointments = appointments.Where(x => x.PatientId == patient.Id);
+
+		viewModel.Appointments = _mapper.ProjectTo<AppointmentViewModel>(appointments).ToList();	
+			
+		return View(viewModel);
 	}
 
 	public IActionResult ToggleStatus(int id)

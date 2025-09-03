@@ -30,4 +30,5 @@ public class PatientViewModel
 		}
 	}
 	public bool AgeFlag { get; set; }
+	public IEnumerable<AppointmentViewModel> Appointments { get; set; } = [];
 }
