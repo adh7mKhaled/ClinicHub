@@ -9,4 +9,5 @@ public class Appointment
 	public Patient? Patient { get; set; }
 	public DateTime AppointmentDate { get; set; }
 	public TimeSpan AppointmentTime { get; set; }
+	public AppointmentStatus Status { get; set; } = AppointmentStatus.Scheduled;
 }
