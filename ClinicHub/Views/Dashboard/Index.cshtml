@@ -93,6 +93,26 @@
                     </div>
                 </div>
 
+                <div class="col-12">
+                    <div class="card">
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                                <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                </li>
+
+                                <li><a class="dropdown-item" href="#">Today</a></li>
+                                <li><a class="dropdown-item" href="#">This Month</a></li>
+                                <li><a class="dropdown-item" href="#">This Year</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Appointments <span>/Per Day</span></h5>
+                            <div id="AppointmentsPerDay" style="height: 350px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- End Left side columns -->
@@ -164,3 +184,7 @@
 
     </div>
 </section>
+
+@section Scripts {
+<script src="~/js/appointment.js" asp-append-version="true"></script>
+}

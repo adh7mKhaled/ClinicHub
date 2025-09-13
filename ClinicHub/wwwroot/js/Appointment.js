@@ -9,6 +9,53 @@
     form.find(".text-danger").empty();
 }
 
+drawAppointmentsChart();
+
+function drawAppointmentsChart() {
+
+    var element = document.getElementById('AppointmentsPerDay');
+
+    if (!element)
+        return;
+
+    var height = parseInt(window.getComputedStyle(element).height);
+
+    $.ajax({
+        url: '/Dashboard/GetAppointmentsPerDay',
+        type: 'GET',
+        success: function (data) {
+            var options = {
+                chart: {
+                    type: 'line',
+                    height: height,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                series: [{
+                    name: 'appointments',
+                    data: data.map(x => x.value)
+                }],
+                xaxis: {
+                    categories: data.map(x => x.label)
+                },
+                yaxis: {
+                    min: 0,
+                    tickAmount: Math.max(... data.map(x => x.value))
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#AppointmentsPerDay"), options);
+
+            chart.render();
+        }
+    })
+
+}
+
 $(document).ready(function () {
 
     $('#SpecialtyId').on('change', function () {
@@ -121,5 +168,7 @@ $(document).ready(function () {
         $(this).val('');
         table.ajax.reload();
     });
+
+
 
 });
