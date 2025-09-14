@@ -1,4 +1,6 @@
-﻿function appointmentSuccessMessage(message = "Saved Successfully!") {
+﻿var chart;
+
+function appointmentSuccessMessage(message = "Saved Successfully!") {
     showSuccessMessage();
 
     $('#appointmentForm')[0].reset();
@@ -9,9 +11,33 @@
     form.find(".text-danger").empty();
 }
 
+function loadDateRange() {
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#AppointmentReportRange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#AppointmentReportRange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+}
+
 drawAppointmentsChart();
 
-function drawAppointmentsChart() {
+function drawAppointmentsChart(startDate = null, endDate = null) {
 
     var element = document.getElementById('AppointmentsPerDay');
 
@@ -20,10 +46,10 @@ function drawAppointmentsChart() {
 
     var height = parseInt(window.getComputedStyle(element).height);
 
-    $.ajax({
-        url: '/Dashboard/GetAppointmentsPerDay',
-        type: 'GET',
+    $.get({
+        url: `/Dashboard/GetAppointmentsPerDay?startDate=${startDate}&endDate=${endDate}`,
         success: function (data) {
+            console.log(data);
             var options = {
                 chart: {
                     type: 'line',
@@ -48,15 +74,23 @@ function drawAppointmentsChart() {
                 }
             };
 
-            var chart = new ApexCharts(document.querySelector("#AppointmentsPerDay"), options);
-
+            chart = new ApexCharts(element, options);
             chart.render();
         }
     })
-
 }
 
 $(document).ready(function () {
+
+    $('#AppointmentReportRange').on('apply.daterangepicker', function (ev, picker) {
+        var startDate = picker.startDate.format('YYYY-MM-DD');
+        var endDate = picker.endDate.format('YYYY-MM-DD');
+
+        chart.destroy();
+        drawAppointmentsChart(startDate, endDate);
+    });
+
+    loadDateRange();
 
     $('#SpecialtyId').on('change', function () {
         var specialtyId = $(this).val();

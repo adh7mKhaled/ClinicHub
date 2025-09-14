@@ -27,10 +27,11 @@ public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper): Contro
 		return View(viewModel);
 	}
 
-	public IActionResult GetAppointmentsPerDay()
+	[AjaxOnly]
+	public IActionResult GetAppointmentsPerDay(DateTime? startDate, DateTime? endDate)
 	{
-		var startDate = DateTime.Today.AddDays(-29);
-		var endDate = DateTime.Today;
+		startDate ??= DateTime.Today.AddDays(-29);
+		endDate ??= DateTime.Today;
 
 		var data = _unitOfWork.Appointments.GetAll()
 			.Where(a => a.AppointmentDate >= startDate && a.AppointmentDate <= endDate)
@@ -39,23 +40,9 @@ public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper): Contro
 				Label = g.Key.AppointmentDate.ToString("d MMM"),
 				Value = g.Count().ToString()	
 			})
+			.OrderBy(x => x.Label)
 			.ToList();
 
-		List<ChartItemViewModel> figures = [];
-
-		for (var day = startDate; day <= endDate; day = day.AddDays(1))
-		{
-			var dayDate = data.SingleOrDefault(d => d.Label == day.ToString("d MMM"));
-
-			ChartItemViewModel item = new()
-			{
-				Label = day.ToString("d MMM"),
-				Value = dayDate is null ? "0" : dayDate.Value
-			};
-
-			figures.Add(item);
-		}
-
-		return Ok(figures);
+		return Ok(data);
 	}
 }

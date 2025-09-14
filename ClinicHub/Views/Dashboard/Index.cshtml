@@ -95,17 +95,11 @@
 
                 <div class="col-12">
                     <div class="card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
+                        <div class="filter me-3">
+                            <div id="AppointmentReportRange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                <i class="fa fa-calendar"></i>&nbsp;
+                                <span></span> <i class="fa fa-caret-down"></i>
+                            </div>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Appointments <span>/Per Day</span></h5>
@@ -186,5 +180,5 @@
 </section>
 
 @section Scripts {
-<script src="~/js/appointment.js" asp-append-version="true"></script>
+    <script src="~/js/appointment.js" asp-append-version="true"></script>
 }
