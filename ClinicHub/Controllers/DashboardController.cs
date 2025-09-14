@@ -1,5 +1,6 @@
 ﻿namespace ClinicHub.Controllers;
 
+[Authorize]
 public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper): Controller
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
