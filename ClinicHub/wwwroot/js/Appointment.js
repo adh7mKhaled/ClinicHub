@@ -180,7 +180,33 @@ $(document).ready(function () {
             { data: 'patientName', "name": "PatientName" },
             { data: 'doctorName', "name": "DoctorName" },
             { data: 'appointmentDate', "name": "AppointmentDate" },
-            { data: 'timeSlot', "name": "TimeSlot" }
+            { data: 'timeSlot', "name": "TimeSlot" },
+            {
+                data: 'status',
+                name: "Status",
+                render: function (data, type, row) {
+                    let text = "";
+                    let badgeClass = "";
+
+                    switch (data) {
+                        case 0:
+                            text = "Scheduled";
+                            badgeClass = "bg-primary";
+                            break;
+                        case 1:
+                            text = "Completed";
+                            badgeClass = "bg-success";
+                            break;
+                        case 2:
+                            text = "Cancelled";
+                            badgeClass = "bg-warning";
+                            break;
+                    }
+
+                    return `<span class="badge ${badgeClass}">${text}</span>`;
+                }
+            }
+
         ]
     });
 
