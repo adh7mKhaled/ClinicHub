@@ -12,16 +12,14 @@ public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper): Contro
 		var todayAppointments = _unitOfWork.Appointments.GetQueryable()
 			.Where(a => a.AppointmentDate == DateTime.Today);
 
-		DashboardViewModel viewModel = new()
+        DashboardViewModel viewModel = new()
 		{
 			NumberOfPatients = _unitOfWork.Patients.Count(p => !p.IsDeleted),
-			NumberOfMalePatients = _unitOfWork.Patients.Count(p => p.Gender.Equals(Gender.Male)),
-			NumberOfFemalePatients = _unitOfWork.Patients.Count(p => p.Gender.Equals(Gender.Female)),
+			MonthlyPatientCount = _unitOfWork.Patients.Count(p => p.CreatedOn.Year == DateTime.Now.Year && DateTime.Now.Month == p.CreatedOn.Month),
 			NumberOfAppointments = _unitOfWork.Appointments.Count(),
 			NumberOfTodayAppointments = _unitOfWork.Appointments.Count(a => a.AppointmentDate == DateTime.Today),
 			NumberOfDoctors = _unitOfWork.Doctors.Count(d => !d.IsDeleted),
-			NumberOfMaleDoctors = _unitOfWork.Doctors.Count(d => d.Gender.Equals(Gender.Male)),
-			NumberOfFemaleDoctors = _unitOfWork.Doctors.Count(d => d.Gender.Equals(Gender.Female)),
+			MonthlyDoctorCount = _unitOfWork.Doctors.Count(p => p.CreatedOn.Year == DateTime.Now.Year && DateTime.Now.Month == p.CreatedOn.Month),
 			TodayAppointments = _mapper.ProjectTo<AppointmentViewModel>(todayAppointments).ToList()
 		};
 
