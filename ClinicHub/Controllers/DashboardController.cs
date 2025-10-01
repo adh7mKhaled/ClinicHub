@@ -27,11 +27,8 @@ public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper, IHashid
 
         DashboardViewModel viewModel = new()
 		{
-			NumberOfPatients = _unitOfWork.Patients.Count(p => !p.IsDeleted),
 			MonthlyPatientCount = _unitOfWork.Patients.Count(p => p.CreatedOn.Year == DateTime.Now.Year && DateTime.Now.Month == p.CreatedOn.Month),
-			NumberOfAppointments = _unitOfWork.Appointments.Count(),
 			NumberOfTodayAppointments = _unitOfWork.Appointments.Count(a => a.AppointmentDate == DateTime.Today),
-			NumberOfDoctors = _unitOfWork.Doctors.Count(d => !d.IsDeleted),
 			MonthlyDoctorCount = _unitOfWork.Doctors.Count(p => p.CreatedOn.Year == DateTime.Now.Year && DateTime.Now.Month == p.CreatedOn.Month),
 			TodayAppointments = _mapper.ProjectTo<AppointmentViewModel>(todayAppointments).ToList(),
 			PatientsThisMonth = patientsThisMonth,
@@ -74,4 +71,16 @@ public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper, IHashid
 
         return Ok(data);
 	}
+
+	[AjaxOnly]
+    public IActionResult GetStats()
+    {
+        var stats = new
+        {
+            NumberOfPatients = _unitOfWork.Patients.Count(p => !p.IsDeleted),
+            NumberOfAppointments = _unitOfWork.Appointments.Count(),
+            NumberOfDoctors = _unitOfWork.Doctors.Count(d => !d.IsDeleted)
+        };
+        return Json(stats);
+    }
 }

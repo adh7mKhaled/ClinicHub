@@ -32,7 +32,7 @@
 									<i class="bi bi-person"></i>
 								</div>
 								<div class="ps-3">
-									<h6>@Model.NumberOfPatients</h6>
+									<h6 id="patientsCount"></h6>
 									<div class="small text-muted mt-1">
 										<div class="small-muted">New this month: @Model.MonthlyPatientCount</div>
 									</div>
@@ -55,7 +55,7 @@
 									<i class="bi bi-calendar-week"></i>
 								</div>
 								<div class="ps-3">
-									<h6>@Model.NumberOfAppointments</h6>
+									<h6 id="appointmentsCount"></h6>
 									<div class="small text-muted mt-2">
 										<i class="bi bi-clock text-primary"></i> Today: @Model.NumberOfTodayAppointments <br>
 									</div>
@@ -78,7 +78,7 @@
 									<i class="bi bi-lungs"></i>
 								</div>
 								<div class="ps-3">
-									<h6>@Model.NumberOfDoctors</h6>
+									<h6 id="doctorsCount"></h6>
 									<div class="small text-muted mt-1">
 										<div class="small-muted">New this month: @Model.MonthlyDoctorCount</div>
 									</div>
