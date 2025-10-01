@@ -228,7 +228,7 @@
 					</div>
 					<div class="d-grid gap-2 mt-3">
 						<a asp-controller="Reports" asp-action="Index"
-							class="btn btn-secondary add-button">
+						   class="btn btn-secondary add-button">
 							<i class="bi bi-file-earmark-text me-2"></i>
 							Generate Report
 						</a>
@@ -238,17 +238,17 @@
 
 			<div class="card">
 				<div class="card-body pb-0">
-					<h5 class="card-title">Website Traffic <span>| Today</span></h5>
-
+					<h5 class="card-title">Doctors per specialty</h5>
+					<canvas id="doughnutChart" style="max-height: 350px; display: block; box-sizing: border-box; height: 400px; width: 716px;" width="716" height="400"></canvas>
 				</div>
 			</div>
 
 		</div>
 		<!-- End Right side columns -->
-
 	</div>
 </section>
 
 @section Scripts {
 	<script src="~/js/appointment.js" asp-append-version="true"></script>
+	<script src="~/js/dashboard.js" asp-append-version="true"></script>
 }

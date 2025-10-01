@@ -1,4 +1,6 @@
-﻿namespace ClinicHub.Controllers;
+﻿using AspNetCoreGeneratedDocument;
+
+namespace ClinicHub.Controllers;
 
 [Authorize]
 public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper, IHashids hashids): Controller
@@ -55,5 +57,21 @@ public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper, IHashid
 			.ToList();
 
 		return Ok(data);
+	}
+
+	[AjaxOnly]
+	public IActionResult GetDoctorsPerSpecialty()
+	{
+		var data = from s in _unitOfWork.Specialties.GetQueryable()
+				   join d in _unitOfWork.Doctors.GetQueryable()
+				   on s.Id equals d.SpecialtyId
+				   into doctorsGroup
+				   select new ChartItemViewModel
+				   {
+					   Label = s.Name,
+					   Value = doctorsGroup.Count().ToString()
+				   };
+
+        return Ok(data);
 	}
 }
