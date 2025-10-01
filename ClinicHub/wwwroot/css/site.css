@@ -73,4 +73,9 @@ textarea.form-control {
     display: none !important;
 }
 
+.add-button {
+    background-color: #4154f1;
+    color: white;
+}
+
 /*End Custom Style*/

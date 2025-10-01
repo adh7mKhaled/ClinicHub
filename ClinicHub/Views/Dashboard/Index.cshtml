@@ -152,7 +152,7 @@
 								else
 								{
 									<div class="alert alert-info alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-										No appointments for today!
+										No patients added this month!
 									</div>
 								}
 
@@ -215,11 +215,27 @@
 				</div>
 			</div>
 			<div class="card">
-				<div class="card-body pb-0">
-					<h5 class="card-title">Budget Report <span>| This Month</span></h5>
-
+				<div class="card-body">
+					<h5 class="card-title">
+						Quick Actions
+					</h5>
+					<div class="d-grid gap-2 mt-3">
+						<a asp-controller="Appointments" asp-action="Create"
+						   class="btn btn-secondary add-button">
+							<i class="bi bi-plus-lg me-2"></i>
+							New Appointment
+						</a>
+					</div>
+					<div class="d-grid gap-2 mt-3">
+						<a asp-controller="Reports" asp-action="Index"
+							class="btn btn-secondary add-button">
+							<i class="bi bi-file-earmark-text me-2"></i>
+							Generate Report
+						</a>
+					</div>
 				</div>
 			</div>
+
 			<div class="card">
 				<div class="card-body pb-0">
 					<h5 class="card-title">Website Traffic <span>| Today</span></h5>
