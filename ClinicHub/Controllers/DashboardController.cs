@@ -1,16 +1,27 @@
 ﻿namespace ClinicHub.Controllers;
 
 [Authorize]
-public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper): Controller
+public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper, IHashids hashids): Controller
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
+    private readonly IHashids _hashids = hashids;
 
-	public IActionResult Index()
+    public IActionResult Index()
 	{
-
 		var todayAppointments = _unitOfWork.Appointments.GetQueryable()
 			.Where(a => a.AppointmentDate == DateTime.Today);
+
+		var rowData = _unitOfWork.Patients.GetAll()
+			.Where(p => p.CreatedOn.Year == DateTime.Now.Year &&
+					DateTime.Now.Month == p.CreatedOn.Month && 
+					!p.IsDeleted)
+			.ToList();
+
+		var patientsThisMonth = _mapper.Map<IEnumerable<PatientViewModel>>(rowData);
+
+		foreach (var patient in patientsThisMonth)
+			patient.Key = _hashids.Encode(patient.Id);
 
         DashboardViewModel viewModel = new()
 		{
@@ -20,8 +31,9 @@ public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper): Contro
 			NumberOfTodayAppointments = _unitOfWork.Appointments.Count(a => a.AppointmentDate == DateTime.Today),
 			NumberOfDoctors = _unitOfWork.Doctors.Count(d => !d.IsDeleted),
 			MonthlyDoctorCount = _unitOfWork.Doctors.Count(p => p.CreatedOn.Year == DateTime.Now.Year && DateTime.Now.Month == p.CreatedOn.Month),
-			TodayAppointments = _mapper.ProjectTo<AppointmentViewModel>(todayAppointments).ToList()
-		};
+			TodayAppointments = _mapper.ProjectTo<AppointmentViewModel>(todayAppointments).ToList(),
+			PatientsThisMonth = patientsThisMonth,
+        };
 
 		return View(viewModel);
 	}

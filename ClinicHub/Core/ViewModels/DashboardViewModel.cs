@@ -10,4 +10,5 @@ public class DashboardViewModel
 	public int MonthlyDoctorCount { get; set; }
 
 	public IEnumerable<AppointmentViewModel> TodayAppointments { get; set; } = [];
+	public IEnumerable<PatientViewModel> PatientsThisMonth { get; set; } = [];
 }
