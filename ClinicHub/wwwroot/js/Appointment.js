@@ -176,14 +176,15 @@ $(document).ready(function () {
             searchable: false
         }],
         columns: [
-            { data: 'id', "name": "Id", "className": "d-none" },
-            { data: 'patientName', "name": "PatientName" },
-            { data: 'doctorName', "name": "DoctorName" },
-            { data: 'appointmentDate', "name": "AppointmentDate" },
-            { data: 'timeSlot', "name": "TimeSlot" },
+            { data: 'id', "name": "Id", "className": "d-none"},
+            { data: 'patientName', "name": "PatientName", orderable: false },
+            { data: 'doctorName', "name": "DoctorName", orderable: false },
+            { data: 'appointmentDate', "name": "AppointmentDate", orderable: false },
+            { data: 'timeSlot', "name": "TimeSlot", orderable: false },
             {
                 data: 'status',
                 name: "Status",
+                orderable: false,
                 render: function (data, type, row) {
                     let text = "";
                     let badgeClass = "";
@@ -199,15 +200,99 @@ $(document).ready(function () {
                             break;
                         case 2:
                             text = "Cancelled";
-                            badgeClass = "bg-warning";
+                            badgeClass = "bg-warning text-dark";
                             break;
                     }
 
-                    return `<span class="badge ${badgeClass}">${text}</span>`;
+                    return `<span class="badge ${badgeClass} js-badge-status">${text}</span>`;
+                }
+            },
+            {
+                data: 'null',
+                orderable: false,
+                searchable: false,
+                "className": "text-end",
+                render: function (data, type, row) {
+                    return `<div class="btn-group">
+			                    <button type="button" class="btn btn-secondary dropdown-toggle btn-sm ps-7" data-bs-toggle="dropdown" aria-expanded="false">
+				                    Change status
+			                    </button>
+			                    <ul class="dropdown-menu">
+				                    <li>
+					                    <a href="javascript:;" class="dropdown-item js-appointment-change-status"
+                                           data-message="Mark this appointment as completed?"
+                                           data-status="1"
+                                           data-url="/Appointments/ChangeStatus?appointmentId=${row.id}&status=1">
+						                    Complete
+					                    </a>
+				                    </li>
+				                    <li>
+					                    <a href="javascript:;" class="dropdown-item js-appointment-change-status"
+                                           data-message="Are you sure you want to cancel this appointment?"
+                                           data-status="2"
+                                           data-url="/Appointments/ChangeStatus?appointmentId=${row.id}&status=2">
+						                    Cancel
+					                    </a>
+				                    </li>
+			                    </ul>
+		                    </div>`;
                 }
             }
-
         ]
+    });
+
+    $('body').delegate('.js-appointment-change-status', 'click', function () {
+        var btn = $(this);
+
+        bootbox.confirm({
+            message: btn.data('message'),
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-secondary'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.post({
+                        url: btn.data('url'),
+                        success: function () {
+                            let row = btn.closest('tr');
+                            let status = row.find('.js-badge-status');
+
+                            const newStatus = btn.data('status');
+
+                            let text = '';
+                            let badgeClass = '';
+
+                            switch (parseInt(newStatus)) {
+                                case 0: text = 'Scheduled'; badgeClass = 'bg-primary'; break;
+                                case 1: text = 'Completed'; badgeClass = 'bg-success'; break;
+                                case 2: text = 'Cancelled'; badgeClass = 'bg-warning text-dark'; break;
+                            }
+
+                            status.text(text)
+                                .removeClass('bg-success bg-warning bg-primary text-dark')
+                                .addClass(badgeClass);
+
+                            status.addClass('animate__animated animate__flash');
+                            setTimeout(() => {
+                                status.removeClass('animate__animated animate__flash');
+                            }, 2000);
+
+                            showSuccessMessage();
+                        },
+                        error: function () {
+                            showErrorMessage();
+                        }
+                    });
+                }
+            }
+        });
     });
 
     $('.js-datepicker-appointment').daterangepicker({
@@ -228,7 +313,5 @@ $(document).ready(function () {
         $(this).val('');
         table.ajax.reload();
     });
-
-
 
 });

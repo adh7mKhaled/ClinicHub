@@ -1,4 +1,4 @@
-﻿using ClinicHub.Core.Models;
+﻿using NuGet.Versioning;
 
 namespace ClinicHub.Controllers;
 
@@ -112,6 +112,21 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 		return Ok(list);
 	}
 
+    [HttpPost, IgnoreAntiforgeryToken]
+    public IActionResult ChangeStatus(int appointmentId, int status)
+	{
+		if (_unitOfWork.Appointments.GetQueryable().FirstOrDefault(x => x.Id == appointmentId) is not { } appointment)
+			return BadRequest();
+
+		if (appointment.Status == (AppointmentStatus)status)
+			return BadRequest();
+
+		appointment.Status = (AppointmentStatus)status;
+		_unitOfWork.Complete();
+
+		return Ok();
+	}
+
 	private List<TimeSpan> GenerateTimeSlots(TimeSpan startTime, TimeSpan endTime, int BookingInterval)
 	{
 		var slots = new List<TimeSpan>();
@@ -123,5 +138,4 @@ public class AppointmentsController(IUnitOfWork unitOfWork, IMapper mapper, IVal
 		}
 		return slots;
 	}
-
 }

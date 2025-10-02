@@ -45,12 +45,12 @@ public class DashboardController(IUnitOfWork unitOfWork, IMapper mapper, IHashid
 
 		var data = _unitOfWork.Appointments.GetAll()
 			.Where(a => a.AppointmentDate >= startDate && a.AppointmentDate <= endDate)
+			.OrderBy(a => a.AppointmentDate)
 			.GroupBy(a => new { a.AppointmentDate })
 			.Select(g => new ChartItemViewModel {
 				Label = g.Key.AppointmentDate.ToString("d MMM"),
 				Value = g.Count().ToString()	
 			})
-			.OrderBy(x => x.Label)
 			.ToList();
 
 		return Ok(data);

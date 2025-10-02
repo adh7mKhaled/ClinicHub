@@ -193,7 +193,7 @@
 											<td>@appt.PatientName</td>
 											<td>@DateTime.Parse(appt.AppointmentTime).ToString("hh:mm tt")</td>
 											<td>
-												<span class="badge @(appt.Status.Equals(AppointmentStatus.Scheduled) ? "bg-primary" : appt.Status.Equals(AppointmentStatus.Cancelled) ? "bg-warning" : "bg-success")">
+												<span class="badge @(appt.Status.Equals(AppointmentStatus.Scheduled) ? "bg-primary" : appt.Status.Equals(AppointmentStatus.Cancelled) ? "bg-warning text-dark" : "bg-success")">
 													@(appt.Status.Equals(AppointmentStatus.Scheduled) ? "Scheduled" : appt.Status.Equals(AppointmentStatus.Cancelled) ? "Cancelled" : "Completed")
 												</span>
 											</td>
