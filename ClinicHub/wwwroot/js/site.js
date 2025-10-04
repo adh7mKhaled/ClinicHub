@@ -48,14 +48,15 @@ function onModalSuccess(item) {
 }
 
 function applySelect2() {
-    $('.js-select2').select2({
-        closeOnSelect: true
-    });
-    $('.js-select2').select2().on('change', function () {
-        var form = $(this).closest('form');
+    $('.js-select2').select2();
+
+    var form = $(this).closest('form');
+
+    if (form.length && form.attr("id") !== "Filters" && $.fn.validate) {
         form.validate().element(this);
-    });
+    }
 }
+
 
 var initDatatable = function () {
     datatable = $('#js-datatable').DataTable({

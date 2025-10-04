@@ -20,3 +20,4 @@ global using System.ComponentModel.DataAnnotations;
 global using System.Linq.Expressions;
 global using UoN.ExpressiveAnnotations.NetCore.Attributes;
 global using ClinicHub.Consts;
+global using ClinicHub.Core.Utilities;

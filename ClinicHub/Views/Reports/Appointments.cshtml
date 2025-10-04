@@ -1,0 +1,131 @@
+﻿@model AppointmentReportViewModel
+
+@{
+	ViewData["Title"] = "Appointments";
+	var index = 1;
+}
+
+<div class="pagetitle">
+	<div class="d-flex justify-content-between">
+		<div>
+			<h1>Reports</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Reports</a></li>
+					<li class="breadcrumb-item active">Appointments</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+</div>
+
+<div class="card shadow-sm mt-0">
+	<div class="card-body p-4">
+		<form asp-action="Appointments" method="get" id="Filters">
+			<input type="hidden" id="pageNumber" name="pageNumber" value="1" />
+			<div class="mb-3">
+				<select class="form-select js-select2" data-placeholder="Select Doctors"
+						asp-items="@Model.Doctors"
+						asp-for="SelectedDoctorsIDs">
+					<option value="">Select Doctors</option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<select class="form-select js-select2" data-placeholder="Select Patients"
+						asp-items="@Model.Patients"
+						asp-for="SelectedPatientsIDs">
+					<option value="">Select Patient</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">Show Report</button>
+		</form>
+	</div>
+</div>
+
+@if (Model.Appointments is not null)
+{
+	<div class="card">
+		<div class="card-header border-0 mb-2">
+			<h5 class="mb-0 fw-bold ">
+				<i class="bi bi-calendar-check me-2"></i>
+				Appointments
+			</h5>
+		</div>
+		<div class="card-body">
+			@if (Model.Appointments.TotalPages > 1)
+			{
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li class="page-item @(!Model.Appointments.HasPreviousPage ? "disabled" : string.Empty)">
+							<a href="javascript:;" class="page-link" data-page-number="1">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						@for (int i = 1; i <= Model.Appointments.TotalPages; i++)
+						{
+							<li class="page-item @(Model.Appointments.PageNumber == i ? "active" : string.Empty)">
+								<a href="javascript:;" class="page-link" data-page-number="@i">@i</a>
+							</li>
+						}
+						<li class="page-item">
+							<a href="javascript:;" data-page-number="@(Model.Appointments.TotalPages)"
+							   class="page-link @(!Model.Appointments.HasNextPage ? "disabled" : string.Empty)">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			}
+			@if (Model.Appointments.Any())
+			{
+				<div class="table-responsive" style="max-height: 1000px; overflow-y: auto;">
+					<table class="table table-hover table-sm align-middle mb-0">
+						<thead class="table-light sticky-top">
+							<tr>
+								<th>#</th>
+								<th>Patient</th>
+								<th>Appointment Date</th>
+								<th>Appointment Time</th>
+								<th>Gender</th>
+								<th>Registered On</th>
+								<th>Doctor</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var appointment in Model.Appointments)
+							{
+								<tr>
+									<td>@index</td>
+									<td>@appointment.Patient!.Name</td>
+									<td>@appointment.AppointmentDate.ToString("d MMM, yyyy")</td>
+									<td>@DateTime.Today.Add(appointment.AppointmentTime).ToString("hh:mm tt")</td>
+									<td>@appointment.Patient!.Gender</td>
+									<td>@appointment.Patient!.CreatedOn</td>
+									<td>@appointment.Doctor!.Name</td>
+									<td>
+										<span class="badge @(appointment.Status.Equals(AppointmentStatus.Scheduled) ? "bg-primary" : appointment.Status.Equals(AppointmentStatus.Cancelled) ? "bg-warning text-dark" : "bg-success")">
+											@(appointment.Status.Equals(AppointmentStatus.Scheduled) ? "Scheduled" : appointment.Status.Equals(AppointmentStatus.Cancelled) ? "Cancelled" : "Completed")
+										</span>
+									</td>
+								</tr>
+								index++;
+							}
+
+						</tbody>
+					</table>
+				</div>
+			}
+			else
+			{
+				<div class="alert alert-info alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+					No appointments found!
+				</div>
+			}
+		</div>
+	</div>
+}
+
+@section Scripts {
+	<script src="~/js/reports.js" asp-append-version="true"></script>
+}
