@@ -10,15 +10,21 @@ public class ReportsController(IUnitOfWork unitOfWork, IMapper mapper) : Control
         return View();
     }
 
-    public IActionResult Appointments(int? pageNumber)
+    public IActionResult Appointments(int? pageNumber, IList<int> selectedDoctorsIDs, IList<int> selectedPatientsIDs)
     {
         var doctors = _unitOfWork.Doctors.GetQueryable();
         var patients = _unitOfWork.Patients.GetQueryable();
 
-        var appointments = _unitOfWork.Appointments
+        IQueryable<Appointment> appointments = _unitOfWork.Appointments
                             .GetQueryable()
                             .Include(x => x.Doctor)
                             .Include(x => x.Patient);
+
+        if (selectedDoctorsIDs.Any())
+            appointments = appointments.Where(a => selectedDoctorsIDs.Contains(a.DoctorId));
+
+        if (selectedPatientsIDs.Any())
+            appointments = appointments.Where(a => selectedPatientsIDs.Contains(a.PatientId));
 
         AppointmentReportViewModel viewModel = new()
         {
@@ -27,7 +33,7 @@ public class ReportsController(IUnitOfWork unitOfWork, IMapper mapper) : Control
         };
 
         if (pageNumber is not null)
-            viewModel.Appointments = PaginatedList<Appointment>.Create(appointments, pageNumber ?? 0, 25);
+            viewModel.Appointments = PaginatedList<Appointment>.Create(appointments, pageNumber ?? 0, (int)ReportsConfigurations.PageSize);
 
         return View(viewModel);
     }
